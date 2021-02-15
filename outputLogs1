@@ -1,0 +1,543 @@
+
+PLAY [all] **************************************************************************************************************************************
+
+PLAY [ansible_provisioners] *********************************************************************************************************************
+
+TASK [Gathering Facts] **************************************************************************************************************************
+ok: [localhost]
+
+TASK [include_role : setup/kubectl] *************************************************************************************************************
+
+TASK [setup/kubectl : register temporary directory] *********************************************************************************************
+changed: [localhost]
+
+TASK [setup/kubectl : check kubectl] ************************************************************************************************************
+ok: [localhost]
+
+TASK [setup/kubectl : Download kubectl binary] **************************************************************************************************
+skipping: [localhost]
+
+TASK [setup/kubectl : Unarchive kubernetes-client] **********************************************************************************************
+skipping: [localhost]
+
+TASK [setup/kubectl : create bin directory] *****************************************************************************************************
+skipping: [localhost]
+
+TASK [setup/kubectl : Copy kubectl binary to destination directory] *****************************************************************************
+skipping: [localhost] => (item=kubectl) 
+
+TASK [setup/kubectl : Test kubectl installation] ************************************************************************************************
+ok: [localhost]
+
+TASK [setup/kubectl : Changing the current context namespace to default] ************************************************************************
+changed: [localhost]
+
+TASK [setup/kubectl : register temporary directory] *********************************************************************************************
+changed: [localhost]
+
+TASK [setup/kubectl : check kubectl] ************************************************************************************************************
+ok: [localhost]
+
+TASK [setup/kubectl : Download kubectl binary] **************************************************************************************************
+skipping: [localhost]
+
+TASK [setup/kubectl : Unarchive kubernetes-client] **********************************************************************************************
+skipping: [localhost]
+
+TASK [setup/kubectl : create bin directory] *****************************************************************************************************
+skipping: [localhost]
+
+TASK [setup/kubectl : Copy kubectl binary to destination directory] *****************************************************************************
+skipping: [localhost] => (item=kubectl) 
+
+TASK [setup/kubectl : Test kubectl installation] ************************************************************************************************
+ok: [localhost]
+
+TASK [setup/kubectl : Changing the current context namespace to default] ************************************************************************
+changed: [localhost]
+
+TASK [setup/kubectl : register temporary directory] *********************************************************************************************
+changed: [localhost]
+
+TASK [setup/kubectl : check kubectl] ************************************************************************************************************
+ok: [localhost]
+
+TASK [setup/kubectl : Download kubectl binary] **************************************************************************************************
+skipping: [localhost]
+
+TASK [setup/kubectl : Unarchive kubernetes-client] **********************************************************************************************
+skipping: [localhost]
+
+TASK [setup/kubectl : create bin directory] *****************************************************************************************************
+skipping: [localhost]
+
+TASK [setup/kubectl : Copy kubectl binary to destination directory] *****************************************************************************
+skipping: [localhost] => (item=kubectl) 
+
+TASK [setup/kubectl : Test kubectl installation] ************************************************************************************************
+ok: [localhost]
+
+TASK [setup/kubectl : Changing the current context namespace to default] ************************************************************************
+changed: [localhost]
+
+TASK [include_role : setup/helm] ****************************************************************************************************************
+
+TASK [setup/helm : register temporary directory] ************************************************************************************************
+changed: [localhost]
+
+TASK [setup/helm : check helm] ******************************************************************************************************************
+ok: [localhost]
+
+TASK [setup/helm : Install helm] ****************************************************************************************************************
+skipping: [localhost]
+
+TASK [setup/helm : Unzip helm archive] **********************************************************************************************************
+skipping: [localhost]
+
+TASK [create bin directory] *********************************************************************************************************************
+skipping: [localhost]
+
+TASK [setup/helm : Move helm binaries] **********************************************************************************************************
+skipping: [localhost] => (item=helm) 
+
+TASK [setup/helm : Test helm installation] ******************************************************************************************************
+ok: [localhost]
+
+TASK [setup/helm : register temporary directory] ************************************************************************************************
+changed: [localhost]
+
+TASK [setup/helm : check helm] ******************************************************************************************************************
+ok: [localhost]
+
+TASK [setup/helm : Install helm] ****************************************************************************************************************
+skipping: [localhost]
+
+TASK [setup/helm : Unzip helm archive] **********************************************************************************************************
+skipping: [localhost]
+
+TASK [create bin directory] *********************************************************************************************************************
+skipping: [localhost]
+
+TASK [setup/helm : Move helm binaries] **********************************************************************************************************
+skipping: [localhost] => (item=helm) 
+
+TASK [setup/helm : Test helm installation] ******************************************************************************************************
+ok: [localhost]
+
+TASK [setup/helm : register temporary directory] ************************************************************************************************
+changed: [localhost]
+
+TASK [setup/helm : check helm] ******************************************************************************************************************
+ok: [localhost]
+
+TASK [setup/helm : Install helm] ****************************************************************************************************************
+skipping: [localhost]
+
+TASK [setup/helm : Unzip helm archive] **********************************************************************************************************
+skipping: [localhost]
+
+TASK [create bin directory] *********************************************************************************************************************
+skipping: [localhost]
+
+TASK [setup/helm : Move helm binaries] **********************************************************************************************************
+skipping: [localhost] => (item=helm) 
+
+TASK [setup/helm : Test helm installation] ******************************************************************************************************
+ok: [localhost]
+
+TASK [include_role : setup/vault] ***************************************************************************************************************
+
+TASK [setup/vault : register temporary directory] ***********************************************************************************************
+changed: [localhost]
+
+TASK [setup/vault : check vault] ****************************************************************************************************************
+ok: [localhost]
+
+TASK [setup/vault : Install vault client] *******************************************************************************************************
+skipping: [localhost]
+
+TASK [setup/vault : create bin directory] *******************************************************************************************************
+skipping: [localhost]
+
+TASK [setup/vault : Unzip vault archive] ********************************************************************************************************
+skipping: [localhost] => (item=vault) 
+
+TASK [setup/vault : Test vault installation] ****************************************************************************************************
+ok: [localhost]
+
+TASK [include_role : setup/aws-cli] *************************************************************************************************************
+skipping: [localhost] => (item={u'ca_data': {u'url': u'ca.supplychain-net:7054', u'certificate': u'file/server.crt'}, u'org_status': u'new', u'external_url_suffix': u'develop.local.com', u'vault': {u'url': u'vault_url', u'root_token': u'vault_root_token', u'secret_path': u'secret'}, u'services': {u'consensus': {u'grpc': {u'port': 9092}, u'type': u'broker', u'name': u'kafka', u'replicas': 3}, u'ca': {u'grpc': {u'port': 7054}, u'type': u'ca', u'name': u'ca', u'subject': u'/C=GB/ST=London/L=London/O=Orderer/CN=ca.supplychain-net'}, u'orderers': [{u'consensus': u'kafka', u'grpc': {u'port': 7050}, u'orderer': None, u'type': u'orderer', u'name': u'orderer1'}]}, u'k8s': {u'region': u'cluster_region', u'config_file': u'~/.kube/config', u'context': u'local'}, u'name': u'supplychain', u'gitops': {u'username': u'ayhamkassab', u'private_key': u'/home/blockchain-automation-framework/build/gitops', u'git_ssh': u'ssh://git@github.com/ayhamkassab/blockchain-automation-framework.git', u'release_dir': u'platforms/hyperledger-fabric/releases/dev', u'branch': u'master', u'chart_source': u'platforms/hyperledger-fabric/charts', u'password': u'**Ak47**', u'email': u'github_email', u'git_repo': u'github.com/ayhamkassab/blockchain-automation-framework.git'}, u'cloud_provider': u'minikube', u'cli': u'disabled', u'country': u'UK', u'state': u'London', u'location': u'London', u'organization': None, u'subject': u'O=Orderer,L=51.50/-0.13/London,C=GB', u'type': u'orderer'}) 
+skipping: [localhost] => (item={u'ca_data': {u'url': u'ca.manufacturer-net:7054', u'certificate': u'file/server.crt'}, u'org_status': u'new', u'external_url_suffix': u'develop.local.com', u'vault': {u'url': u'vault_url', u'root_token': u'vault_root_token', u'secret_path': u'secret'}, u'services': {u'ca': {u'grpc': {u'port': 7054}, u'type': u'ca', u'name': u'ca', u'subject': u'/C=CH/ST=Zurich/L=Zurich/O=Manufacturer/CN=ca.manufacturer-net'}, u'peers': [{u'cli': u'disabled', u'peerAddress': u'peer0.manufacturer-net:7051', u'grpc': {u'port': 7051}, u'restserver': {u'targetPort': 20001, u'port': 20001}, u'couchdb': {u'port': 5984}, u'gossippeeraddress': u'peer0.manufacturer-net:7051', u'chaincode': {u'version': u'1', u'name': u'supplychain', u'repository': {u'username': u'ayhamkassab', u'url': u'github.com/ayhamkassab/blockchain-automation-framework.git', u'password': u'**Ak47**', u'branch': u'develop', u'path': u'examples/supplychain-app/fabric/chaincode_rest_server/chaincode/'}, u'endorsements': u'', u'maindirectory': u'cmd', u'arguments': u'\\"init\\",\\"\\"'}, u'peer': None, u'type': u'anchor', u'events': {u'port': 7053}, u'expressapi': {u'targetPort': 3000, u'port': 3000}, u'name': u'peer0'}]}, u'k8s': {u'region': u'cluster_region', u'config_file': u'~/.kube/config', u'context': u'local'}, u'name': u'manufacturer', u'gitops': {u'username': u'ayhamkassab', u'private_key': u'/home/blockchain-automation-framework/build/gitops', u'git_ssh': u'ssh://git@github.com/ayhamkassab/blockchain-automation-framework.git', u'release_dir': u'platforms/hyperledger-fabric/releases/dev', u'branch': u'master', u'chart_source': u'platforms/hyperledger-fabric/charts', u'password': u'**Ak47**', u'email': u'github_email', u'git_repo': u'github.com/ayhamkassab/blockchain-automation-framework.git'}, u'cloud_provider': u'minikube', u'cli': u'enabled', u'country': u'CH', u'state': u'Zurich', u'location': u'Zurich', u'organization': None, u'subject': u'O=Manufacturer,OU=Manufacturer,L=47.38/8.54/Zurich,C=CH', u'type': u'peer'}) 
+skipping: [localhost] => (item={u'ca_data': {u'url': u'ca.carrier-net:7054', u'certificate': u'file/server.crt'}, u'org_status': u'new', u'external_url_suffix': u'develop.local.com', u'vault': {u'url': u'vault_url', u'root_token': u'vault_root_token', u'secret_path': u'secret'}, u'services': {u'ca': {u'grpc': {u'port': 7054}, u'type': u'ca', u'name': u'ca', u'subject': u'/C=GB/ST=London/L=London/O=Carrier/CN=ca.carrier-net'}, u'peers': [{u'cli': u'disabled', u'peerAddress': u'peer0.carrier-net:7051', u'grpc': {u'port': 7051}, u'restserver': {u'targetPort': 20001, u'port': 20001}, u'couchdb': {u'port': 5984}, u'gossippeeraddress': u'peer0.carrier-net:7051', u'chaincode': {u'version': u'1', u'name': u'supplychain', u'repository': {u'username': u'ayhamkassab', u'url': u'github.com/ayhamkassab/blockchain-automation-framework.git', u'password': u'**Ak47**', u'branch': u'develop', u'path': u'examples/supplychain-app/fabric/chaincode_rest_server/chaincode/'}, u'endorsements': u'', u'maindirectory': u'cmd', u'arguments': u'\\"init\\",\\"\\"'}, u'peer': None, u'type': u'anchor', u'events': {u'port': 7053}, u'expressapi': {u'targetPort': 3000, u'port': 3000}, u'name': u'peer0'}]}, u'k8s': {u'region': u'cluster_region', u'config_file': u'~/.kube/config', u'context': u'local'}, u'name': u'carrier', u'gitops': {u'username': u'ayhamkassab', u'private_key': u'/home/blockchain-automation-framework/build/gitops', u'git_ssh': u'ssh://git@github.com/ayhamkassab/blockchain-automation-framework.git', u'release_dir': u'platforms/hyperledger-fabric/releases/dev', u'branch': u'master', u'chart_source': u'platforms/hyperledger-fabric/charts', u'password': u'**Ak47**', u'email': u'github_email', u'git_repo': u'github.com/ayhamkassab/blockchain-automation-framework.git'}, u'cloud_provider': u'minikube', u'cli': u'enabled', u'country': u'GB', u'state': u'London', u'location': u'London', u'organization': None, u'subject': u'O=Carrier,OU=Carrier,L=51.50/-0.13/London,C=GB', u'type': u'peer'}) 
+
+TASK [include_role : setup/aws-auth] ************************************************************************************************************
+skipping: [localhost] => (item={u'ca_data': {u'url': u'ca.supplychain-net:7054', u'certificate': u'file/server.crt'}, u'org_status': u'new', u'external_url_suffix': u'develop.local.com', u'vault': {u'url': u'vault_url', u'root_token': u'vault_root_token', u'secret_path': u'secret'}, u'services': {u'consensus': {u'grpc': {u'port': 9092}, u'type': u'broker', u'name': u'kafka', u'replicas': 3}, u'ca': {u'grpc': {u'port': 7054}, u'type': u'ca', u'name': u'ca', u'subject': u'/C=GB/ST=London/L=London/O=Orderer/CN=ca.supplychain-net'}, u'orderers': [{u'consensus': u'kafka', u'grpc': {u'port': 7050}, u'orderer': None, u'type': u'orderer', u'name': u'orderer1'}]}, u'k8s': {u'region': u'cluster_region', u'config_file': u'~/.kube/config', u'context': u'local'}, u'name': u'supplychain', u'gitops': {u'username': u'ayhamkassab', u'private_key': u'/home/blockchain-automation-framework/build/gitops', u'git_ssh': u'ssh://git@github.com/ayhamkassab/blockchain-automation-framework.git', u'release_dir': u'platforms/hyperledger-fabric/releases/dev', u'branch': u'master', u'chart_source': u'platforms/hyperledger-fabric/charts', u'password': u'**Ak47**', u'email': u'github_email', u'git_repo': u'github.com/ayhamkassab/blockchain-automation-framework.git'}, u'cloud_provider': u'minikube', u'cli': u'disabled', u'country': u'UK', u'state': u'London', u'location': u'London', u'organization': None, u'subject': u'O=Orderer,L=51.50/-0.13/London,C=GB', u'type': u'orderer'}) 
+skipping: [localhost] => (item={u'ca_data': {u'url': u'ca.manufacturer-net:7054', u'certificate': u'file/server.crt'}, u'org_status': u'new', u'external_url_suffix': u'develop.local.com', u'vault': {u'url': u'vault_url', u'root_token': u'vault_root_token', u'secret_path': u'secret'}, u'services': {u'ca': {u'grpc': {u'port': 7054}, u'type': u'ca', u'name': u'ca', u'subject': u'/C=CH/ST=Zurich/L=Zurich/O=Manufacturer/CN=ca.manufacturer-net'}, u'peers': [{u'cli': u'disabled', u'peerAddress': u'peer0.manufacturer-net:7051', u'grpc': {u'port': 7051}, u'restserver': {u'targetPort': 20001, u'port': 20001}, u'couchdb': {u'port': 5984}, u'gossippeeraddress': u'peer0.manufacturer-net:7051', u'chaincode': {u'version': u'1', u'name': u'supplychain', u'repository': {u'username': u'ayhamkassab', u'url': u'github.com/ayhamkassab/blockchain-automation-framework.git', u'password': u'**Ak47**', u'branch': u'develop', u'path': u'examples/supplychain-app/fabric/chaincode_rest_server/chaincode/'}, u'endorsements': u'', u'maindirectory': u'cmd', u'arguments': u'\\"init\\",\\"\\"'}, u'peer': None, u'type': u'anchor', u'events': {u'port': 7053}, u'expressapi': {u'targetPort': 3000, u'port': 3000}, u'name': u'peer0'}]}, u'k8s': {u'region': u'cluster_region', u'config_file': u'~/.kube/config', u'context': u'local'}, u'name': u'manufacturer', u'gitops': {u'username': u'ayhamkassab', u'private_key': u'/home/blockchain-automation-framework/build/gitops', u'git_ssh': u'ssh://git@github.com/ayhamkassab/blockchain-automation-framework.git', u'release_dir': u'platforms/hyperledger-fabric/releases/dev', u'branch': u'master', u'chart_source': u'platforms/hyperledger-fabric/charts', u'password': u'**Ak47**', u'email': u'github_email', u'git_repo': u'github.com/ayhamkassab/blockchain-automation-framework.git'}, u'cloud_provider': u'minikube', u'cli': u'enabled', u'country': u'CH', u'state': u'Zurich', u'location': u'Zurich', u'organization': None, u'subject': u'O=Manufacturer,OU=Manufacturer,L=47.38/8.54/Zurich,C=CH', u'type': u'peer'}) 
+skipping: [localhost] => (item={u'ca_data': {u'url': u'ca.carrier-net:7054', u'certificate': u'file/server.crt'}, u'org_status': u'new', u'external_url_suffix': u'develop.local.com', u'vault': {u'url': u'vault_url', u'root_token': u'vault_root_token', u'secret_path': u'secret'}, u'services': {u'ca': {u'grpc': {u'port': 7054}, u'type': u'ca', u'name': u'ca', u'subject': u'/C=GB/ST=London/L=London/O=Carrier/CN=ca.carrier-net'}, u'peers': [{u'cli': u'disabled', u'peerAddress': u'peer0.carrier-net:7051', u'grpc': {u'port': 7051}, u'restserver': {u'targetPort': 20001, u'port': 20001}, u'couchdb': {u'port': 5984}, u'gossippeeraddress': u'peer0.carrier-net:7051', u'chaincode': {u'version': u'1', u'name': u'supplychain', u'repository': {u'username': u'ayhamkassab', u'url': u'github.com/ayhamkassab/blockchain-automation-framework.git', u'password': u'**Ak47**', u'branch': u'develop', u'path': u'examples/supplychain-app/fabric/chaincode_rest_server/chaincode/'}, u'endorsements': u'', u'maindirectory': u'cmd', u'arguments': u'\\"init\\",\\"\\"'}, u'peer': None, u'type': u'anchor', u'events': {u'port': 7053}, u'expressapi': {u'targetPort': 3000, u'port': 3000}, u'name': u'peer0'}]}, u'k8s': {u'region': u'cluster_region', u'config_file': u'~/.kube/config', u'context': u'local'}, u'name': u'carrier', u'gitops': {u'username': u'ayhamkassab', u'private_key': u'/home/blockchain-automation-framework/build/gitops', u'git_ssh': u'ssh://git@github.com/ayhamkassab/blockchain-automation-framework.git', u'release_dir': u'platforms/hyperledger-fabric/releases/dev', u'branch': u'master', u'chart_source': u'platforms/hyperledger-fabric/charts', u'password': u'**Ak47**', u'email': u'github_email', u'git_repo': u'github.com/ayhamkassab/blockchain-automation-framework.git'}, u'cloud_provider': u'minikube', u'cli': u'enabled', u'country': u'GB', u'state': u'London', u'location': u'London', u'organization': None, u'subject': u'O=Carrier,OU=Carrier,L=51.50/-0.13/London,C=GB', u'type': u'peer'}) 
+
+PLAY [ansible_provisioners] *********************************************************************************************************************
+
+TASK [include_role : setup/flux] ****************************************************************************************************************
+
+TASK [aws-cli : register temporary directory] ***************************************************************************************************
+skipping: [localhost]
+
+TASK [aws-cli : check aws cli] ******************************************************************************************************************
+skipping: [localhost]
+
+TASK [aws-cli : download aws cli] ***************************************************************************************************************
+skipping: [localhost]
+
+TASK [aws-cli : extract aws cli] ****************************************************************************************************************
+skipping: [localhost]
+
+TASK [create bin directory] *********************************************************************************************************************
+skipping: [localhost]
+
+TASK [aws-cli : install aws cli] ****************************************************************************************************************
+skipping: [localhost]
+
+TASK [aws-cli : configuring aws] ****************************************************************************************************************
+skipping: [localhost]
+
+TASK [aws-auth : register temporary directory] **************************************************************************************************
+skipping: [localhost]
+
+TASK [check aws-authenticator] ******************************************************************************************************************
+skipping: [localhost]
+
+TASK [aws-auth : create bin directory] **********************************************************************************************************
+skipping: [localhost]
+
+TASK [Install aws-authenticator] ****************************************************************************************************************
+skipping: [localhost]
+
+TASK [aws-auth : Test Kubernetes connection] ****************************************************************************************************
+skipping: [localhost]
+
+TASK [helm : register temporary directory] ******************************************************************************************************
+changed: [localhost]
+
+TASK [check helm] *******************************************************************************************************************************
+ok: [localhost]
+
+TASK [Install helm] *****************************************************************************************************************************
+skipping: [localhost]
+
+TASK [Unzip helm archive] ***********************************************************************************************************************
+skipping: [localhost]
+
+TASK [create bin directory] *********************************************************************************************************************
+skipping: [localhost]
+
+TASK [Move helm binaries] ***********************************************************************************************************************
+skipping: [localhost] => (item=helm) 
+
+TASK [Test helm installation] *******************************************************************************************************************
+ok: [localhost]
+
+TASK [kubectl : register temporary directory] ***************************************************************************************************
+changed: [localhost]
+
+TASK [check kubectl] ****************************************************************************************************************************
+ok: [localhost]
+
+TASK [Download kubectl binary] ******************************************************************************************************************
+skipping: [localhost]
+
+TASK [kubectl : Unarchive kubernetes-client] ****************************************************************************************************
+skipping: [localhost]
+
+TASK [kubectl : create bin directory] ***********************************************************************************************************
+skipping: [localhost]
+
+TASK [Copy kubectl binary to destination directory] *********************************************************************************************
+skipping: [localhost] => (item=kubectl) 
+
+TASK [Test kubectl installation] ****************************************************************************************************************
+ok: [localhost]
+
+TASK [kubectl : Changing the current context namespace to default] ******************************************************************************
+changed: [localhost]
+
+TASK [setup/flux : Check if Flux is running] ****************************************************************************************************
+ok: [localhost]
+
+TASK [setup/flux : Get ssh known hosts] *********************************************************************************************************
+skipping: [localhost]
+
+TASK [setup/flux : Helm repo add] ***************************************************************************************************************
+changed: [localhost]
+
+TASK [setup/flux : Install flux for over https connection] **************************************************************************************
+changed: [localhost]
+
+TASK [setup/flux : Install flux for over ssh connection] ****************************************************************************************
+skipping: [localhost]
+
+TASK [wait for pods to come up] *****************************************************************************************************************
+
+TASK [/root/hyperledger-labs/myFork/blockchain-automation-framework/platforms/shared/configuration/../../shared/configuration/roles/check/helm_component : Wait for Pod flux in default] ***
+skipping: [localhost]
+
+TASK [/root/hyperledger-labs/myFork/blockchain-automation-framework/platforms/shared/configuration/../../shared/configuration/roles/check/helm_component : Check for {{ job_title }} job on {{ component_name }}] ***
+skipping: [localhost]
+
+TASK [/root/hyperledger-labs/myFork/blockchain-automation-framework/platforms/shared/configuration/../../shared/configuration/roles/check/helm_component : Wait for Pod flux in default] ***
+ok: [localhost]
+
+TASK [aws-cli : register temporary directory] ***************************************************************************************************
+skipping: [localhost]
+
+TASK [aws-cli : check aws cli] ******************************************************************************************************************
+skipping: [localhost]
+
+TASK [aws-cli : download aws cli] ***************************************************************************************************************
+skipping: [localhost]
+
+TASK [aws-cli : extract aws cli] ****************************************************************************************************************
+skipping: [localhost]
+
+TASK [create bin directory] *********************************************************************************************************************
+skipping: [localhost]
+
+TASK [aws-cli : install aws cli] ****************************************************************************************************************
+skipping: [localhost]
+
+TASK [aws-cli : configuring aws] ****************************************************************************************************************
+skipping: [localhost]
+
+TASK [aws-auth : register temporary directory] **************************************************************************************************
+skipping: [localhost]
+
+TASK [check aws-authenticator] ******************************************************************************************************************
+skipping: [localhost]
+
+TASK [aws-auth : create bin directory] **********************************************************************************************************
+skipping: [localhost]
+
+TASK [Install aws-authenticator] ****************************************************************************************************************
+skipping: [localhost]
+
+TASK [aws-auth : Test Kubernetes connection] ****************************************************************************************************
+skipping: [localhost]
+
+TASK [helm : register temporary directory] ******************************************************************************************************
+changed: [localhost]
+
+TASK [check helm] *******************************************************************************************************************************
+ok: [localhost]
+
+TASK [Install helm] *****************************************************************************************************************************
+skipping: [localhost]
+
+TASK [Unzip helm archive] ***********************************************************************************************************************
+skipping: [localhost]
+
+TASK [create bin directory] *********************************************************************************************************************
+skipping: [localhost]
+
+TASK [Move helm binaries] ***********************************************************************************************************************
+skipping: [localhost] => (item=helm) 
+
+TASK [Test helm installation] *******************************************************************************************************************
+ok: [localhost]
+
+TASK [kubectl : register temporary directory] ***************************************************************************************************
+changed: [localhost]
+
+TASK [check kubectl] ****************************************************************************************************************************
+ok: [localhost]
+
+TASK [Download kubectl binary] ******************************************************************************************************************
+skipping: [localhost]
+
+TASK [kubectl : Unarchive kubernetes-client] ****************************************************************************************************
+skipping: [localhost]
+
+TASK [kubectl : create bin directory] ***********************************************************************************************************
+skipping: [localhost]
+
+TASK [Copy kubectl binary to destination directory] *********************************************************************************************
+skipping: [localhost] => (item=kubectl) 
+
+TASK [Test kubectl installation] ****************************************************************************************************************
+ok: [localhost]
+
+TASK [kubectl : Changing the current context namespace to default] ******************************************************************************
+changed: [localhost]
+
+TASK [setup/flux : Check if Flux is running] ****************************************************************************************************
+ok: [localhost]
+
+TASK [setup/flux : Get ssh known hosts] *********************************************************************************************************
+skipping: [localhost]
+
+TASK [setup/flux : Helm repo add] ***************************************************************************************************************
+skipping: [localhost]
+
+TASK [setup/flux : Install flux for over https connection] **************************************************************************************
+skipping: [localhost]
+
+TASK [setup/flux : Install flux for over ssh connection] ****************************************************************************************
+skipping: [localhost]
+
+TASK [wait for pods to come up] *****************************************************************************************************************
+skipping: [localhost]
+
+TASK [aws-cli : register temporary directory] ***************************************************************************************************
+skipping: [localhost]
+
+TASK [aws-cli : check aws cli] ******************************************************************************************************************
+skipping: [localhost]
+
+TASK [aws-cli : download aws cli] ***************************************************************************************************************
+skipping: [localhost]
+
+TASK [aws-cli : extract aws cli] ****************************************************************************************************************
+skipping: [localhost]
+
+TASK [create bin directory] *********************************************************************************************************************
+skipping: [localhost]
+
+TASK [aws-cli : install aws cli] ****************************************************************************************************************
+skipping: [localhost]
+
+TASK [aws-cli : configuring aws] ****************************************************************************************************************
+skipping: [localhost]
+
+TASK [aws-auth : register temporary directory] **************************************************************************************************
+skipping: [localhost]
+
+TASK [check aws-authenticator] ******************************************************************************************************************
+skipping: [localhost]
+
+TASK [aws-auth : create bin directory] **********************************************************************************************************
+skipping: [localhost]
+
+TASK [Install aws-authenticator] ****************************************************************************************************************
+skipping: [localhost]
+
+TASK [aws-auth : Test Kubernetes connection] ****************************************************************************************************
+skipping: [localhost]
+
+TASK [helm : register temporary directory] ******************************************************************************************************
+changed: [localhost]
+
+TASK [check helm] *******************************************************************************************************************************
+ok: [localhost]
+
+TASK [Install helm] *****************************************************************************************************************************
+skipping: [localhost]
+
+TASK [Unzip helm archive] ***********************************************************************************************************************
+skipping: [localhost]
+
+TASK [create bin directory] *********************************************************************************************************************
+skipping: [localhost]
+
+TASK [Move helm binaries] ***********************************************************************************************************************
+skipping: [localhost] => (item=helm) 
+
+TASK [Test helm installation] *******************************************************************************************************************
+ok: [localhost]
+
+TASK [kubectl : register temporary directory] ***************************************************************************************************
+changed: [localhost]
+
+TASK [check kubectl] ****************************************************************************************************************************
+ok: [localhost]
+
+TASK [Download kubectl binary] ******************************************************************************************************************
+skipping: [localhost]
+
+TASK [kubectl : Unarchive kubernetes-client] ****************************************************************************************************
+skipping: [localhost]
+
+TASK [kubectl : create bin directory] ***********************************************************************************************************
+skipping: [localhost]
+
+TASK [Copy kubectl binary to destination directory] *********************************************************************************************
+skipping: [localhost] => (item=kubectl) 
+
+TASK [Test kubectl installation] ****************************************************************************************************************
+ok: [localhost]
+
+TASK [kubectl : Changing the current context namespace to default] ******************************************************************************
+changed: [localhost]
+
+TASK [setup/flux : Check if Flux is running] ****************************************************************************************************
+ok: [localhost]
+
+TASK [setup/flux : Get ssh known hosts] *********************************************************************************************************
+skipping: [localhost]
+
+TASK [setup/flux : Helm repo add] ***************************************************************************************************************
+skipping: [localhost]
+
+TASK [setup/flux : Install flux for over https connection] **************************************************************************************
+skipping: [localhost]
+
+TASK [setup/flux : Install flux for over ssh connection] ****************************************************************************************
+skipping: [localhost]
+
+TASK [wait for pods to come up] *****************************************************************************************************************
+skipping: [localhost]
+
+TASK [Prepare nodes and clients ports for ambassador] *******************************************************************************************
+skipping: [localhost] => (item={u'ca_data': {u'url': u'ca.supplychain-net:7054', u'certificate': u'file/server.crt'}, u'org_status': u'new', u'external_url_suffix': u'develop.local.com', u'vault': {u'url': u'vault_url', u'root_token': u'vault_root_token', u'secret_path': u'secret'}, u'services': {u'consensus': {u'grpc': {u'port': 9092}, u'type': u'broker', u'name': u'kafka', u'replicas': 3}, u'ca': {u'grpc': {u'port': 7054}, u'type': u'ca', u'name': u'ca', u'subject': u'/C=GB/ST=London/L=London/O=Orderer/CN=ca.supplychain-net'}, u'orderers': [{u'consensus': u'kafka', u'grpc': {u'port': 7050}, u'orderer': None, u'type': u'orderer', u'name': u'orderer1'}]}, u'k8s': {u'region': u'cluster_region', u'config_file': u'~/.kube/config', u'context': u'local'}, u'name': u'supplychain', u'gitops': {u'username': u'ayhamkassab', u'private_key': u'/home/blockchain-automation-framework/build/gitops', u'git_ssh': u'ssh://git@github.com/ayhamkassab/blockchain-automation-framework.git', u'release_dir': u'platforms/hyperledger-fabric/releases/dev', u'branch': u'master', u'chart_source': u'platforms/hyperledger-fabric/charts', u'password': u'**Ak47**', u'email': u'github_email', u'git_repo': u'github.com/ayhamkassab/blockchain-automation-framework.git'}, u'cloud_provider': u'minikube', u'cli': u'disabled', u'country': u'UK', u'state': u'London', u'location': u'London', u'organization': None, u'subject': u'O=Orderer,L=51.50/-0.13/London,C=GB', u'type': u'orderer'}) 
+skipping: [localhost] => (item={u'ca_data': {u'url': u'ca.manufacturer-net:7054', u'certificate': u'file/server.crt'}, u'org_status': u'new', u'external_url_suffix': u'develop.local.com', u'vault': {u'url': u'vault_url', u'root_token': u'vault_root_token', u'secret_path': u'secret'}, u'services': {u'ca': {u'grpc': {u'port': 7054}, u'type': u'ca', u'name': u'ca', u'subject': u'/C=CH/ST=Zurich/L=Zurich/O=Manufacturer/CN=ca.manufacturer-net'}, u'peers': [{u'cli': u'disabled', u'peerAddress': u'peer0.manufacturer-net:7051', u'grpc': {u'port': 7051}, u'restserver': {u'targetPort': 20001, u'port': 20001}, u'couchdb': {u'port': 5984}, u'gossippeeraddress': u'peer0.manufacturer-net:7051', u'chaincode': {u'version': u'1', u'name': u'supplychain', u'repository': {u'username': u'ayhamkassab', u'url': u'github.com/ayhamkassab/blockchain-automation-framework.git', u'password': u'**Ak47**', u'branch': u'develop', u'path': u'examples/supplychain-app/fabric/chaincode_rest_server/chaincode/'}, u'endorsements': u'', u'maindirectory': u'cmd', u'arguments': u'\\"init\\",\\"\\"'}, u'peer': None, u'type': u'anchor', u'events': {u'port': 7053}, u'expressapi': {u'targetPort': 3000, u'port': 3000}, u'name': u'peer0'}]}, u'k8s': {u'region': u'cluster_region', u'config_file': u'~/.kube/config', u'context': u'local'}, u'name': u'manufacturer', u'gitops': {u'username': u'ayhamkassab', u'private_key': u'/home/blockchain-automation-framework/build/gitops', u'git_ssh': u'ssh://git@github.com/ayhamkassab/blockchain-automation-framework.git', u'release_dir': u'platforms/hyperledger-fabric/releases/dev', u'branch': u'master', u'chart_source': u'platforms/hyperledger-fabric/charts', u'password': u'**Ak47**', u'email': u'github_email', u'git_repo': u'github.com/ayhamkassab/blockchain-automation-framework.git'}, u'cloud_provider': u'minikube', u'cli': u'enabled', u'country': u'CH', u'state': u'Zurich', u'location': u'Zurich', u'organization': None, u'subject': u'O=Manufacturer,OU=Manufacturer,L=47.38/8.54/Zurich,C=CH', u'type': u'peer'}) 
+skipping: [localhost] => (item={u'ca_data': {u'url': u'ca.carrier-net:7054', u'certificate': u'file/server.crt'}, u'org_status': u'new', u'external_url_suffix': u'develop.local.com', u'vault': {u'url': u'vault_url', u'root_token': u'vault_root_token', u'secret_path': u'secret'}, u'services': {u'ca': {u'grpc': {u'port': 7054}, u'type': u'ca', u'name': u'ca', u'subject': u'/C=GB/ST=London/L=London/O=Carrier/CN=ca.carrier-net'}, u'peers': [{u'cli': u'disabled', u'peerAddress': u'peer0.carrier-net:7051', u'grpc': {u'port': 7051}, u'restserver': {u'targetPort': 20001, u'port': 20001}, u'couchdb': {u'port': 5984}, u'gossippeeraddress': u'peer0.carrier-net:7051', u'chaincode': {u'version': u'1', u'name': u'supplychain', u'repository': {u'username': u'ayhamkassab', u'url': u'github.com/ayhamkassab/blockchain-automation-framework.git', u'password': u'**Ak47**', u'branch': u'develop', u'path': u'examples/supplychain-app/fabric/chaincode_rest_server/chaincode/'}, u'endorsements': u'', u'maindirectory': u'cmd', u'arguments': u'\\"init\\",\\"\\"'}, u'peer': None, u'type': u'anchor', u'events': {u'port': 7053}, u'expressapi': {u'targetPort': 3000, u'port': 3000}, u'name': u'peer0'}]}, u'k8s': {u'region': u'cluster_region', u'config_file': u'~/.kube/config', u'context': u'local'}, u'name': u'carrier', u'gitops': {u'username': u'ayhamkassab', u'private_key': u'/home/blockchain-automation-framework/build/gitops', u'git_ssh': u'ssh://git@github.com/ayhamkassab/blockchain-automation-framework.git', u'release_dir': u'platforms/hyperledger-fabric/releases/dev', u'branch': u'master', u'chart_source': u'platforms/hyperledger-fabric/charts', u'password': u'**Ak47**', u'email': u'github_email', u'git_repo': u'github.com/ayhamkassab/blockchain-automation-framework.git'}, u'cloud_provider': u'minikube', u'cli': u'enabled', u'country': u'GB', u'state': u'London', u'location': u'London', u'organization': None, u'subject': u'O=Carrier,OU=Carrier,L=51.50/-0.13/London,C=GB', u'type': u'peer'}) 
+
+TASK [include_role : setup/ambassador] **********************************************************************************************************
+skipping: [localhost] => (item={u'ca_data': {u'url': u'ca.supplychain-net:7054', u'certificate': u'file/server.crt'}, u'org_status': u'new', u'external_url_suffix': u'develop.local.com', u'vault': {u'url': u'vault_url', u'root_token': u'vault_root_token', u'secret_path': u'secret'}, u'services': {u'consensus': {u'grpc': {u'port': 9092}, u'type': u'broker', u'name': u'kafka', u'replicas': 3}, u'ca': {u'grpc': {u'port': 7054}, u'type': u'ca', u'name': u'ca', u'subject': u'/C=GB/ST=London/L=London/O=Orderer/CN=ca.supplychain-net'}, u'orderers': [{u'consensus': u'kafka', u'grpc': {u'port': 7050}, u'orderer': None, u'type': u'orderer', u'name': u'orderer1'}]}, u'k8s': {u'region': u'cluster_region', u'config_file': u'~/.kube/config', u'context': u'local'}, u'name': u'supplychain', u'gitops': {u'username': u'ayhamkassab', u'private_key': u'/home/blockchain-automation-framework/build/gitops', u'git_ssh': u'ssh://git@github.com/ayhamkassab/blockchain-automation-framework.git', u'release_dir': u'platforms/hyperledger-fabric/releases/dev', u'branch': u'master', u'chart_source': u'platforms/hyperledger-fabric/charts', u'password': u'**Ak47**', u'email': u'github_email', u'git_repo': u'github.com/ayhamkassab/blockchain-automation-framework.git'}, u'cloud_provider': u'minikube', u'cli': u'disabled', u'country': u'UK', u'state': u'London', u'location': u'London', u'organization': None, u'subject': u'O=Orderer,L=51.50/-0.13/London,C=GB', u'type': u'orderer'}) 
+skipping: [localhost] => (item={u'ca_data': {u'url': u'ca.manufacturer-net:7054', u'certificate': u'file/server.crt'}, u'org_status': u'new', u'external_url_suffix': u'develop.local.com', u'vault': {u'url': u'vault_url', u'root_token': u'vault_root_token', u'secret_path': u'secret'}, u'services': {u'ca': {u'grpc': {u'port': 7054}, u'type': u'ca', u'name': u'ca', u'subject': u'/C=CH/ST=Zurich/L=Zurich/O=Manufacturer/CN=ca.manufacturer-net'}, u'peers': [{u'cli': u'disabled', u'peerAddress': u'peer0.manufacturer-net:7051', u'grpc': {u'port': 7051}, u'restserver': {u'targetPort': 20001, u'port': 20001}, u'couchdb': {u'port': 5984}, u'gossippeeraddress': u'peer0.manufacturer-net:7051', u'chaincode': {u'version': u'1', u'name': u'supplychain', u'repository': {u'username': u'ayhamkassab', u'url': u'github.com/ayhamkassab/blockchain-automation-framework.git', u'password': u'**Ak47**', u'branch': u'develop', u'path': u'examples/supplychain-app/fabric/chaincode_rest_server/chaincode/'}, u'endorsements': u'', u'maindirectory': u'cmd', u'arguments': u'\\"init\\",\\"\\"'}, u'peer': None, u'type': u'anchor', u'events': {u'port': 7053}, u'expressapi': {u'targetPort': 3000, u'port': 3000}, u'name': u'peer0'}]}, u'k8s': {u'region': u'cluster_region', u'config_file': u'~/.kube/config', u'context': u'local'}, u'name': u'manufacturer', u'gitops': {u'username': u'ayhamkassab', u'private_key': u'/home/blockchain-automation-framework/build/gitops', u'git_ssh': u'ssh://git@github.com/ayhamkassab/blockchain-automation-framework.git', u'release_dir': u'platforms/hyperledger-fabric/releases/dev', u'branch': u'master', u'chart_source': u'platforms/hyperledger-fabric/charts', u'password': u'**Ak47**', u'email': u'github_email', u'git_repo': u'github.com/ayhamkassab/blockchain-automation-framework.git'}, u'cloud_provider': u'minikube', u'cli': u'enabled', u'country': u'CH', u'state': u'Zurich', u'location': u'Zurich', u'organization': None, u'subject': u'O=Manufacturer,OU=Manufacturer,L=47.38/8.54/Zurich,C=CH', u'type': u'peer'}) 
+skipping: [localhost] => (item={u'ca_data': {u'url': u'ca.carrier-net:7054', u'certificate': u'file/server.crt'}, u'org_status': u'new', u'external_url_suffix': u'develop.local.com', u'vault': {u'url': u'vault_url', u'root_token': u'vault_root_token', u'secret_path': u'secret'}, u'services': {u'ca': {u'grpc': {u'port': 7054}, u'type': u'ca', u'name': u'ca', u'subject': u'/C=GB/ST=London/L=London/O=Carrier/CN=ca.carrier-net'}, u'peers': [{u'cli': u'disabled', u'peerAddress': u'peer0.carrier-net:7051', u'grpc': {u'port': 7051}, u'restserver': {u'targetPort': 20001, u'port': 20001}, u'couchdb': {u'port': 5984}, u'gossippeeraddress': u'peer0.carrier-net:7051', u'chaincode': {u'version': u'1', u'name': u'supplychain', u'repository': {u'username': u'ayhamkassab', u'url': u'github.com/ayhamkassab/blockchain-automation-framework.git', u'password': u'**Ak47**', u'branch': u'develop', u'path': u'examples/supplychain-app/fabric/chaincode_rest_server/chaincode/'}, u'endorsements': u'', u'maindirectory': u'cmd', u'arguments': u'\\"init\\",\\"\\"'}, u'peer': None, u'type': u'anchor', u'events': {u'port': 7053}, u'expressapi': {u'targetPort': 3000, u'port': 3000}, u'name': u'peer0'}]}, u'k8s': {u'region': u'cluster_region', u'config_file': u'~/.kube/config', u'context': u'local'}, u'name': u'carrier', u'gitops': {u'username': u'ayhamkassab', u'private_key': u'/home/blockchain-automation-framework/build/gitops', u'git_ssh': u'ssh://git@github.com/ayhamkassab/blockchain-automation-framework.git', u'release_dir': u'platforms/hyperledger-fabric/releases/dev', u'branch': u'master', u'chart_source': u'platforms/hyperledger-fabric/charts', u'password': u'**Ak47**', u'email': u'github_email', u'git_repo': u'github.com/ayhamkassab/blockchain-automation-framework.git'}, u'cloud_provider': u'minikube', u'cli': u'enabled', u'country': u'GB', u'state': u'London', u'location': u'London', u'organization': None, u'subject': u'O=Carrier,OU=Carrier,L=51.50/-0.13/London,C=GB', u'type': u'peer'}) 
+
+TASK [include_role : setup/haproxy-ingress] *****************************************************************************************************
+skipping: [localhost] => (item={u'ca_data': {u'url': u'ca.supplychain-net:7054', u'certificate': u'file/server.crt'}, u'org_status': u'new', u'external_url_suffix': u'develop.local.com', u'vault': {u'url': u'vault_url', u'root_token': u'vault_root_token', u'secret_path': u'secret'}, u'services': {u'consensus': {u'grpc': {u'port': 9092}, u'type': u'broker', u'name': u'kafka', u'replicas': 3}, u'ca': {u'grpc': {u'port': 7054}, u'type': u'ca', u'name': u'ca', u'subject': u'/C=GB/ST=London/L=London/O=Orderer/CN=ca.supplychain-net'}, u'orderers': [{u'consensus': u'kafka', u'grpc': {u'port': 7050}, u'orderer': None, u'type': u'orderer', u'name': u'orderer1'}]}, u'k8s': {u'region': u'cluster_region', u'config_file': u'~/.kube/config', u'context': u'local'}, u'name': u'supplychain', u'gitops': {u'username': u'ayhamkassab', u'private_key': u'/home/blockchain-automation-framework/build/gitops', u'git_ssh': u'ssh://git@github.com/ayhamkassab/blockchain-automation-framework.git', u'release_dir': u'platforms/hyperledger-fabric/releases/dev', u'branch': u'master', u'chart_source': u'platforms/hyperledger-fabric/charts', u'password': u'**Ak47**', u'email': u'github_email', u'git_repo': u'github.com/ayhamkassab/blockchain-automation-framework.git'}, u'cloud_provider': u'minikube', u'cli': u'disabled', u'country': u'UK', u'state': u'London', u'location': u'London', u'organization': None, u'subject': u'O=Orderer,L=51.50/-0.13/London,C=GB', u'type': u'orderer'}) 
+skipping: [localhost] => (item={u'ca_data': {u'url': u'ca.manufacturer-net:7054', u'certificate': u'file/server.crt'}, u'org_status': u'new', u'external_url_suffix': u'develop.local.com', u'vault': {u'url': u'vault_url', u'root_token': u'vault_root_token', u'secret_path': u'secret'}, u'services': {u'ca': {u'grpc': {u'port': 7054}, u'type': u'ca', u'name': u'ca', u'subject': u'/C=CH/ST=Zurich/L=Zurich/O=Manufacturer/CN=ca.manufacturer-net'}, u'peers': [{u'cli': u'disabled', u'peerAddress': u'peer0.manufacturer-net:7051', u'grpc': {u'port': 7051}, u'restserver': {u'targetPort': 20001, u'port': 20001}, u'couchdb': {u'port': 5984}, u'gossippeeraddress': u'peer0.manufacturer-net:7051', u'chaincode': {u'version': u'1', u'name': u'supplychain', u'repository': {u'username': u'ayhamkassab', u'url': u'github.com/ayhamkassab/blockchain-automation-framework.git', u'password': u'**Ak47**', u'branch': u'develop', u'path': u'examples/supplychain-app/fabric/chaincode_rest_server/chaincode/'}, u'endorsements': u'', u'maindirectory': u'cmd', u'arguments': u'\\"init\\",\\"\\"'}, u'peer': None, u'type': u'anchor', u'events': {u'port': 7053}, u'expressapi': {u'targetPort': 3000, u'port': 3000}, u'name': u'peer0'}]}, u'k8s': {u'region': u'cluster_region', u'config_file': u'~/.kube/config', u'context': u'local'}, u'name': u'manufacturer', u'gitops': {u'username': u'ayhamkassab', u'private_key': u'/home/blockchain-automation-framework/build/gitops', u'git_ssh': u'ssh://git@github.com/ayhamkassab/blockchain-automation-framework.git', u'release_dir': u'platforms/hyperledger-fabric/releases/dev', u'branch': u'master', u'chart_source': u'platforms/hyperledger-fabric/charts', u'password': u'**Ak47**', u'email': u'github_email', u'git_repo': u'github.com/ayhamkassab/blockchain-automation-framework.git'}, u'cloud_provider': u'minikube', u'cli': u'enabled', u'country': u'CH', u'state': u'Zurich', u'location': u'Zurich', u'organization': None, u'subject': u'O=Manufacturer,OU=Manufacturer,L=47.38/8.54/Zurich,C=CH', u'type': u'peer'}) 
+skipping: [localhost] => (item={u'ca_data': {u'url': u'ca.carrier-net:7054', u'certificate': u'file/server.crt'}, u'org_status': u'new', u'external_url_suffix': u'develop.local.com', u'vault': {u'url': u'vault_url', u'root_token': u'vault_root_token', u'secret_path': u'secret'}, u'services': {u'ca': {u'grpc': {u'port': 7054}, u'type': u'ca', u'name': u'ca', u'subject': u'/C=GB/ST=London/L=London/O=Carrier/CN=ca.carrier-net'}, u'peers': [{u'cli': u'disabled', u'peerAddress': u'peer0.carrier-net:7051', u'grpc': {u'port': 7051}, u'restserver': {u'targetPort': 20001, u'port': 20001}, u'couchdb': {u'port': 5984}, u'gossippeeraddress': u'peer0.carrier-net:7051', u'chaincode': {u'version': u'1', u'name': u'supplychain', u'repository': {u'username': u'ayhamkassab', u'url': u'github.com/ayhamkassab/blockchain-automation-framework.git', u'password': u'**Ak47**', u'branch': u'develop', u'path': u'examples/supplychain-app/fabric/chaincode_rest_server/chaincode/'}, u'endorsements': u'', u'maindirectory': u'cmd', u'arguments': u'\\"init\\",\\"\\"'}, u'peer': None, u'type': u'anchor', u'events': {u'port': 7053}, u'expressapi': {u'targetPort': 3000, u'port': 3000}, u'name': u'peer0'}]}, u'k8s': {u'region': u'cluster_region', u'config_file': u'~/.kube/config', u'context': u'local'}, u'name': u'carrier', u'gitops': {u'username': u'ayhamkassab', u'private_key': u'/home/blockchain-automation-framework/build/gitops', u'git_ssh': u'ssh://git@github.com/ayhamkassab/blockchain-automation-framework.git', u'release_dir': u'platforms/hyperledger-fabric/releases/dev', u'branch': u'master', u'chart_source': u'platforms/hyperledger-fabric/charts', u'password': u'**Ak47**', u'email': u'github_email', u'git_repo': u'github.com/ayhamkassab/blockchain-automation-framework.git'}, u'cloud_provider': u'minikube', u'cli': u'enabled', u'country': u'GB', u'state': u'London', u'location': u'London', u'organization': None, u'subject': u'O=Carrier,OU=Carrier,L=51.50/-0.13/London,C=GB', u'type': u'peer'}) 
+
+PLAY [ansible_provisioners] *********************************************************************************************************************
+
+TASK [Remove build directory] *******************************************************************************************************************
+changed: [localhost]
+
+TASK [Create namespace and Vault auth for each organization] ************************************************************************************
+
+TASK [Checking if the namespace supplychain-net already exists] *********************************************************************************
+
+TASK [/root/hyperledger-labs/myFork/blockchain-automation-framework/platforms/hyperledger-fabric/configuration/../../shared/configuration/roles/check/k8_component : Check Namespace supplychain-net is created] ***
+ok: [localhost]
+
+TASK [/root/hyperledger-labs/myFork/blockchain-automation-framework/platforms/hyperledger-fabric/configuration/../../shared/configuration/roles/check/k8_component : Wait for Namespace supplychain-net] ***
+skipping: [localhost]
+
+TASK [/root/hyperledger-labs/myFork/blockchain-automation-framework/platforms/hyperledger-fabric/configuration/../../shared/configuration/roles/check/k8_component : Wait for Namespace supplychain-net] ***
+skipping: [localhost]
+
+TASK [/root/hyperledger-labs/myFork/blockchain-automation-framework/platforms/hyperledger-fabric/configuration/../../shared/configuration/roles/check/k8_component : Wait for Namespace supplychain-net] ***
+skipping: [localhost]
+
+TASK [create/namespace_vaultauth : Set Variable] ************************************************************************************************
+ok: [localhost]
+
+TASK [Create namespaces] ************************************************************************************************************************
+skipping: [localhost]
+
+TASK [Create vault reviewer service account for Organizations] **********************************************************************************
+skipping: [localhost]
+
+TASK [Create vault auth service account for Organizations] **************************************************************************************
+skipping: [localhost]
+
+TASK [Create clusterrolebinding for Ordrers] ****************************************************************************************************
+skipping: [localhost]
+
+TASK [Git Push] *********************************************************************************************************************************
+
+TASK [/root/hyperledger-labs/myFork/blockchain-automation-framework/platforms/hyperledger-fabric/configuration/../../shared/configuration/roles/git_push : Check if directory: /root/hyperledger-labs/myFork/blockchain-automation-framework/platforms/hyperledger-fabric/configuration/../../../ exists] ***
+ok: [localhost]
+
+TASK [/root/hyperledger-labs/myFork/blockchain-automation-framework/platforms/hyperledger-fabric/configuration/../../shared/configuration/roles/git_push : Execute git push via shell task] ***
