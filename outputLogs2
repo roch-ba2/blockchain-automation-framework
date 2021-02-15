@@ -541,3 +541,116 @@ TASK [/root/hyperledger-labs/myFork/blockchain-automation-framework/platforms/hy
 ok: [localhost]
 
 TASK [/root/hyperledger-labs/myFork/blockchain-automation-framework/platforms/hyperledger-fabric/configuration/../../shared/configuration/roles/git_push : Execute git push via shell task] ***
+changed: [localhost]
+
+TASK [/root/hyperledger-labs/myFork/blockchain-automation-framework/platforms/hyperledger-fabric/configuration/../../shared/configuration/roles/git_push : Output for gitpush] ***
+ok: [localhost] => {
+    "msg": [
+        "---------------SHOW CONTENT OF DIR---------------", 
+        ".", 
+        "..", 
+        ".circleci", 
+        ".git", 
+        ".github", 
+        ".gitignore", 
+        "CODEOWNERS", 
+        "CODE_OF_CONDUCT.md", 
+        "CONTRIBUTING.md", 
+        "Dockerfile", 
+        "LICENSE", 
+        "MAINTAINERS.md", 
+        "README.md", 
+        "_travis.yml", 
+        "automation", 
+        "docs", 
+        "examples", 
+        "inventory.ini", 
+        "outputLogs1", 
+        "outputLogs2", 
+        "platforms", 
+        "release-notes.md", 
+        "reset.sh", 
+        "run.sh", 
+        "---------------GIT PUSH---------------", 
+        "Unstaged changes after reset:", 
+        "M\tplatforms/hyperledger-fabric/configuration/samples/network-minikube.yaml", 
+        "[master 6f2d1bd2] [ci skip] Pushing deployment files for namespace, service accounts and clusterrolebinding", 
+        " 2 files changed, 690 insertions(+)", 
+        " create mode 100644 outputLogs2"
+    ]
+}
+
+TASK [/root/hyperledger-labs/myFork/blockchain-automation-framework/platforms/hyperledger-fabric/configuration/../../shared/configuration/roles/git_push : Error for git_push] ***
+ok: [localhost] => {
+    "msg": [
+        "To https://github.com/ayhamkassab/blockchain-automation-framework.git", 
+        "   cdc7b316..6f2d1bd2  HEAD -> master"
+    ]
+}
+
+TASK [Checking for the supplychain-net-role-tokenreview-binding] ********************************************************************************
+skipping: [localhost]
+
+TASK [Including the check for ServiceAccount vault-reviewer in supplychain-net] *****************************************************************
+
+TASK [/root/hyperledger-labs/myFork/blockchain-automation-framework/platforms/hyperledger-fabric/configuration/../../shared/configuration/roles/check/k8_component : Check ServiceAccount vault-reviewer is created] ***
+skipping: [localhost]
+
+TASK [/root/hyperledger-labs/myFork/blockchain-automation-framework/platforms/hyperledger-fabric/configuration/../../shared/configuration/roles/check/k8_component : Wait for ServiceAccount vault-reviewer] ***
+skipping: [localhost]
+
+TASK [/root/hyperledger-labs/myFork/blockchain-automation-framework/platforms/hyperledger-fabric/configuration/../../shared/configuration/roles/check/k8_component : Wait for ServiceAccount vault-reviewer] ***
+skipping: [localhost]
+
+TASK [/root/hyperledger-labs/myFork/blockchain-automation-framework/platforms/hyperledger-fabric/configuration/../../shared/configuration/roles/check/k8_component : Wait for ServiceAccount vault-reviewer] ***
+ok: [localhost]
+
+TASK [Including the check for ServiceAccount vault-auth in supplychain-net] *********************************************************************
+
+TASK [/root/hyperledger-labs/myFork/blockchain-automation-framework/platforms/hyperledger-fabric/configuration/../../shared/configuration/roles/check/k8_component : Check ServiceAccount vault-auth is created] ***
+skipping: [localhost]
+
+TASK [/root/hyperledger-labs/myFork/blockchain-automation-framework/platforms/hyperledger-fabric/configuration/../../shared/configuration/roles/check/k8_component : Wait for ServiceAccount vault-auth] ***
+skipping: [localhost]
+
+TASK [/root/hyperledger-labs/myFork/blockchain-automation-framework/platforms/hyperledger-fabric/configuration/../../shared/configuration/roles/check/k8_component : Wait for ServiceAccount vault-auth] ***
+skipping: [localhost]
+
+TASK [/root/hyperledger-labs/myFork/blockchain-automation-framework/platforms/hyperledger-fabric/configuration/../../shared/configuration/roles/check/k8_component : Wait for ServiceAccount vault-auth] ***
+ok: [localhost]
+
+TASK [Checking if the namespace manufacturer-net already exists] ********************************************************************************
+
+TASK [/root/hyperledger-labs/myFork/blockchain-automation-framework/platforms/hyperledger-fabric/configuration/../../shared/configuration/roles/check/k8_component : Check Namespace manufacturer-net is created] ***
+ok: [localhost]
+
+TASK [/root/hyperledger-labs/myFork/blockchain-automation-framework/platforms/hyperledger-fabric/configuration/../../shared/configuration/roles/check/k8_component : Wait for Namespace manufacturer-net] ***
+skipping: [localhost]
+
+TASK [/root/hyperledger-labs/myFork/blockchain-automation-framework/platforms/hyperledger-fabric/configuration/../../shared/configuration/roles/check/k8_component : Wait for Namespace manufacturer-net] ***
+skipping: [localhost]
+
+TASK [/root/hyperledger-labs/myFork/blockchain-automation-framework/platforms/hyperledger-fabric/configuration/../../shared/configuration/roles/check/k8_component : Wait for Namespace manufacturer-net] ***
+skipping: [localhost]
+
+TASK [create/namespace_vaultauth : Set Variable] ************************************************************************************************
+ok: [localhost]
+
+TASK [Create namespaces] ************************************************************************************************************************
+skipping: [localhost]
+
+TASK [Create vault reviewer service account for Organizations] **********************************************************************************
+skipping: [localhost]
+
+TASK [Create vault auth service account for Organizations] **************************************************************************************
+skipping: [localhost]
+
+TASK [Create clusterrolebinding for Ordrers] ****************************************************************************************************
+skipping: [localhost]
+
+TASK [Git Push] *********************************************************************************************************************************
+
+TASK [/root/hyperledger-labs/myFork/blockchain-automation-framework/platforms/hyperledger-fabric/configuration/../../shared/configuration/roles/git_push : Check if directory: /root/hyperledger-labs/myFork/blockchain-automation-framework/platforms/hyperledger-fabric/configuration/../../../ exists] ***
+ok: [localhost]
+
+TASK [/root/hyperledger-labs/myFork/blockchain-automation-framework/platforms/hyperledger-fabric/configuration/../../shared/configuration/roles/git_push : Execute git push via shell task] ***
