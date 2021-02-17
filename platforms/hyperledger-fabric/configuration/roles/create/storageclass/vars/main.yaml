@@ -3,8 +3,8 @@ sc_templates:
   aws-peer: awspeer_sc.tpl
   azure-orderer: azureorderer_sc.tpl
   azure-peer: azurepeer_sc.tpl
-  minikube-orderer: mini_sc.tpl
-  minikube-peer: mini_sc.tpl
+  minikube-orderer: localpath_sc.tpl
+  minikube-peer: localpath_sc.tpl
   digitalocean-orderer: digitalocean_sc.tpl
   digitalocean-peer: digitalocean_sc.tpl
 
