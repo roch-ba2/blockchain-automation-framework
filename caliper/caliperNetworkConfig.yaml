@@ -1,0 +1,76 @@
+name: Fabric
+    version: "2.0.0"
+
+    caliper:
+      blockchain: fabric
+      sutOptions:
+        mutualTls: true
+      fabric:
+        gateway:
+          usegateway: true
+          discovery: true
+
+    info:
+      Orderer: Kafka
+      Version: 2.2.0
+      Distribution: Single Host
+      StateDB: CouchDB
+      Size: 3 Orgs
+
+    channels:
+      - channelName: mychannel
+        create:
+          buildTransaction:
+            capabilities: []
+            consortium: 'SampleConsortium'
+            msps: ['carrierMSP', 'manufacturerMSP']
+            version: 0
+        contracts:
+        - id: simpleauction
+          contractID: myMarbles
+          install:
+            language: golang
+            version: "1"
+            path: simpleauction/
+          instantiate:
+            initFunction: init
+          initArguments: []
+          created: true
+
+    organizations:
+      - mspid: Org1MSP
+        identities:
+          certificates:
+          - name: 'admin.carrier-net.svc.cluster.local'
+            admin: true
+            clientPrivateKey:
+              pem: |-
+                -----BEGIN PRIVATE KEY-----
+                MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgJS0mbcPoxC+HWsD5nkuXXQ8ts+mQFXcuJYKPM9xE7MChRANCAAQ7+fOASXnoSNnl5ZTqiSdOf2yW79/Juds6D9sdPjbz2X0DOQt/4WDTHyY0b7SLZrEpO1RGko4mftKlWaWiSRU9
+                -----END PRIVATE KEY-----
+            clientSignedCert:
+              pem: |-
+                -----BEGIN CERTIFICATE-----
+                MIIC8DCCApagAwIBAgIUO5NTKo0WpQMWqOxuY1p9lzs0PowwCgYIKoZIzj0EAwIwWjELMAkGA1UEBhMCR0IxDzANBgNVBAgMBkxvbmRvbjEPMA0GA1UEBwwGTG9uZG9uMRAwDgYDVQQKDAdDYXJyaWVyMRcwFQYDVQQDDA5jYS5jYXJyaWVyLW5ldDAeFw0yMTAyMjIxNTUxMDBaFw0yMjAyMjIxNTU2MDBaMHkxCzAJBgNVBAYTAkdCMRswGQYDVQQHExI1MS41MC8tMC4xMy9Mb25kb24xEDAOBgNVBAoTB0NhcnJpZXIxHzANBgNVBAsTBmNsaWVudDAOBgNVBAsTB0NhcnJpZXIxGjAYBgNVBAMMEUFkbWluQGNhcnJpZXItbmV0MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEO/nzgEl56EjZ5eWU6oknTn9slu/fybnbOg/bHT4289l9AzkLf+Fg0x8mNG+0i2axKTtURpKOJn7SpVmlokkVPaOCARkwggEVMA4GA1UdDwEB/wQEAwIHgDAMBgNVHRMBAf8EAjAAMB0GA1UdDgQWBBRvJj3XMWn1LafvgQN9h1KVbkyvjzAfBgNVHSMEGDAWgBROoxt8lskVH3s19384ovEmtUwUqTAkBgNVHREEHTAbghljYS10b29scy02Yzk5NmY1NTQ4LWxiOW54MIGOBggqAwQFBgcIAQSBgXsiYXR0cnMiOnsiYWJhYy5pbml0IjoidHJ1ZSIsImFkbWluIjoidHJ1ZSIsImhmLkFmZmlsaWF0aW9uIjoiQ2FycmllciIsImhmLkVucm9sbG1lbnRJRCI6IkFkbWluQGNhcnJpZXItbmV0IiwiaGYuVHlwZSI6ImNsaWVudCJ9fTAKBggqhkjOPQQDAgNIADBFAiEArVnQttDWfDOtU3pd5+8lTjwWnoM1/aPNK9PTBOtW6vUCIErN0uKTCTDX8jicY5SpiwsgadNrnl+hcZMC3YJaR/11
+                -----END CERTIFICATE-----
+        connectionProfile:
+          path: './Org1ConnectionProfile.json'
+          discover: true
+      - mspid: Org2MSP
+        identities:
+          certificates:
+          - name: 'admin.manufacturer-net.svc.cluster.local'
+            admin: true
+            clientPrivateKey:
+              pem: |-
+                -----BEGIN PRIVATE KEY-----
+                MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQg7Z7Y8zFsHTcqXi2hPorfJLFmjpIPZoXsZQXKh6GFvtKhRANCAAR0xSAQhoe2r8kcwtKySWdaTn3mJdDzf6oopm1qmadXn6xkf2Me+GTRskc4WbnNYd0d1m+R5ZKPa9M1KZ93W7rc
+                -----END PRIVATE KEY-----
+            clientSignedCert:
+              pem: |-
+                -----BEGIN CERTIFICATE-----
+                MIIDEjCCArmgAwIBAgIUcQZuBHqlsHdPq66o6CnDRvXelOwwCgYIKoZIzj0EAwIw> ZDELMAkGA1UEBhMCQ0gxDzANBgNVBAgMBlp1cmljaDEPMA0GA1UEBwwGWnVyaWNo> MRUwEwYDVQQKDAxNYW51ZmFjdHVyZXIxHDAaBgNVBAMME2NhLm1hbnVmYWN0dXJl> ci1uZXQwHhcNMjEwMjIyMTU1MDAwWhcNMjIwMjIyMTU1NTAwWjCBhzELMAkGA1UE> BhMCQ0gxGjAYBgNVBAcTETQ3LjM4LzguNTQvWnVyaWNoMRUwEwYDVQQKEwxNYW51> ZmFjdHVyZXIxJDANBgNVBAsTBmNsaWVudDATBgNVBAsTDE1hbnVmYWN0dXJlcjEf> MB0GA1UEAwwWQWRtaW5AbWFudWZhY3R1cmVyLW5ldDBZMBMGByqGSM49AgEGCCqG> SM49AwEHA0IABHTFIBCGh7avyRzC0rJJZ1pOfeYl0PN/qiimbWqZp1efrGR/Yx74> ZNGyRzhZuc1h3R3Wb5Hlko9r0zUpn3dbutyjggEjMIIBHzAOBgNVHQ8BAf8EBAMC> B4AwDAYDVR0TAQH/BAIwADAdBgNVHQ4EFgQUgYHDJNYZ5NC3uzSL4HavdiCHZNow> HwYDVR0jBBgwFoAUSNxZf+/FVB763Twc7XdmxZdxdN0wJAYDVR0RBB0wG4IZY2Et> dG9vbHMtNmM5OTZmNTU0OC10eHg3ZzCBmAYIKgMEBQYHCAEEgYt7ImF0dHJzIjp7> ImFiYWMuaW5pdCI6InRydWUiLCJhZG1pbiI6InRydWUiLCJoZi5BZmZpbGlhdGlv> biI6Ik1hbnVmYWN0dXJlciIsImhmLkVucm9sbG1lbnRJRCI6IkFkbWluQG1hbnVm> YWN0dXJlci1uZXQiLCJoZi5UeXBlIjoiY2xpZW50In19MAoGCCqGSM49BAMCA0cA> MEQCIG1DwrRBrcBcOpOMG5+xVUfTF10DlVPW1mbN6QDsLMbKAiB6HtvK53LlOxAL> kDBBw9jHwaWZtp67lcWVJQdxVYOhHQ==
+                -----END CERTIFICATE-----
+        connectionProfile:
+          path: './Org2ConnectionProfile.json'
+          discover: true

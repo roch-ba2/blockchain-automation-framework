@@ -1,0 +1,216 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ include "caliper.fullname" . }}-master"
+  labels:
+{{ include "caliper.labels" . | indent 4 }}
+spec:
+  parallelism: {{ .Values.replicaMasterCount }}
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 30
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: "{{ include "caliper.name" . }}-master"
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      restartPolicy: "Never"
+        {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ template "caliper.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+      - name: certificates-init
+        image: index.docker.io/hyperledgerlabs/alpine-utils:1.0
+        imagePullPolicy: Always
+        env:
+        - name: VAULT_ADDR
+          value: http://130.104.229.21:30000
+        - name: KUBERNETES_AUTH_PATH
+          value: supplychain-net-auth
+        - name: VAULT_APP_ROLE
+          value: vault-role
+        - name: VAULT_PEER_SECRET_PREFIX
+          value: "secret/crypto/peerOrganizations/carrier-net/peers/peer0.carrier-net"
+        - name: ENDORSING_ORG_NAMES
+          value: "carrier manufacturer"
+        - name: CREATOR_NS
+          value: "carrier-net"
+        - name: VAULT_ORDERER_SECRET_PREFIX
+          value: "secret/crypto/ordererOrganizations/supplychain-net/orderers/orderer1.supplychain-net"
+        - name: MOUNT_PATH
+          value: /secret
+        - name: NETWORK_VERSION
+          value: "2.2.0"
+        command: ["sh", "-c"]
+        args:
+        - |-
+          #!/usr/bin/env sh
+          validateVaultResponse () {
+          if echo ${2} | grep "errors"; then
+           echo "ERROR: unable to retrieve ${1}: ${2}"
+           exit 1
+           fi
+          }
+          KUBE_SA_TOKEN="eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJkZWZhdWx0LXRva2VuLWg0Nm5jIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImRlZmF1bHQiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiJjYmZmNjJkZS1lZTE3LTRlOGQtYTBkNy1lNzgwNGIwZGE3YzUiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZS1zeXN0ZW06ZGVmYXVsdCJ9.L8WKDs3yV8ioFV5eRGTc-8SK-G3fB-PD_LBjfQZm4UaNTKTrox0ibT-oLQr0W2pY5p0l5yZJxuNg9su5-PtYWExcy68kHsh1ypfBNVyqa8cYWStVnP7_4jos0QMFucrhaUdoORDN8V5-euK5mBf7vlVs1071yy37ua8UVajYdmoktTZPEBftzFR18hLv9HkIH_sfpZth-g0mxut-y6IylyUd4uYa_MdEJgh1KDjrWNkzkTqWixhFjC4NuTvd3KS7tTIArBKZWAzd0-UGz-eehZ0NLbFbY2lz-Ik-L_xqYpgvtEd9I2MgB20njJyjo4h5oc5xISc0mUJXwPB1AE6QSg"
+          echo "Getting secrets from Vault Server: ${VAULT_ADDR}"
+          # Login to Vault and so I can get an approle token
+          VAULT_CLIENT_TOKEN="s.32JqFMwzbrqbeFl8bKI9R2QC"
+          validateVaultResponse 'vault login token' "${VAULT_CLIENT_TOKEN}"
+
+          vault_secret_key="secret/crypto/ordererOrganizations/supplychain-net/orderers/orderer1.supplychain-net/tls"
+          echo "Getting Orderer TLS certificates from Vault using key $vault_secret_key"
+
+          OUTPUT_PATH="/secret/orderer/tls"
+          LOOKUP_SECRET_RESPONSE=$(curl -sS  \
+            --header "X-Vault-Token: ${VAULT_CLIENT_TOKEN}" \
+            ${VAULT_ADDR}/v1/${vault_secret_key} | jq -r 'if .errors then . else . end')
+
+          validateVaultResponse "secret (${vault_secret_key})" "${LOOKUP_SECRET_RESPONSE}"
+
+          TLS_CA_CERT=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["ca.crt"]')
+
+          mkdir -p ${OUTPUT_PATH}
+          echo "${TLS_CA_CERT}" >> ${OUTPUT_PATH}/ca.crt
+
+          vault_secret_key="secret/crypto/peerOrganizations/carrier-net/peers/peer0.carrier-net/msp"
+          echo "Getting MSP certificates from Vault using key $vault_secret_key"
+
+          OUTPUT_PATH="${MOUNT_PATH}/admin/msp"
+          LOOKUP_SECRET_RESPONSE=$(curl -sS  \
+            --header "X-Vault-Token: ${VAULT_CLIENT_TOKEN}" \
+            ${VAULT_ADDR}/v1/${vault_secret_key} | jq -r 'if .errors then . else . end')
+          validateVaultResponse "secret (${vault_secret_key})" "${LOOKUP_SECRET_RESPONSE}"
+
+          ADMINCERT=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["admincerts"]')
+          CACERTS=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["cacerts"]')
+          KEYSTORE=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["keystore"]')
+          SIGNCERTS=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["signcerts"]')
+          TLSCACERTS=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["tlscacerts"]')
+
+          mkdir -p ${OUTPUT_PATH}/admincerts
+          mkdir -p ${OUTPUT_PATH}/cacerts
+          mkdir -p ${OUTPUT_PATH}/keystore
+          mkdir -p ${OUTPUT_PATH}/signcerts
+          mkdir -p ${OUTPUT_PATH}/tlscacerts
+
+
+          echo "${ADMINCERT}" >> ${OUTPUT_PATH}/admincerts/admin.crt
+          echo "${CACERTS}" >> ${OUTPUT_PATH}/cacerts/ca.crt
+          echo "${KEYSTORE}" >> ${OUTPUT_PATH}/keystore/server.key
+          echo "${SIGNCERTS}" >> ${OUTPUT_PATH}/signcerts/server.crt
+          echo "${TLSCACERTS}" >> ${OUTPUT_PATH}/tlscacerts/tlsca.crt
+          
+          ######################################################################
+
+          version2=`echo $NETWORK_VERSION | grep -c 2.`
+          if [ $version2 = 1 ];then
+            #Downloading Certificates for all admin users
+            echo $ENDORSING_ORG_NAMES
+            for ns in $ENDORSING_ORG_NAMES
+            do
+              SECRETPREFIX=secret/crypto/peerOrganizations/${CREATOR_NS}/endorsers/${ns}/users/admin
+              echo "Fetching certificates for org: $ns"
+              echo "Secret prefix for org: $SECRETPREFIX"
+
+              vault_secret_key="$SECRETPREFIX/msp"
+              echo "Getting MSP certificates from Vault using key $vault_secret_key"
+
+              OUTPUT_PATH="${MOUNT_PATH}/endorsers/$ns/msp"
+              echo "Certificate output path: $OUTPUT_PATH"
+
+              LOOKUP_SECRET_RESPONSE=$(curl -sS  \
+                --header "X-Vault-Token: ${VAULT_CLIENT_TOKEN}" \
+                ${VAULT_ADDR}/v1/${vault_secret_key} | jq -r 'if .errors then . else . end')
+              validateVaultResponse "secret (${vault_secret_key})" "${LOOKUP_SECRET_RESPONSE}"
+
+              CACERTS=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["cacerts"]')
+
+              mkdir -p ${OUTPUT_PATH}/cacerts
+              echo "${CACERTS}" >> ${OUTPUT_PATH}/cacerts/ca.crt
+              cat ${OUTPUT_PATH}/cacerts/ca.crt
+            done
+          fi
+          sleep 1000
+        volumeMounts:
+        - name: certificates
+          mountPath: /secret
+      containers:
+        - name: {{ .Chart.Name }}-master
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          args: ["{{ .Values.args.first }}", "{{ .Values.args.second}}","--caliper-fabric-gateway-enabled"]
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          volumeMounts:
+          #- name: {{ include "caliper.fullname" . }}--shared-pvc
+          #  mountPath: /hyperledger/caliper/workspace/
+          - name: {{ include "caliper.fullname" . }}--yaml-config
+            mountPath: /hyperledger/caliper/workspace/microBenchMarkconfig.yaml
+            subPath: microBenchMarkconfig.yaml   
+          - name: {{ include "caliper.fullname" . }}--yaml-config
+            mountPath: /hyperledger/caliper/workspace/caliperNetworkConfig.yaml
+            subPath: caliperNetworkConfig.yaml
+          - name: {{ include "caliper.fullname" . }}--yaml-config
+            mountPath: /hyperledger/caliper/workspace/createBid.js
+            subPath: createBid.js
+          - name: {{ include "caliper.fullname" . }}--yaml-config
+            mountPath: /hyperledger/caliper/workspace/createOffer.js
+            subPath: createOffer.js
+          - name: {{ include "caliper.fullname" . }}--yaml-config
+            mountPath: /hyperledger/caliper/workspace/Org1ConnectionProfile.json
+            subPath: Org1ConnectionProfile.json
+          - name: {{ include "caliper.fullname" . }}--yaml-config
+            mountPath: /hyperledger/caliper/workspace/Org2ConnectionProfile.json
+            subPath: Org2ConnectionProfile.json
+          - name: {{ include "caliper.fullname" . }}--yaml-config
+            mountPath: /hyperledger/caliper/workspace/caliper.yaml
+            subPath: caliper.yaml
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            initialDelaySeconds: 9999
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            initialDelaySeconds: 9999
+            httpGet:
+              path: /
+              port: http
+          env:
+          - name: CALIPER_BIND_SUT
+            value: fabric:2.1.0
+          - name: CALIPER_BIND_SDK
+            value: 2.1.0
+          - name: CALIPER_BENCHCONFIG
+            value: microBenchMarkconfig.yaml
+          - name: CALIPER_NETWORKCONFIG
+            value: caliperNetworkConfig.yaml
+          - name: CALIPER_REPORT_PATH
+            value: report_change_Name_InConfigMap.html
+          - name: CALIPER_LOGGING-FORMATS-JSON
+            value: "{space:0}"
+          - name: CALIPER_WORKER_REMOTE
+            value: "true"
+          - name: CALIPER_WORKER_COMMUNICATION_METHOD
+            value: "mqtt"
+          - name: CALIPER_WORKER_COMMUNICATION_ADDRESS
+            value: "mqtt://caliper-mosquitto:1883"
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+      #- name: {{ include "caliper.fullname" . }}--shared-pvc
+      #  persistentVolumeClaim:
+      #    claimName: sharedclaim
+      - name: {{ include "caliper.fullname" . }}--yaml-config
+        configMap:
+          name: {{ include "caliper.fullname" . }}--yaml-config
+          defaultMode: 0744     
+      - name: certificates
+        emptyDir: {}

@@ -1,0 +1,11 @@
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ include "caliper.fullname" . }}--yaml-config
+data:
+  {{- $files := .Files }}
+  {{- range tuple "microBenchMarkconfig.yaml" "caliperNetworkConfig.yaml" "Org1ConnectionProfile.json" "Org2ConnectionProfile.json" "createBid.js" "createOffer.js" "caliper.yaml"}}
+  {{ . }}: |-
+    {{ $files.Get . }}
+  {{- end }}

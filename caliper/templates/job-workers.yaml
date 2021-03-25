@@ -1,0 +1,65 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ include "caliper.fullname" . }}-workers"
+  labels:
+{{ include "caliper.labels" . | indent 4 }}
+spec:
+  parallelism: {{ .Values.replicaWorkersCount }}
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 30
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: "{{ include "caliper.name" . }}-workers"
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      restartPolicy: "Never"
+      containers:
+      - name: {{ .Chart.Name }}-worker
+        image: hyperledger/caliper:0.4.2
+        args: [launch,worker]
+        volumeMounts:
+          - name: caliper--yaml-config
+            mountPath: /hyperledger/caliper/workspace/microBenchMarkconfig.yaml
+            subPath: microBenchMarkconfig.yaml   
+          - name: caliper--yaml-config
+            mountPath: /hyperledger/caliper/workspace/caliperNetworkConfig.yaml
+            subPath: caliperNetworkConfig.yaml
+          - name: {{ include "caliper.fullname" . }}--yaml-config
+            mountPath: /hyperledger/caliper/workspace/createBid.js
+            subPath: createBid.js
+          - name: {{ include "caliper.fullname" . }}--yaml-config
+            mountPath: /hyperledger/caliper/workspace/createOffer.js
+            subPath: createOffer.js
+          - name: {{ include "caliper.fullname" . }}--yaml-config
+            mountPath: /hyperledger/caliper/workspace/Org1ConnectionProfile.json
+            subPath: Org1ConnectionProfile.json
+          - name: {{ include "caliper.fullname" . }}--yaml-config
+            mountPath: /hyperledger/caliper/workspace/Org2ConnectionProfile.json
+            subPath: Org2ConnectionProfile.json
+          - name: {{ include "caliper.fullname" . }}--yaml-config
+            mountPath: /hyperledger/caliper/workspace/caliper.yaml
+            subPath: caliper.yaml
+        env:
+        - name: CALIPER_BIND_SUT
+          value: fabric:2.1.0
+        - name: CALIPER_BIND_SDK
+          value: 2.1.0
+        - name: CALIPER_BENCHCONFIG
+          value: microBenchMarkconfig.yaml
+        - name: CALIPER_NETWORKCONFIG
+          value: caliperNetworkConfig.yaml
+        - name: CALIPER_WORKER_REMOTE
+          value: "true"
+        - name: CALIPER_WORKER_COMMUNICATION_METHOD
+          value: "mqtt"
+        - name: CALIPER_WORKER_COMMUNICATION_ADDRESS
+          value: "mqtt://caliper-mosquitto:1883"
+        ports:
+        - containerPort: 1883
+      volumes:
+      - name: caliper--yaml-config
+        configMap:
+          name: caliper--yaml-config
+          defaultMode: 0744 

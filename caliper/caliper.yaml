@@ -1,0 +1,7 @@
+caliper:
+      fabric:
+        gateway:
+          discovery: true
+          enabled: true
+        skipcreatechannel:
+          mychannel: true

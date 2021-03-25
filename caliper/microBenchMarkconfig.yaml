@@ -1,0 +1,23 @@
+---
+    test:
+      workers:
+        type: local
+        number: 4
+      rounds:
+      - label: offers
+        txNumber: 500
+        rateControl: { type: 'fixed-feedback-rate', opts: { tps: 100, "unfinished_per_client": 100 } }
+        workload:
+          module: createOffer.js
+      - label: bids
+        txNumber: 500
+        rateControl: { type: 'fixed-feedback-rate', opts: { tps: 100, "unfinished_per_client": 100 } }
+        workload:
+          module: createBid.js
+
+    monitors:
+        resource:
+        - module: docker
+          options:
+            interval: 1
+            containers: ['all']
