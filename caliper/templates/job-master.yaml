@@ -71,15 +71,15 @@ spec:
 
           validateVaultResponse "secret (${vault_secret_key})" "${LOOKUP_SECRET_RESPONSE}"
 
-          TLS_CA_CERT=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["ca.crt"]')
+          TLS_CA_CERT=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["ca.pem"]')
 
           mkdir -p ${OUTPUT_PATH}
-          echo "${TLS_CA_CERT}" >> ${OUTPUT_PATH}/ca.crt
+          echo "${TLS_CA_CERT}" >> ${OUTPUT_PATH}/ca.pem
 
           vault_secret_key="secret/crypto/peerOrganizations/carrier-net/peers/peer0.carrier-net/msp"
           echo "Getting MSP certificates from Vault using key $vault_secret_key"
 
-          OUTPUT_PATH="${MOUNT_PATH}/admin/msp"
+          OUTPUT_PATH="${MOUNT_PATH}/carrier/peer/msp"
           LOOKUP_SECRET_RESPONSE=$(curl -sS  \
             --header "X-Vault-Token: ${VAULT_CLIENT_TOKEN}" \
             ${VAULT_ADDR}/v1/${vault_secret_key} | jq -r 'if .errors then . else . end')
@@ -98,11 +98,163 @@ spec:
           mkdir -p ${OUTPUT_PATH}/tlscacerts
 
 
-          echo "${ADMINCERT}" >> ${OUTPUT_PATH}/admincerts/admin.crt
-          echo "${CACERTS}" >> ${OUTPUT_PATH}/cacerts/ca.crt
-          echo "${KEYSTORE}" >> ${OUTPUT_PATH}/keystore/server.key
-          echo "${SIGNCERTS}" >> ${OUTPUT_PATH}/signcerts/server.crt
-          echo "${TLSCACERTS}" >> ${OUTPUT_PATH}/tlscacerts/tlsca.crt
+          echo "${ADMINCERT}" >> ${OUTPUT_PATH}/admincerts/admin.pem
+          echo "${CACERTS}" >> ${OUTPUT_PATH}/cacerts/ca.pem
+          echo "${KEYSTORE}" >> ${OUTPUT_PATH}/keystore/server.pem
+          echo "${SIGNCERTS}" >> ${OUTPUT_PATH}/signcerts/server.pem
+          echo "${TLSCACERTS}" >> ${OUTPUT_PATH}/tlscacerts/tlsca.pem
+
+          ######################################################################
+
+          vault_secret_key="secret/crypto/peerOrganizations/manufacturer-net/peers/peer0.manufacturer-net/msp"
+          echo "Getting MSP certificates from Vault using key $vault_secret_key"
+
+          OUTPUT_PATH="${MOUNT_PATH}/manufacturer/peer/msp"
+          LOOKUP_SECRET_RESPONSE=$(curl -sS  \
+            --header "X-Vault-Token: ${VAULT_CLIENT_TOKEN}" \
+            ${VAULT_ADDR}/v1/${vault_secret_key} | jq -r 'if .errors then . else . end')
+          validateVaultResponse "secret (${vault_secret_key})" "${LOOKUP_SECRET_RESPONSE}"
+
+          ADMINCERT=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["admincerts"]')
+          CACERTS=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["cacerts"]')
+          KEYSTORE=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["keystore"]')
+          SIGNCERTS=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["signcerts"]')
+          TLSCACERTS=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["tlscacerts"]')
+
+          mkdir -p ${OUTPUT_PATH}/admincerts
+          mkdir -p ${OUTPUT_PATH}/cacerts
+          mkdir -p ${OUTPUT_PATH}/keystore
+          mkdir -p ${OUTPUT_PATH}/signcerts
+          mkdir -p ${OUTPUT_PATH}/tlscacerts
+
+
+          echo "${ADMINCERT}" >> ${OUTPUT_PATH}/admincerts/admin.pem
+          echo "${CACERTS}" >> ${OUTPUT_PATH}/cacerts/ca.pem
+          echo "${KEYSTORE}" >> ${OUTPUT_PATH}/keystore/server.pem
+          echo "${SIGNCERTS}" >> ${OUTPUT_PATH}/signcerts/server.pem
+          echo "${TLSCACERTS}" >> ${OUTPUT_PATH}/tlscacerts/tlsca.pem
+
+          ######################################################################
+
+          vault_secret_key="secret/crypto/peerOrganizations/carrier-net/users/user1/msp"
+          echo "Getting MSP certificates from Vault using key $vault_secret_key"
+
+          OUTPUT_PATH="${MOUNT_PATH}/carrier/user1/msp"
+          LOOKUP_SECRET_RESPONSE=$(curl -sS  \
+            --header "X-Vault-Token: ${VAULT_CLIENT_TOKEN}" \
+            ${VAULT_ADDR}/v1/${vault_secret_key} | jq -r 'if .errors then . else . end')
+          validateVaultResponse "secret (${vault_secret_key})" "${LOOKUP_SECRET_RESPONSE}"
+
+          ADMINCERT=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["admincerts"]')
+          CACERTS=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["cacerts"]')
+          KEYSTORE=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["keystore"]')
+          SIGNCERTS=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["signcerts"]')
+          TLSCACERTS=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["tlscacerts"]')
+
+          mkdir -p ${OUTPUT_PATH}/admincerts
+          mkdir -p ${OUTPUT_PATH}/cacerts
+          mkdir -p ${OUTPUT_PATH}/keystore
+          mkdir -p ${OUTPUT_PATH}/signcerts
+          mkdir -p ${OUTPUT_PATH}/tlscacerts
+
+
+          echo "${ADMINCERT}" >> ${OUTPUT_PATH}/admincerts/admin.pem
+          echo "${CACERTS}" >> ${OUTPUT_PATH}/cacerts/ca.pem
+          echo "${KEYSTORE}" >> ${OUTPUT_PATH}/keystore/server.pem
+          echo "${SIGNCERTS}" >> ${OUTPUT_PATH}/signcerts/server.pem
+          echo "${TLSCACERTS}" >> ${OUTPUT_PATH}/tlscacerts/tlsca.pem
+
+ 
+          ######################################################################
+
+          vault_secret_key="secret/crypto/peerOrganizations/manufacturer-net/users/user1/msp"
+          echo "Getting MSP certificates from Vault using key $vault_secret_key"
+
+          OUTPUT_PATH="${MOUNT_PATH}/manufacturer/user1/msp"
+          LOOKUP_SECRET_RESPONSE=$(curl -sS  \
+            --header "X-Vault-Token: ${VAULT_CLIENT_TOKEN}" \
+            ${VAULT_ADDR}/v1/${vault_secret_key} | jq -r 'if .errors then . else . end')
+          validateVaultResponse "secret (${vault_secret_key})" "${LOOKUP_SECRET_RESPONSE}"
+
+          ADMINCERT=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["admincerts"]')
+          CACERTS=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["cacerts"]')
+          KEYSTORE=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["keystore"]')
+          SIGNCERTS=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["signcerts"]')
+          TLSCACERTS=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["tlscacerts"]')
+
+          mkdir -p ${OUTPUT_PATH}/admincerts
+          mkdir -p ${OUTPUT_PATH}/cacerts
+          mkdir -p ${OUTPUT_PATH}/keystore
+          mkdir -p ${OUTPUT_PATH}/signcerts
+          mkdir -p ${OUTPUT_PATH}/tlscacerts
+
+
+          echo "${ADMINCERT}" >> ${OUTPUT_PATH}/admincerts/admin.pem
+          echo "${CACERTS}" >> ${OUTPUT_PATH}/cacerts/ca.pem
+          echo "${KEYSTORE}" >> ${OUTPUT_PATH}/keystore/server.pem
+          echo "${SIGNCERTS}" >> ${OUTPUT_PATH}/signcerts/server.pem
+          echo "${TLSCACERTS}" >> ${OUTPUT_PATH}/tlscacerts/tlsca.pem
+          
+
+          ######################################################################
+
+          vault_secret_key="secret/crypto/peerOrganizations/carrier-net/users/admin/msp"
+          echo "Getting MSP certificates from Vault using key $vault_secret_key"
+
+          OUTPUT_PATH="${MOUNT_PATH}/carrier/admin/msp"
+          LOOKUP_SECRET_RESPONSE=$(curl -sS  \
+            --header "X-Vault-Token: ${VAULT_CLIENT_TOKEN}" \
+            ${VAULT_ADDR}/v1/${vault_secret_key} | jq -r 'if .errors then . else . end')
+          validateVaultResponse "secret (${vault_secret_key})" "${LOOKUP_SECRET_RESPONSE}"
+
+          ADMINCERT=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["admincerts"]')
+          CACERTS=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["cacerts"]')
+          KEYSTORE=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["keystore"]')
+          SIGNCERTS=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["signcerts"]')
+          TLSCACERTS=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["tlscacerts"]')
+
+          mkdir -p ${OUTPUT_PATH}/admincerts
+          mkdir -p ${OUTPUT_PATH}/cacerts
+          mkdir -p ${OUTPUT_PATH}/keystore
+          mkdir -p ${OUTPUT_PATH}/signcerts
+          mkdir -p ${OUTPUT_PATH}/tlscacerts
+
+
+          echo "${ADMINCERT}" >> ${OUTPUT_PATH}/admincerts/admin.pem
+          echo "${CACERTS}" >> ${OUTPUT_PATH}/cacerts/ca.pem
+          echo "${KEYSTORE}" >> ${OUTPUT_PATH}/keystore/server.pem
+          echo "${SIGNCERTS}" >> ${OUTPUT_PATH}/signcerts/server.pem
+          echo "${TLSCACERTS}" >> ${OUTPUT_PATH}/tlscacerts/tlsca.pem
+
+          ######################################################################
+
+          vault_secret_key="secret/crypto/peerOrganizations/manufacturer-net/users/admin/msp"
+          echo "Getting MSP certificates from Vault using key $vault_secret_key"
+
+          OUTPUT_PATH="${MOUNT_PATH}/manufacturer/admin/msp"
+          LOOKUP_SECRET_RESPONSE=$(curl -sS  \
+            --header "X-Vault-Token: ${VAULT_CLIENT_TOKEN}" \
+            ${VAULT_ADDR}/v1/${vault_secret_key} | jq -r 'if .errors then . else . end')
+          validateVaultResponse "secret (${vault_secret_key})" "${LOOKUP_SECRET_RESPONSE}"
+
+          ADMINCERT=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["admincerts"]')
+          CACERTS=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["cacerts"]')
+          KEYSTORE=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["keystore"]')
+          SIGNCERTS=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["signcerts"]')
+          TLSCACERTS=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["tlscacerts"]')
+
+          mkdir -p ${OUTPUT_PATH}/admincerts
+          mkdir -p ${OUTPUT_PATH}/cacerts
+          mkdir -p ${OUTPUT_PATH}/keystore
+          mkdir -p ${OUTPUT_PATH}/signcerts
+          mkdir -p ${OUTPUT_PATH}/tlscacerts
+
+
+          echo "${ADMINCERT}" >> ${OUTPUT_PATH}/admincerts/admin.pem
+          echo "${CACERTS}" >> ${OUTPUT_PATH}/cacerts/ca.pem
+          echo "${KEYSTORE}" >> ${OUTPUT_PATH}/keystore/server.pem
+          echo "${SIGNCERTS}" >> ${OUTPUT_PATH}/signcerts/server.pem
+          echo "${TLSCACERTS}" >> ${OUTPUT_PATH}/tlscacerts/tlsca.pem
           
           ######################################################################
 
@@ -130,11 +282,10 @@ spec:
               CACERTS=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["cacerts"]')
 
               mkdir -p ${OUTPUT_PATH}/cacerts
-              echo "${CACERTS}" >> ${OUTPUT_PATH}/cacerts/ca.crt
-              cat ${OUTPUT_PATH}/cacerts/ca.crt
+              echo "${CACERTS}" >> ${OUTPUT_PATH}/cacerts/ca.pem
+              cat ${OUTPUT_PATH}/cacerts/ca.pem
             done
           fi
-          sleep 1000
         volumeMounts:
         - name: certificates
           mountPath: /secret
@@ -169,6 +320,8 @@ spec:
           - name: {{ include "caliper.fullname" . }}--yaml-config
             mountPath: /hyperledger/caliper/workspace/caliper.yaml
             subPath: caliper.yaml
+          - name: certificates
+            mountPath: /hyperledger/caliper/workspace/secret
           ports:
             - name: http
               containerPort: 80

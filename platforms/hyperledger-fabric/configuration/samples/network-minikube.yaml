@@ -102,7 +102,7 @@ network:
       # Do not check-in root_token
       vault:
         url: "http://130.104.229.21:30000"
-        root_token: "s.a8GUWx72B5UoxbvFAaYJY0gu"
+        root_token: "s.32JqFMwzbrqbeFl8bKI9R2QC"
         secret_path: "secret"
       # Git Repo details which will be used by GitOps/Flux.
       # Do not check-in git_access_token
@@ -173,7 +173,7 @@ network:
       # Do not check-in root_token
       vault:
         url: "http://130.104.229.21:30000"
-        root_token: "s.a8GUWx72B5UoxbvFAaYJY0gu"
+        root_token: "s.32JqFMwzbrqbeFl8bKI9R2QC"
         secret_path: "secret"
       # Git Repo details which will be used by GitOps/Flux.
       # Do not check-in git_access_token
@@ -219,14 +219,14 @@ network:
             targetPort: 3000
             port: 3000
           chaincode:
-            name: "supplychain"    # This has to be replaced with the name of the chaincode
+            name: "simpleauction"    # This has to be replaced with the name of the chaincode
             version: "1"           # This has to be replaced with the version of the chaincode (do NOT use .)
-            maindirectory: "cmd"   # The main directory where chaincode is needed to be placed
+            maindirectory: "."   # The main directory where chaincode is needed to be placed
             repository:
               username: "ayhamkassab"          # Git user
               password: "**Ak47**"             # Git token or password of above user
               url: "github.com/ayhamkassab/blockchain-automation-framework.git"
-              branch: develop
+              branch: master
               path: "examples/supplychain-app/fabric/chaincode_rest_server/chaincode/"  #The path to the chaincode in the repo
             arguments: '\"init\",\"\"'                                                  #Arguments to be passed along with the chaincode parameters
             endorsements: ""                                                            #Endorsements (if any) provided along with the chaincode
@@ -258,7 +258,7 @@ network:
       # Do not check-in root_token
       vault:
         url: "http://130.104.229.21:30000"
-        root_token: "s.a8GUWx72B5UoxbvFAaYJY0gu"
+        root_token: "s.32JqFMwzbrqbeFl8bKI9R2QC"
         secret_path: "secret"
       # Git Repo details which will be used by GitOps/Flux.
       # Do not check-in git_access_token
@@ -302,14 +302,14 @@ network:
             targetPort: 3000
             port: 3000
           chaincode:
-            name: "supplychain"    # This has to be replaced with the name of the chaincode
+            name: "simpleauction"    # This has to be replaced with the name of the chaincode
             version: "1"           # This has to be replaced with the version of the chaincode (do NOT use .)
-            maindirectory: "cmd"   # The main directory where chaincode is needed to be placed
+            maindirectory: "."   # The main directory where chaincode is needed to be placed
             repository:
               username: "ayhamkassab"          # Git user
               password: "**Ak47**"             # Git token or password of above user
               url: "github.com/ayhamkassab/blockchain-automation-framework.git"
-              branch: develop
+              branch: master
               path: "examples/supplychain-app/fabric/chaincode_rest_server/chaincode/"  #The path to the chaincode in the repo
             arguments: '\"init\",\"\"'                                                  #Arguments to be passed along with the chaincode parameters
             endorsements: ""                                                            #Endorsements (if any) provided along with the chaincode
