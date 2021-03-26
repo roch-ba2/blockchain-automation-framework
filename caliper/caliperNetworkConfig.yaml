@@ -27,10 +27,10 @@ name: Fabric
             version: 0
         contracts:
         - id: simpleauction
-          contractID: myMarbles
+          contractID: simpleauction
           install:
             language: golang
-            version: "1"
+            version: "v1"
             path: simpleauction/
           instantiate:
             initFunction: init
@@ -46,7 +46,7 @@ name: Fabric
             clientPrivateKey:
               path: secret/carrier//admin/msp/keystore/server.pem
             clientSignedCert:
-              path: secret/carrier/admin/msp/tlscacerts/tlsca.pem
+              path: secret/carrier/admin/msp/signcerts/server.pem
         connectionProfile:
           path: './Org1ConnectionProfile.json'
           discover: true
@@ -58,7 +58,7 @@ name: Fabric
             clientPrivateKey:
               path: secret/manufacturer/admin/msp/keystore/server.pem
             clientSignedCert:
-              path: secret/manufacturer/admin/msp/tlscacerts/tlsca.pem
+              path: secret/manufacturer/admin/msp/signcerts/server.pem
         connectionProfile:
           path: './Org2ConnectionProfile.json'
           discover: true

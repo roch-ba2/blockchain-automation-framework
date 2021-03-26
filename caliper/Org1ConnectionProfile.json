@@ -6,7 +6,7 @@
             "connection": {
                 "timeout": {
                     "peer": {
-                        "endorser": "300"
+                        "endorser": "3000"
                     }
                 }
             }
@@ -24,7 +24,7 @@
         },
         "peers": {
             "peer0": {
-                "url": "grpcs://peer0.carrier-net.svc.local:7051",
+                "url": "grpcs://peer0.carrier-net:7051",
                 "tlsCACerts": {
                     "path": "secret/carrier/peer/msp/tlscacerts/tlsca.pem"
                 },
@@ -36,7 +36,7 @@
         },
         "certificateAuthorities": {
             "ca": {
-                "url": "https://ca.carrier-net.svc.local:7054",
+                "url": "https://ca.carrier-net:7054",
                 "caName": "ca.carrier-net",
                 "tlsCACerts": {
                     "path": ["secret/endorsers/carrier/msp/cacerts/ca.pem"]

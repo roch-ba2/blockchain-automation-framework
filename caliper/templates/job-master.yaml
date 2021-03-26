@@ -320,6 +320,12 @@ spec:
           - name: {{ include "caliper.fullname" . }}--yaml-config
             mountPath: /hyperledger/caliper/workspace/caliper.yaml
             subPath: caliper.yaml
+          - name: {{ include "caliper.fullname" . }}--yaml-config
+            mountPath: /hyperledger/caliper/workspace/simpleauction/go.mod
+            subPath: go.mod
+          - name: {{ include "caliper.fullname" . }}--yaml-config
+            mountPath: /hyperledger/caliper/workspace/simpleauction/simpleAuction.go
+            subPath: simpleAuction.go
           - name: certificates
             mountPath: /hyperledger/caliper/workspace/secret
           ports:

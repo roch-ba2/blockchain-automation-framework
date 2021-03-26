@@ -9,7 +9,7 @@
       description: simpleauction benchmark for evaluating create, modify, and query operations.
       workers:
         type: local
-        number: 4
+        number: 1
       rounds:
         - label: create
           txNumber: 500

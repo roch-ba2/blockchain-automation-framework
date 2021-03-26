@@ -27,7 +27,7 @@ caliper:
 ################################################
 
 replicaMasterCount: 1
-replicaWorkersCount: 4
+replicaWorkersCount: 1
 image:
   repository: hyperledger/caliper
   tag: 0.4.2
