@@ -13,9 +13,9 @@ caliper:
   CALIPER_BENCHCONFIG: benchmarks/scenario/simple/microBenchMarkconfig.yaml
   CALIPER_NETWORKCONFIG: networks/fabric/ourDeploymentFabric-go.yaml
   image:
-    repository: hyperledger/caliper
-    tag: 0.4.2
-    pullPolicy: IfNotPresent
+    repository: ayhamkassab/caliper
+    tag: b2c2
+    pullPolicy: Always
   persistence:
     accessMode: ReadWriteOnce
     size: 1Gi
@@ -29,9 +29,9 @@ caliper:
 replicaMasterCount: 1
 replicaWorkersCount: 1
 image:
-  repository: hyperledger/caliper
-  tag: 0.4.2
-  pullPolicy: IfNotPresent
+  repository: ayhamkassab/caliper
+  tag: b2c2
+  pullPolicy: Always
 args:
   first: launch
   second: manager

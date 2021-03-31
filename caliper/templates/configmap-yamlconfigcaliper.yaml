@@ -5,7 +5,7 @@ metadata:
   name: {{ include "caliper.fullname" . }}--yaml-config
 data:
   {{- $files := .Files }}
-  {{- range tuple "microBenchMarkconfig.yaml" "caliperNetworkConfig.yaml" "Org1ConnectionProfile.json" "Org2ConnectionProfile.json" "createBid.js" "createOffer.js" "caliper.yaml" "simpleAuction.go" "go.mod"}}
+  {{- range tuple "microBenchMarkconfig.yaml" "caliperNetworkConfig.yaml" "Org1ConnectionProfile.yaml" "Org2ConnectionProfile.yaml" "createBid.js" "createOffer.js" "caliper.yaml" "simpleAuction.go" "go.mod"}}
   {{ . }}: |-
     {{ $files.Get . }}
   {{- end }}

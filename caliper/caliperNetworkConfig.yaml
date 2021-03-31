@@ -4,7 +4,7 @@ name: Fabric
     caliper:
       blockchain: fabric
       sutOptions:
-        mutualTls: true
+        mutualTls: false
       fabric:
         gateway:
           usegateway: true
@@ -18,11 +18,11 @@ name: Fabric
       Size: 3 Orgs
 
     channels:
-      - channelName: mychannel
+      - channelName: allchannel
         create:
           buildTransaction:
             capabilities: []
-            consortium: 'SampleConsortium'
+            consortium: 'SupplyChainConsortium'
             msps: ['carrierMSP', 'manufacturerMSP']
             version: 0
         contracts:
@@ -44,11 +44,11 @@ name: Fabric
           - name: 'admin'
             admin: true
             clientPrivateKey:
-              path: secret/carrier//admin/msp/keystore/server.pem
+              path: 'secret/admin/msp/keystore/server.key'
             clientSignedCert:
-              path: secret/carrier/admin/msp/signcerts/server.pem
+              path: 'secret/admin/msp/signcerts/server.crt'
         connectionProfile:
-          path: './Org1ConnectionProfile.json'
+          path: './Org1ConnectionProfile.yaml'
           discover: true
       - mspid: manufacturerMSP
         identities:
@@ -56,9 +56,33 @@ name: Fabric
           - name: 'admin'
             admin: true
             clientPrivateKey:
-              path: secret/manufacturer/admin/msp/keystore/server.pem
+              pem: |
+                -----BEGIN PRIVATE KEY-----
+                MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgW930lITUrRWKIG6i
+                fJnX4chQRs8i2Y/xFtvhxBv56WehRANCAASGq29gLm+KkET9zalLdBdS1C+RSeb4
+                qtIKTuSHje11P8veAUx7bUDd1o9kSRv4qh7unN28IvyPvxvCmLn46q8N
+                -----END PRIVATE KEY-----
             clientSignedCert:
-              path: secret/manufacturer/admin/msp/signcerts/server.pem
+              pem: |
+                -----BEGIN CERTIFICATE-----
+                MIIDEzCCArmgAwIBAgIUQggGE4VW2n1VcMd9tTZQ/6u+tjIwCgYIKoZIzj0EAwIw
+                ZDELMAkGA1UEBhMCQ0gxDzANBgNVBAgMBlp1cmljaDEPMA0GA1UEBwwGWnVyaWNo
+                MRUwEwYDVQQKDAxNYW51ZmFjdHVyZXIxHDAaBgNVBAMME2NhLm1hbnVmYWN0dXJl
+                ci1uZXQwHhcNMjEwMzE2MTU0ODAwWhcNMjIwMzE2MTU1MzAwWjCBhzELMAkGA1UE
+                BhMCQ0gxGjAYBgNVBAcTETQ3LjM4LzguNTQvWnVyaWNoMRUwEwYDVQQKEwxNYW51
+                ZmFjdHVyZXIxJDANBgNVBAsTBmNsaWVudDATBgNVBAsTDE1hbnVmYWN0dXJlcjEf
+                MB0GA1UEAwwWQWRtaW5AbWFudWZhY3R1cmVyLW5ldDBZMBMGByqGSM49AgEGCCqG
+                SM49AwEHA0IABIarb2Aub4qQRP3NqUt0F1LUL5FJ5viq0gpO5IeN7XU/y94BTHtt
+                QN3Wj2RJG/iqHu6c3bwi/I+/G8KYufjqrw2jggEjMIIBHzAOBgNVHQ8BAf8EBAMC
+                B4AwDAYDVR0TAQH/BAIwADAdBgNVHQ4EFgQUGr4LvRKcW4Msss2fw7F0/ONXp1sw
+                HwYDVR0jBBgwFoAUXqh0+IpI/TTUg1k/ZpdpVB0mrBgwJAYDVR0RBB0wG4IZY2Et
+                dG9vbHMtNzk4NTg5ZjlkNS1tbWdtbTCBmAYIKgMEBQYHCAEEgYt7ImF0dHJzIjp7
+                ImFiYWMuaW5pdCI6InRydWUiLCJhZG1pbiI6InRydWUiLCJoZi5BZmZpbGlhdGlv
+                biI6Ik1hbnVmYWN0dXJlciIsImhmLkVucm9sbG1lbnRJRCI6IkFkbWluQG1hbnVm
+                YWN0dXJlci1uZXQiLCJoZi5UeXBlIjoiY2xpZW50In19MAoGCCqGSM49BAMCA0gA
+                MEUCIQDp4gVafPDmC/CLZmFiAFR8DW0Fo2BEVWI35eW22M4WIwIgbomhFGGEKDOE
+                rj5stYgpZQ31+cRyq37dHPZSKJBscuY=
+                -----END CERTIFICATE-----
         connectionProfile:
-          path: './Org2ConnectionProfile.json'
+          path: './Org2ConnectionProfile.yaml'
           discover: true

@@ -4,4 +4,9 @@ caliper:
           discovery: true
           enabled: true
         skipcreatechannel:
-          mychannel: true
+          allchannel: true
+      logging:
+        targets:
+          console:
+            options:
+              level: debug 
