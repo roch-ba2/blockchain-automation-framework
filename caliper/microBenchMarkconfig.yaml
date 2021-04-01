@@ -16,11 +16,7 @@
           rateControl: *rate
           workload:
               module: createOffer.js
-        - label: bids
-          txNumber: 500
-          rateControl: *rate
-          workload:
-            module: createBid.js
+
 
     monitors:
         resource:
