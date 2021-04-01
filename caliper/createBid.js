@@ -27,7 +27,7 @@
          */
         constructor() {
             super();
-            this.txIndex = 1;
+            this.txIndex = 400;
         }
     
         /**
@@ -37,7 +37,7 @@
         async submitTransaction() {
             this.txIndex++;
             let offerID = this.txIndex.toString();
-            let bidID = "1"
+            let bidID = this.txIndex.toString();
             let bidValue = Math.floor(Math.random() * Math.floor(100));
 
             let args = {

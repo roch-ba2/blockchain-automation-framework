@@ -27,7 +27,7 @@
          */
         constructor() {
             super();
-            this.txIndex = 1;
+            this.txIndex = 400;
         }
     
         /**
@@ -37,12 +37,12 @@
         async submitTransaction() {
             this.txIndex++;
             let offerID = this.txIndex.toString();
-            let winner = ""
+    
             let args = {
                 contractId: 'simpleauction',
                 contractVersion: '1',
                 contractFunction: 'CreateOffer',
-                contractArguments: [offerID, winner],
+                contractArguments: [offerID, ""],
                 timeout: 30
             };
     
