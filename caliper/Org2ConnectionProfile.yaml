@@ -35,10 +35,6 @@
         url: grpcs://peer0.manufacturer-net:7051
         tlsCACerts:
           path: secret/manufacturer/msp/tlscacerts/tlsca.pem
-        grpcOptions:
-          ssl-target-name-override: peer0.manufacturer-net
-          grpc.keepalive_time_ms: 6000
-          request-timeout: 1200000
     certificateAuthorities:
       ca.manufacturer-net:
         url: https://ca.manufacturer-net:7054
@@ -50,9 +46,5 @@
     orderers:
       orderer1.supplychain-net:
         url: grpcs://orderer1.supplychain-net:7050
-        grpcOptions:
-          ssl-target-name-override: orderer1.supplychain-net
-          grpc.keepalive_time_ms: 6000
-          request-timeout: 1200000
         tlsCACerts:
           path: secret/manufacturer/msp/tlscacerts/orderer-tlsca.pem 
