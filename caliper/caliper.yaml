@@ -3,6 +3,7 @@ caliper:
         gateway:
           discovery: true
           enabled: true
+          localhost: false
         skipcreatechannel:
           allchannel: true
       logging:
