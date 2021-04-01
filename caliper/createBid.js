@@ -44,48 +44,13 @@
                 contractId: 'simpleauction',
                 contractVersion: '1',
                 contractFunction: 'CreateBid',
-                contractArguments: [offerID, bidID, bidValue],
+                contractArguments: [bidID, offerID, bidValue],
                 timeout: 30
             };
     
             await this.sutAdapter.sendRequests(args);
         }
 
-
-        async submitTransaction() {
-            this.txIndex++;
-            let offerID = this.txIndex.toString();
-            let bidID = "2"
-            let bidValue = Math.floor(Math.random() * Math.floor(100));
-
-            let args = {
-                contractId: 'simpleauction',
-                contractVersion: '1',
-                contractFunction: 'CreateBid',
-                contractArguments: [offerID, bidID, bidValue],
-                timeout: 30
-            };
-    
-            await this.sutAdapter.sendRequests(args);
-        }
-
-
-        async submitTransaction() {
-            this.txIndex++;
-            let offerID = this.txIndex.toString();
-            let bidID = "3"
-            let bidValue = Math.floor(Math.random() * Math.floor(100));
-
-            let args = {
-                contractId: 'simpleauction',
-                contractVersion: '1',
-                contractFunction: 'CreateBid',
-                contractArguments: [offerID, bidID, bidValue],
-                timeout: 30
-            };
-    
-            await this.sutAdapter.sendRequests(args);
-        }
     }
     
     /**
