@@ -1,0 +1,37 @@
+peers:
+  fabric-peer1org4:
+    url: grpc://fabric-peer1org4:7051
+    grpcOptions:
+      ssl-target-name-override: fabric-peer1org4
+      grpc.keepalive_time_ms: 600000
+  fabric-peer1org3:
+    url: grpc://fabric-peer1org3:7051
+    grpcOptions:
+      ssl-target-name-override: fabric-peer1org3
+      grpc.keepalive_time_ms: 600000
+  fabric-peer1org2:
+    url: grpc://fabric-peer1org2:7051
+    grpcOptions:
+      ssl-target-name-override: fabric-peer1org2
+      grpc.keepalive_time_ms: 600000
+  fabric-peer1org1:
+    url: grpc://fabric-peer1org1:7051
+    grpcOptions:
+      ssl-target-name-override: fabric-peer1org1
+      grpc.keepalive_time_ms: 600000
+version: 1.0.0
+orderers:
+  ord1-hlf-ord:
+    url: grpc://fabric-ord1:7050
+    grpcOptions:
+      ssl-target-name-override: fabric-ord1
+name: test-network-carrier-net
+client:
+  organization: buyer-net
+  connection:
+    timeout:
+      peer:
+        endorser: 300
+        eventHub: 300
+        eventReg: 300
+      orderer: 300

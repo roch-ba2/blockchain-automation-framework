@@ -1,0 +1,7 @@
+chaincode_name: simpleauction
+chaincode_version: '"v1"'
+chaincode_lang: golang
+chaincode_init_function: init
+chaincode_path: simpleauction/
+initArguments: []
+created: true

@@ -1,0 +1,24 @@
+domain_name: svc.cluster.local
+
+organizations:
+- id: 1
+  name: carrier
+  orderer: supplychain
+  numberOfPeers: 1
+
+- id: 2
+  name: manufacturer
+  orderer: supplychain
+  numberOfPeers: 1
+
+- id: 3
+  name: supplychain
+  orderer: supplychain
+  numberOfPeers: 1
+
+
+- id: 4
+  name: buyer
+  orderer: supplychain
+  numberOfPeers: 1
+
