@@ -9,6 +9,17 @@ BAFgitops:
   git_repo: "github.com/ayhamkassab/blockchain-automation-framework.git"       # Gitops https URL for git push  (without https://)
   username: "ayhamkassab"                                                     # Git user who has rights to check-in in all branches
   password: "**Ak47**"   
+  email: "github_email"                                                           # Email to use in git config
+  private_key: "/root/hyperledger-labs/myFork/blockchain-automation-framework/build/gitops"               # Path to private key file which has write-access to the git repo
+
+BAFk8s:
+  context: "local"
+  config_file: "~/.kube/config"
+
+vault:
+  url: 'http://130.104.229.21:30000'
+  root_token: 's.32JqFMwzbrqbeFl8bKI9R2QC'
+
 
 organizations:
 - id: 1
