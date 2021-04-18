@@ -82,8 +82,7 @@ spec:
               echo "${USER_CERT}" >> ${OUTPUT_PATH}/${FABRIC_USER}.cert
               echo "${USER_KEY}" >> ${OUTPUT_PATH}/${FABRIC_USER}.pem
               
-              "peer0.carrier-net"
-              vault_secret_key="${secret/crypto/peerOrganizations/${ns}-net}/peers/peer0.${ns}-net/msp"
+              vault_secret_key="secret/crypto/peerOrganizations/${ns}-net/peers/peer0.${ns}-net/msp"
               echo "Getting MSP certificates from Vault using key $vault_secret_key"
               
               OUTPUT_PATH="${MOUNT_PATH}/${ns}/msp"
@@ -94,7 +93,7 @@ spec:
               echo "${ORG_TLS_CERTS}" >> ${OUTPUT_PATH}/tlscacerts/tlsca.pem
               
               
-              vault_secret_key="${secret/crypto/peerOrganizations/${ns}-net}/orderer/tls"
+              vault_secret_key="secret/crypto/peerOrganizations/${ns}-net/orderer/tls"
               echo "Getting Orderer certificates from Vault using key $vault_secret_key"
               LOOKUP_SECRET_RESPONSE=$(curl -sS --header "X-Vault-Token: ${VAULT_CLIENT_TOKEN}" ${VAULT_ADDR}/v1/${vault_secret_key} | jq -r 'if .errors then . else . end')
               validateVaultResponse "secret (${vault_secret_key})" "${LOOKUP_SECRET_RESPONSE}" 
@@ -104,7 +103,7 @@ spec:
 
             done
           fi
-          echo "DONE"
+          echo "DONE VAULT_ADDR $VAULT_ADDR     VAULT_TOKEN   $VAULT_TOKEN   ENDORSING_ORG_NAMES $ENDORSING_ORG_NAMES "
         volumeMounts:
         - name: certificates
           mountPath: /secret

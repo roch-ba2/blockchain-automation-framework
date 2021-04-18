@@ -644,8 +644,8 @@ def genCaliperOrganizations(domainName, orgsCount, orderersCount, peerCounts, or
     for org in orgNames:
         orgConfig = {}
         orgConfig["mspid"] = "{}MSP".format(org)
-        orgConfig["identities"] = {'certificates': [{'admin': True, 'clientPrivateKey': {'path': '"secret/{}/tls/admin.pem"'.format(org)}, 'clientSignedCert': {'path': '"secret/{}/tls/admin.cert"'.format(org)}, 'name': '"admin"'}]}
-        orgConfig["connectionProfile"] = {'path': './{}ConnectionProfile.yaml'.format(org), 'discover': "True"}
+        orgConfig["identities"] = {'certificates': [{'admin': True, 'clientPrivateKey': {'path': 'secret/{}/tls/admin.pem'.format(org)}, 'clientSignedCert': {'path': 'secret/{}/tls/admin.cert'.format(org)}, 'name': '"admin"'}]}
+        orgConfig["connectionProfile"] = {'path': '"./{}ConnectionProfile.yaml"'.format(org), 'discover': "True"}
 
         config.append(orgConfig)
     return config
@@ -983,7 +983,7 @@ def getCaliperConnectionProfile(domainName, orgsCount, orderersCount, chaincodeN
     caliperConnectionProfile["version"] = "1.0.0"
     caliperConnectionProfile["client"] = {'organization': '{}-net'.format(org), 'connection': {'timeout': {'peer': {'endorser': '"300"', 'eventHub': '"300"', 'eventReg': '"300"'}, 'orderer': '"300"'}}}
 
-    caliperConnectionProfile["peers"] = {'peers': {'peer0.{}-net'.format(org): {'url': 'grpcs://peer0.{}-net:7051'.format(org), 'tlsCACerts': {'path': 'secret/{}/msp/tlscacerts/tlsca.pem'.format(org)}}}}
+    caliperConnectionProfile["peers"] = {'peer0.{}-net'.format(org): {'url': 'grpcs://peer0.{}-net:7051'.format(org), 'tlsCACerts': {'path': 'secret/{}/msp/tlscacerts/tlsca.pem'.format(org)}}}
 
     ###########" get the ordere org of this ogr here for fabric config"
     caliperConnectionProfile["orderers"] = {'orderer1.{}-net'.format(ordererOrg): {'url': 'grpcs://orderer1.{}-net:7050'.format(ordererOrg), 'tlsCACerts': {'path': 'secret/{}/msp/tlscacerts/orderer-tlsca.pem'.format(org)}}}
