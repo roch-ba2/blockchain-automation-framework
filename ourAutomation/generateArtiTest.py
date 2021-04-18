@@ -652,7 +652,7 @@ def genCaliperOrganizations(domainName, orgsCount, orderersCount, peerCounts, or
 def getCaliperNetworkConfig(domainName, orgsCount, orderersCount, chaincodeName, peerCounts, chaincodeversion, chaincode_lang, chaincode_init_function, chaincode_path, orgNames, chaincode_init_arguments, chaincode_created, endorsersList):
 
 
-    fHandle = open("caliperNetworkConfig.yaml", "w")
+
     caliperConfig = {}
     caliperConfig["channels"] = [genCaliperChannels(domainName, orgsCount, orderersCount, chaincodeName, peerCounts, chaincodeversion, chaincode_lang, chaincode_init_function, chaincode_path, endorsersList, chaincode_init_arguments, chaincode_created)]
 
@@ -673,7 +673,7 @@ def getCaliperNetworkConfig(domainName, orgsCount, orderersCount, chaincodeName,
 
     caliperConfig["organizations"] = genCaliperOrganizations(domainName, orgsCount, orderersCount, peerCounts, endorsersList)
 
-
+    fHandle = open("caliperNetworkConfig.yaml", "w")
     stream = yaml.dump(caliperConfig, default_flow_style = False, sort_keys=False)
     fHandle.write(stream.replace("'", ""))
     #fHandle.write(stream)

@@ -26,40 +26,24 @@ spec:
         imagePullPolicy: Always
         env:
         - name: VAULT_ADDR
-          value: http://130.104.229.21:30000
-        - name: CARRIER_KUBERNETES_AUTH_PATH
-          value: carrier-net-auth
-        - name: MANUFACTURER_KUBERNETES_AUTH_PATH
-          value: manufacturer-net-auth
+          value: {{ .Values.VAULT_ADDR }}
+        - name: VAULT_TOKEN
+          value: {{ .Values.VAULT_TOKEN }}
         - name: VAULT_APP_ROLE
           value: vault-role
-        - name: VAULT_PEER_SECRET_PREFIX
-          value: "secret/crypto/peerOrganizations/carrier-net/users/admin"
         - name: ENDORSING_ORG_NAMES
-          value: "carrier  manufacturer"
-        - name: CREATOR_NS
-          value: "carrier-net"
-        - name: VAULT_ORDERER_SECRET_PREFIX
-          value: "secret/crypto/peerOrganizations/carrier-net/orderer"
+          value: {{ .Values.ENDORSING_ORG_NAMES }}
         - name: MOUNT_PATH
           value: /secret
         - name: NETWORK_VERSION
           value: "2.2.0"
-        - name: CARRIER_VAULT_SECRET_PREFIX
-          value: "secret/crypto/peerOrganizations/carrier-net"
-        - name: MANUFACTURER_VAULT_SECRET_PREFIX
-          value: "secret/crypto/peerOrganizations/manufacturer-net"
         - name: FABRIC_USER
           value: "admin"
-        - name: CARRIER_PEERNAME
-          value: "peer0.carrier-net"
-        - name: MANUFACTURER_PEERNAME
-          value: "peer0.manufacturer-net"
         command: ["sh", "-c"]
         args:
         - |-
           #!/usr/bin/env sh
-
+          
           set -x
 
           validateVaultResponse () {
@@ -70,170 +54,56 @@ spec:
           }
           KUBE_SA_TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
           echo "Getting secrets from Vault Server: ${VAULT_ADDR}"
-          # Login to Vault and so I can get an approle token
-          VAULT_CLIENT_TOKEN=$(curl -sS  --request POST ${VAULT_ADDR}/v1/auth/${CARRIER_KUBERNETES_AUTH_PATH}/login \
-            -H "Content-Type: application/json" \
-            -d '{"role":"'"${VAULT_APP_ROLE}"'","jwt":"'"${KUBE_SA_TOKEN}"'"}' | \
-            jq -r 'if .errors then . else .auth.client_token end')
-          validateVaultResponse 'vault login token' "${VAULT_CLIENT_TOKEN}"
-          
-          vault_secret_key="${VAULT_ORDERER_SECRET_PREFIX}/tls"
-          echo "Getting Orderer TLS certificates from Vault using key $vault_secret_key"
-          
-          OUTPUT_PATH="${MOUNT_PATH}/orderer/tls"
-          LOOKUP_SECRET_RESPONSE=$(curl -sS  \
-            --header "X-Vault-Token: ${VAULT_CLIENT_TOKEN}" \
-            ${VAULT_ADDR}/v1/${vault_secret_key} | jq -r 'if .errors then . else . end')
-          
-          validateVaultResponse "secret (${vault_secret_key})" "${LOOKUP_SECRET_RESPONSE}"
-          
-          TLS_CA_CERT=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["ca.crt"]')
-          
-          mkdir -p ${OUTPUT_PATH}
-          echo "${TLS_CA_CERT}" >> ${OUTPUT_PATH}/ca.crt
-          
-          vault_secret_key="${VAULT_PEER_SECRET_PREFIX}/msp"
-          echo "Getting MSP certificates from Vault using key $vault_secret_key"
-          
-          OUTPUT_PATH="${MOUNT_PATH}/admin/msp"
-          LOOKUP_SECRET_RESPONSE=$(curl -sS  \
-            --header "X-Vault-Token: ${VAULT_CLIENT_TOKEN}" \
-            ${VAULT_ADDR}/v1/${vault_secret_key} | jq -r 'if .errors then . else . end')
-          validateVaultResponse "secret (${vault_secret_key})" "${LOOKUP_SECRET_RESPONSE}"
-          
-          ADMINCERT=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["admincerts"]')
-          CACERTS=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["cacerts"]')
-          KEYSTORE=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["keystore"]')
-          SIGNCERTS=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["signcerts"]')
-          TLSCACERTS=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["tlscacerts"]')
-          
-          mkdir -p ${OUTPUT_PATH}/admincerts
-          mkdir -p ${OUTPUT_PATH}/cacerts
-          mkdir -p ${OUTPUT_PATH}/keystore
-          mkdir -p ${OUTPUT_PATH}/signcerts
-          mkdir -p ${OUTPUT_PATH}/tlscacerts
-          
-          echo "${ADMINCERT}" >> ${OUTPUT_PATH}/admincerts/admin.crt
-          echo "${CACERTS}" >> ${OUTPUT_PATH}/cacerts/ca.crt
-          echo "${KEYSTORE}" >> ${OUTPUT_PATH}/keystore/server.key
-          echo "${SIGNCERTS}" >> ${OUTPUT_PATH}/signcerts/server.crt
-          echo "${TLSCACERTS}" >> ${OUTPUT_PATH}/tlscacerts/tlsca.crt
-          
+          #override using vault root token to avoid namespace not autorized error
+          VAULT_CLIENT_TOKEN=$VAULT_TOKEN
+
+
           ######################################################################
           
           version2=`echo $NETWORK_VERSION | grep -c 2.`
           if [ $version2 = 1 ];then
             #Downloading Certificates for all admin users
             echo $ENDORSING_ORG_NAMES
+
+
             for ns in $ENDORSING_ORG_NAMES
             do
-              SECRETPREFIX=secret/crypto/peerOrganizations/${CREATOR_NS}/endorsers/${ns}/users/admin
-              echo "Fetching certificates for org: $ns"
-              echo "Secret prefix for org: $SECRETPREFIX"
-          
-              vault_secret_key="$SECRETPREFIX/msp"
+              vault_secret_key="secret/crypto/peerOrganizations/${ns}-net/users/${FABRIC_USER}/msp"
+              echo "Getting TLS certificates from Vault using key $vault_secret_key"
+              
+              OUTPUT_PATH="${MOUNT_PATH}/${ns}/tls"
+              LOOKUP_SECRET_RESPONSE=$(curl -sS --header "X-Vault-Token: ${VAULT_CLIENT_TOKEN}" ${VAULT_ADDR}/v1/${vault_secret_key} | jq -r 'if .errors then . else . end')
+              validateVaultResponse "secret (${vault_secret_key})" "${LOOKUP_SECRET_RESPONSE}" 
+                
+              USER_CERT=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["signcerts"]')
+              USER_KEY=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["keystore"]')
+              
+              mkdir -p ${OUTPUT_PATH}
+              echo "${USER_CERT}" >> ${OUTPUT_PATH}/${FABRIC_USER}.cert
+              echo "${USER_KEY}" >> ${OUTPUT_PATH}/${FABRIC_USER}.pem
+              
+              "peer0.carrier-net"
+              vault_secret_key="${secret/crypto/peerOrganizations/${ns}-net}/peers/peer0.${ns}-net/msp"
               echo "Getting MSP certificates from Vault using key $vault_secret_key"
-          
-              OUTPUT_PATH="${MOUNT_PATH}/endorsers/$ns/msp"
-              echo "Certificate output path: $OUTPUT_PATH"
-          
-              LOOKUP_SECRET_RESPONSE=$(curl -sS  \
-                --header "X-Vault-Token: ${VAULT_CLIENT_TOKEN}" \
-                ${VAULT_ADDR}/v1/${vault_secret_key} | jq -r 'if .errors then . else . end')
-              validateVaultResponse "secret (${vault_secret_key})" "${LOOKUP_SECRET_RESPONSE}"
-          
-              CACERTS=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["cacerts"]')
-          
-              mkdir -p ${OUTPUT_PATH}/cacerts
-              echo "${CACERTS}" >> ${OUTPUT_PATH}/cacerts/ca.crt
-              cat ${OUTPUT_PATH}/cacerts/ca.crt
+              
+              OUTPUT_PATH="${MOUNT_PATH}/${ns}/msp"
+              LOOKUP_SECRET_RESPONSE=$(curl -sS --header "X-Vault-Token: ${VAULT_CLIENT_TOKEN}" ${VAULT_ADDR}/v1/${vault_secret_key} | jq -r 'if .errors then . else . end')
+              validateVaultResponse "secret (${vault_secret_key})" "${LOOKUP_SECRET_RESPONSE}" 
+              ORG_TLS_CERTS=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["tlscacerts"]')          
+              mkdir -p ${OUTPUT_PATH}/tlscacerts
+              echo "${ORG_TLS_CERTS}" >> ${OUTPUT_PATH}/tlscacerts/tlsca.pem
+              
+              
+              vault_secret_key="${secret/crypto/peerOrganizations/${ns}-net}/orderer/tls"
+              echo "Getting Orderer certificates from Vault using key $vault_secret_key"
+              LOOKUP_SECRET_RESPONSE=$(curl -sS --header "X-Vault-Token: ${VAULT_CLIENT_TOKEN}" ${VAULT_ADDR}/v1/${vault_secret_key} | jq -r 'if .errors then . else . end')
+              validateVaultResponse "secret (${vault_secret_key})" "${LOOKUP_SECRET_RESPONSE}" 
+              ORDERER_TLS_CERTS=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["ca.crt"]')
+              echo "${ORDERER_TLS_CERTS}" >> ${OUTPUT_PATH}/tlscacerts/orderer-tlsca.pem
+
+
             done
           fi
-
-          vault_secret_key="${CARRIER_VAULT_SECRET_PREFIX}/users/${FABRIC_USER}/msp"
-          echo "Getting TLS certificates from Vault using key $vault_secret_key"
-          
-          OUTPUT_PATH="${MOUNT_PATH}/tls"
-          LOOKUP_SECRET_RESPONSE=$(curl -sS --header "X-Vault-Token: ${VAULT_CLIENT_TOKEN}" ${VAULT_ADDR}/v1/${vault_secret_key} | jq -r 'if .errors then . else . end')
-          validateVaultResponse "secret (${vault_secret_key})" "${LOOKUP_SECRET_RESPONSE}" 
-            
-          USER_CERT=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["signcerts"]')
-          USER_KEY=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["keystore"]')
-          
-          mkdir -p ${OUTPUT_PATH}
-          echo "${USER_CERT}" >> ${OUTPUT_PATH}/${FABRIC_USER}.cert
-          echo "${USER_KEY}" >> ${OUTPUT_PATH}/${FABRIC_USER}.pem
-          
-          
-          vault_secret_key="${CARRIER_VAULT_SECRET_PREFIX}/peers/${CARRIER_PEERNAME}/msp"
-          echo "Getting MSP certificates from Vault using key $vault_secret_key"
-          
-          OUTPUT_PATH="${MOUNT_PATH}/msp"
-          LOOKUP_SECRET_RESPONSE=$(curl -sS --header "X-Vault-Token: ${VAULT_CLIENT_TOKEN}" ${VAULT_ADDR}/v1/${vault_secret_key} | jq -r 'if .errors then . else . end')
-          validateVaultResponse "secret (${vault_secret_key})" "${LOOKUP_SECRET_RESPONSE}" 
-          ORG_TLS_CERTS=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["tlscacerts"]')          
-          mkdir -p ${OUTPUT_PATH}/tlscacerts
-          echo "${ORG_TLS_CERTS}" >> ${OUTPUT_PATH}/tlscacerts/tlsca.pem
-          
-          
-          vault_secret_key="${CARRIER_VAULT_SECRET_PREFIX}/orderer/tls"
-          echo "Getting Orderer certificates from Vault using key $vault_secret_key"
-          LOOKUP_SECRET_RESPONSE=$(curl -sS --header "X-Vault-Token: ${VAULT_CLIENT_TOKEN}" ${VAULT_ADDR}/v1/${vault_secret_key} | jq -r 'if .errors then . else . end')
-          validateVaultResponse "secret (${vault_secret_key})" "${LOOKUP_SECRET_RESPONSE}" 
-          ORDERER_TLS_CERTS=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["ca.crt"]')
-          echo "${ORDERER_TLS_CERTS}" >> ${OUTPUT_PATH}/tlscacerts/orderer-tlsca.pem
-
-
-          #change token to manufacturer token
-          #######################################################################
-          # KUBE_SA_TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
-          # echo "Getting secrets from Vault Server: ${VAULT_ADDR}"
-          # # Login to Vault and so I can get an approle token
-          # VAULT_CLIENT_TOKEN=$(curl -sS  --request POST ${VAULT_ADDR}/v1/auth/${MANUFACTURER_KUBERNETES_AUTH_PATH}/login \
-          #   -H "Content-Type: application/json" \
-          #   -d '{"role":"'"${VAULT_APP_ROLE}"'","jwt":"'"${KUBE_SA_TOKEN}"'"}' | \
-          #   jq -r 'if .errors then . else .auth.client_token end')
-          # validateVaultResponse 'vault login token' "${VAULT_CLIENT_TOKEN}"
-
-          #override using vault root token to avoid namespace not autorized error
-          VAULT_CLIENT_TOKEN="s.32JqFMwzbrqbeFl8bKI9R2QC"
-
-          ## begin add gr ###
-          #######################################################################
-          vault_secret_key="${MANUFACTURER_VAULT_SECRET_PREFIX}/users/${FABRIC_USER}/msp"
-          echo "Getting TLS certificates from Vault using key $vault_secret_key"
-          
-          OUTPUT_PATH="${MOUNT_PATH}/manufacturer/tls/"
-          LOOKUP_SECRET_RESPONSE=$(curl -sS --header "X-Vault-Token: ${VAULT_CLIENT_TOKEN}" ${VAULT_ADDR}/v1/${vault_secret_key} | jq -r 'if .errors then . else . end')
-          validateVaultResponse "secret (${vault_secret_key})" "${LOOKUP_SECRET_RESPONSE}"
-           
-          USER_CERT=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["signcerts"]')
-          USER_KEY=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["keystore"]')
-          
-          mkdir -p ${OUTPUT_PATH}
-          echo "${USER_CERT}" >> ${OUTPUT_PATH}/${FABRIC_USER}.cert
-          echo "${USER_KEY}" >> ${OUTPUT_PATH}/${FABRIC_USER}.pem
-          
-          
-          vault_secret_key="${MANUFACTURER_VAULT_SECRET_PREFIX}/peers/${MANUFACTURER_PEERNAME}/msp"
-          echo "Getting MSP certificates from Vault using key $vault_secret_key"
-          
-          OUTPUT_PATH="${MOUNT_PATH}/manufacturer/msp"
-          LOOKUP_SECRET_RESPONSE=$(curl -sS --header "X-Vault-Token: ${VAULT_CLIENT_TOKEN}" ${VAULT_ADDR}/v1/${vault_secret_key} | jq -r 'if .errors then . else . end')
-          validateVaultResponse "secret (${vault_secret_key})" "${LOOKUP_SECRET_RESPONSE}" 
-          ORG_TLS_CERTS=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["tlscacerts"]')          
-          mkdir -p ${OUTPUT_PATH}/tlscacerts
-          echo "${ORG_TLS_CERTS}" >> ${OUTPUT_PATH}/tlscacerts/tlsca.pem
-          
-          
-          vault_secret_key="${MANUFACTURER_VAULT_SECRET_PREFIX}/orderer/tls"
-          echo "Getting Orderer certificates from Vault using key $vault_secret_key"
-          LOOKUP_SECRET_RESPONSE=$(curl -sS --header "X-Vault-Token: ${VAULT_CLIENT_TOKEN}" ${VAULT_ADDR}/v1/${vault_secret_key} | jq -r 'if .errors then . else . end')
-          validateVaultResponse "secret (${vault_secret_key})" "${LOOKUP_SECRET_RESPONSE}" 
-          ORDERER_TLS_CERTS=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data["ca.crt"]')
-          echo "${ORDERER_TLS_CERTS}" >> ${OUTPUT_PATH}/tlscacerts/orderer-tlsca.pem          
-          ## end add GR ##
-
           echo "DONE"
         volumeMounts:
         - name: certificates
@@ -257,11 +127,11 @@ spec:
             mountPath: /hyperledger/caliper/workspace/createOffer.js
             subPath: createOffer.js
           - name: {{ include "caliper.fullname" . }}--yaml-config
-            mountPath: /hyperledger/caliper/workspace/Org1ConnectionProfile.yaml
-            subPath: Org1ConnectionProfile.yaml
+            mountPath: /hyperledger/caliper/workspace/carrierConnectionProfile.yaml
+            subPath: carrierConnectionProfile.yaml
           - name: {{ include "caliper.fullname" . }}--yaml-config
-            mountPath: /hyperledger/caliper/workspace/Org2ConnectionProfile.yaml
-            subPath: Org2ConnectionProfile.yaml
+            mountPath: /hyperledger/caliper/workspace/manufacturerConnectionProfile.yaml
+            subPath: manufacturerConnectionProfile.yaml
           - name: {{ include "caliper.fullname" . }}--yaml-config
             mountPath: /hyperledger/caliper/workspace/caliper.yaml
             subPath: caliper.yaml
