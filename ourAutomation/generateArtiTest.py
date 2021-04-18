@@ -576,10 +576,15 @@ def peerListInsideChannels(orgsCount, peerCounts):
 
 
 def MSPList(orgNames):
-    mspConfig=[]
-    for x in orgNames:
-        mspConfig.append('{}MSP'.format(x))
-    return '['.join(mspConfig)
+    mspConfig=''
+    for x in range(len(orgNames)):
+        if x !=0:
+            mspConfig = mspConfig + ', "{}MSP"'.format(orgNames[x])
+        else:
+            mspConfig = mspConfig + '"{}MSP"'.format(orgNames[x])
+
+        #mspConfig.append('{}MSP'.format(x))
+    return '[{}]'.format(mspConfig)
 
 def contractsIdentitiesList(orgNames):
     mspConfig=[]
@@ -597,11 +602,22 @@ def genCaliperChannels(domainName, orgsCount, orderersCount, chaincodeName, peer
     chConfig = {}
     tempList=[]
     chConfig["channelName"] = "allchannel"
-    chConfig["create"] = {'buildTransaction': {'version': 0, 'consortium': "'SupplyChainConsortium'", 'capabilities': [], 'msps': ''}}
+    chConfig["create"] = {'buildTransaction': {'version': 0, 'consortium': '"SupplyChainConsortium"', 'capabilities': []}}
     chConfig["create"]["buildTransaction"]["msps"] = MSPList(orgNames)
     #chConfig["contracts"] = contractsListInsideChannels(orgsCount, peerCounts)
 
-    tempList.append({"id" : chaincodeName,
+    #tempList.append({"id" : chaincodeName,
+    #            "contractID" : chaincodeName,
+    #           "install": {
+    #                "version" : chaincodeversion,
+    #                 "language" : chaincode_lang,
+    #                "path" : chaincode_path,},
+    #           'instantiate': {'initFunction': chaincode_init_function},
+    #           "initArguments" : chaincode_init_arguments,
+    #           "created" : chaincode_created})
+
+
+    chConfig["contracts"] = {"id" : chaincodeName,
                 "contractID" : chaincodeName,
                "install": {
                     "version" : chaincodeversion,
@@ -609,12 +625,14 @@ def genCaliperChannels(domainName, orgsCount, orderersCount, chaincodeName, peer
                     "path" : chaincode_path,},
                'instantiate': {'initFunction': chaincode_init_function},
                "initArguments" : chaincode_init_arguments,
-               "created" : chaincode_created})
+               "created" : chaincode_created}
 
-
-    chConfig["contracts"] = tempList
-    #chConfig["contracts"]["endorsementPolicy"] = {'policy': {'{}}-of'.format(len(orgNames)): [{'signed-by': x} for x in range(len(orgNames))]}}
-    #chConfig["contracts"]["identities"] = contractsIdentitiesList(orgNames)
+    #caliperNetwork
+    # can use here endorsersList
+    #{'policy': {'{}}-of'.format(len(orgNames)): [{'signed-by': x} for x in range(len(orgNames))]}}
+                                                
+    chConfig["contracts"]["endorsementPolicy"] = {'policy': {'{}-of'.format(len(orgNames)): [{'signed-by': x} for x in range(len(orgNames))]}}
+    chConfig["contracts"]["identities"] = contractsIdentitiesList(orgNames)
 
     return chConfig
 
@@ -624,20 +642,27 @@ def genCaliperOrganizations(domainName, orgsCount, orderersCount, peerCounts, or
     for org in orgNames:
         orgConfig = {}
         orgConfig["mspid"] = "{}MSP".format(org)
-        orgConfig["identities"] = {'certificates': [{'admin': True, 'clientPrivateKey': {'path': "secret/{}/tls/admin.pem".format(org)}, 'clientSignedCert': {'path': "secret/{}/tls/admin.cert".format(org)}, 'name': 'admin'}]}
+        orgConfig["identities"] = {'certificates': [{'admin': True, 'clientPrivateKey': {'path': '"secret/{}/tls/admin.pem"'.format(org)}, 'clientSignedCert': {'path': '"secret/{}/tls/admin.cert"'.format(org)}, 'name': '"admin"'}]}
         orgConfig["connectionProfile"] = {'path': './{}ConnectionProfile.yaml'.format(org), 'discover': "True"}
 
         config.append(orgConfig)
     return config
 
 
-def getCaliperNetworkConfig(domainName, orgsCount, orderersCount, chaincodeName, peerCounts, chaincodeversion, chaincode_lang, chaincode_init_function, chaincode_path, orgNames, chaincode_init_arguments, chaincode_created):
+def getCaliperNetworkConfig(domainName, orgsCount, orderersCount, chaincodeName, peerCounts, chaincodeversion, chaincode_lang, chaincode_init_function, chaincode_path, orgNames, chaincode_init_arguments, chaincode_created, endorsersList):
 
 
+    fHandle = open("caliperNetworkConfig.yaml", "w")
     caliperConfig = {}
+    caliperConfig["channels"] = [genCaliperChannels(domainName, orgsCount, orderersCount, chaincodeName, peerCounts, chaincodeversion, chaincode_lang, chaincode_init_function, chaincode_path, endorsersList, chaincode_init_arguments, chaincode_created)]
+
+    #streamChannel = yaml.dump(caliperConfig, default_flow_style = None, sort_keys=False)
+    #fHandle.write(stream.replace("'", ""))
+    #fHandle.write(streamChannel)
 
     caliperConfig["info"] = {"Version" : "2.2.0",
                              "Size" : "3 Orgs",
+                             "Orderer" : "Kafka",
                              "Distribution" : "Single Host",
                              "StateDB" : "CouchDB"}
 
@@ -645,12 +670,10 @@ def getCaliperNetworkConfig(domainName, orgsCount, orderersCount, chaincodeName,
     caliperConfig["version"] ='"2.0.0"'
     caliperConfig["name"] = "Fabric"
 
-    caliperConfig["channels"] = [genCaliperChannels(domainName, orgsCount, orderersCount, chaincodeName, peerCounts, chaincodeversion, chaincode_lang, chaincode_init_function, chaincode_path, orgNames, chaincode_init_arguments, chaincode_created)]
 
-    caliperConfig["organizations"] = genCaliperOrganizations(domainName, orgsCount, orderersCount, peerCounts, orgNames)
+    caliperConfig["organizations"] = genCaliperOrganizations(domainName, orgsCount, orderersCount, peerCounts, endorsersList)
 
 
-    fHandle = open("caliperNetworkConfig.yaml", "w")
     stream = yaml.dump(caliperConfig, default_flow_style = False, sort_keys=False)
     fHandle.write(stream.replace("'", ""))
     #fHandle.write(stream)
@@ -924,7 +947,7 @@ def genFabricValues(orgsCount, orderersCount, peerCounts):
 
 
 
-
+'''
 def genCaliperOrderers(domainName, orgsCount, orderersCount):
     ordererConfig = {}
     for ordcounter in range(orderersCount):
@@ -945,26 +968,27 @@ def genCaliperPeers(domainName, orgsCount, orderersCount, peerCounts):
 
         #print peerCounts, org,  peerPerOrg, sum(peerCounts[0:org]), sum(peerCounts[0:org])+peerCounts[org]
     return clConfig
-    
+''' 
 
 
 
-def getCaliperConnectionProfile(domainName, orgsCount, orderersCount, chaincodeName, peerCounts, chaincodeversion, chaincode_lang, chaincode_init_function, chaincode_path, org):
+def getCaliperConnectionProfile(domainName, orgsCount, orderersCount, chaincodeName, peerCounts, chaincodeversion, chaincode_lang, chaincode_init_function, chaincode_path, org, ordererOrg):
 
     caliperConnectionProfile = {}
     #connectionProfile = {'organizations': {'carrier-net{var OrgName}': {'peers': ['peer0.carrier-net'], 'orderers': ['orderer1.supplychain-net'], 'mspid': 'carrierMSP', 'certificateAuthorities': ['ca.carrier-net']}}, 'peers': {'peer0.carrier-net': {'url': 'grpcs://peer0.carrier-net:7051', 'tlsCACerts': {'path': 'secret/msp/tlscacerts/tlsca.pem'}}}, 'orderers': {'orderer1.supplychain-net': {'url': 'grpcs://orderer1.supplychain-net:7050', 'tlsCACerts': {'path': 'secret/msp/tlscacerts/orderer-tlsca.pem'}}}, 'name': 'test-network-carrier-net', 'certificateAuthorities': {'ca.carrier-net': {'url': 'https://ca.carrier-net:7054', 'httpOptions': {'verify': False}, 'tlsCACerts': {'path': 'secret/msp/tlscacerts/tlsca.pem'}, 'caName': 'ca.carrier-net'}}, 'channels': {'allchannel': {'peers': {'peer0.carrier-net': {'endorsingPeer': True, 'chaincodeQuery': True, 'eventSource': True, 'discover': True, 'ledgerQuery': True}}, 'orderers': ['orderer1.supplychain-net']}}, 'client': {'organization': 'carrier-net', 'connection': {'timeout': {'peer': {'endorser': '300', 'eventHub': '300', 'eventReg': '300'}, 'orderer': '300'}}}, 'version': '1.0.0'}
-
+    caliperConnectionProfile["channels"] = {'allchannel': {'peers': {'peer0.{}-net'.format(org): {'endorsingPeer': True, 'chaincodeQuery': True, 'eventSource': True, 'discover': True, 'ledgerQuery': True}}, 'orderers': ['orderer1.{}-net'.format(ordererOrg)]}}
     caliperConnectionProfile["name"] = "test-network-carrier-net"
     caliperConnectionProfile["version"] = "1.0.0"
-    caliperConnectionProfile["client"] = {'organization': '{}-net'.format(org), 'connection': {'timeout': {'peer': {'endorser': '300', 'eventHub': '300', 'eventReg': '300'}, 'orderer': '300'}}}
+    caliperConnectionProfile["client"] = {'organization': '{}-net'.format(org), 'connection': {'timeout': {'peer': {'endorser': '"300"', 'eventHub': '"300"', 'eventReg': '"300"'}, 'orderer': '"300"'}}}
 
-    caliperConnectionProfile["peers"] = genCaliperPeers(domainName, orgsCount, orderersCount, peerCounts)
+    caliperConnectionProfile["peers"] = {'peers': {'peer0.{}-net'.format(org): {'url': 'grpcs://peer0.{}-net:7051'.format(org), 'tlsCACerts': {'path': 'secret/{}/msp/tlscacerts/tlsca.pem'.format(org)}}}}
 
+    ###########" get the ordere org of this ogr here for fabric config"
+    caliperConnectionProfile["orderers"] = {'orderer1.{}-net'.format(ordererOrg): {'url': 'grpcs://orderer1.{}-net:7050'.format(ordererOrg), 'tlsCACerts': {'path': 'secret/{}/msp/tlscacerts/orderer-tlsca.pem'.format(org)}}}
 
-    caliperConnectionProfile["orderers"] = genCaliperOrderers(domainName, orgsCount, orderersCount)
-
-
-
+    caliperConnectionProfile["organizations"] = {'{}-net'.format(org): {'peers': ['peer0.{}-net'.format(org)], 'orderers': ['orderer1.{}-net'.format(ordererOrg)], 'mspid': '{}MSP'.format(org), 'certificateAuthorities': ['ca.{}-net'.format(org)]}}
+    
+    caliperConnectionProfile["certificateAuthorities"] = {'ca.{}-net'.format(org): {'url': 'https://ca.{}-net:7054'.format(org), 'httpOptions': {'verify': False}, 'tlsCACerts': {'path': 'secret/{}/msp/tlscacerts/tlsca.pem'.format(org)}, 'caName': 'ca.{}-net'.format(org)}}
 
 
     #caliperConfig["clients"] = genCaliperClients(domainName, orgsCount, orderersCount, peerCounts)
@@ -1020,7 +1044,7 @@ def genBAFOrderers(domainName, orgsCount, orderersCount):
 
 
 
-def getBAFnetwork(domainName, orgsCount, orderersCount, chaincodeName, peerCounts, chaincodeversion, chaincode_lang, chaincode_init_function, chaincode_path, orgNames, BAFgit_protocol, BAFgit_url, BAFgitbranch, BAFgitrelease_dir, BAFgitchart_source, BAFgit_repo, BAFgitusername, BAFgitpassword, BAFgitemail, BAFgitprivate_key, BAFk8sContext, BAFk8sConfig_file, vaultUrl, vaultRootToken):
+def getBAFnetwork(domainName, orgsCount, orderersCount, chaincodeName, peerCounts, chaincodeversion, chaincode_lang, chaincode_init_function, chaincode_path, orgNames, BAFgit_protocol, BAFgit_url, BAFgitbranch, BAFgitrelease_dir, BAFgitchart_source, BAFgit_repo, BAFgitusername, BAFgitpassword, BAFgitemail, BAFgitprivate_key, BAFk8sContext, BAFk8sConfig_file, vaultUrl, vaultRootToken, endorsersList):
 
     bafNetwork = {}
     
@@ -1145,6 +1169,7 @@ def generate():
         try:
             fabricConfig = yaml.safe_load(stream)
 
+            endorsersBooleanList= []
             ordererOwnershipList= []
             ordererOwners= []
             peerCounts= []
@@ -1156,10 +1181,13 @@ def generate():
                 ordererOwnershipList.append(listOfOrgs[org]["orderer"])
                 peerCounts.append(listOfOrgs[org]["numberOfPeers"])
                 orgNames.append(listOfOrgs[org]["name"])
+                endorsersBooleanList.append(listOfOrgs[org]["endorser"])
             #orderersCount=(len([idx for idx in range(len(ordererOwnershipList)) if ordererOwnershipList[idx] == True]))
             orderersCount = len(np.unique(ordererOwnershipList))
             print(ordererOwnershipList, orderersCount)
             domainName = fabricConfig["domain_name"]#"svc.cluster.local"
+            endorsersList=([orgNames[idx] for idx in range(len(endorsersBooleanList)) if endorsersBooleanList[idx] == True])
+            print(endorsersList, endorsersBooleanList)
 
             BAFgit_protocol = fabricConfig["BAFgitops"]["git_protocol"]
             BAFgit_url = fabricConfig["BAFgitops"]["git_url"]
@@ -1237,12 +1265,13 @@ def generate():
 
     #genFabricrequirements(orgsCount, orderersCount, peerCounts)
 
-    getCaliperNetworkConfig(domainName, orgsCount, orderersCount, chaincodeName, peerCounts, chaincodeversion, chaincode_lang, chaincode_init_function, chaincode_path, orgNames, chaincode_init_arguments, chaincode_created)
+    getCaliperNetworkConfig(domainName, orgsCount, orderersCount, chaincodeName, peerCounts, chaincodeversion, chaincode_lang, chaincode_init_function, chaincode_path, orgNames, chaincode_init_arguments, chaincode_created, endorsersList)
 
-    for org in orgNames:
-        getCaliperConnectionProfile(domainName, orgsCount, orderersCount, chaincodeName, peerCounts, chaincodeversion, chaincode_lang, chaincode_init_function, chaincode_path, org)
+    #for org in orgNames:
+    for org in range(len(endorsersList)):
+        getCaliperConnectionProfile(domainName, orgsCount, orderersCount, chaincodeName, peerCounts, chaincodeversion, chaincode_lang, chaincode_init_function, chaincode_path, endorsersList[org], ordererOwnershipList[org])
 
-    getBAFnetwork(domainName, orgsCount, orderersCount, chaincodeName, peerCounts, chaincodeversion, chaincode_lang, chaincode_init_function, chaincode_path, orgNames, BAFgit_protocol, BAFgit_url, BAFgitbranch, BAFgitrelease_dir, BAFgitchart_source, BAFgit_repo, BAFgitusername, BAFgitpassword, BAFgitemail, BAFgitprivate_key, BAFk8sContext, BAFk8sConfig_file, vaultUrl, vaultRootToken)
+    getBAFnetwork(domainName, orgsCount, orderersCount, chaincodeName, peerCounts, chaincodeversion, chaincode_lang, chaincode_init_function, chaincode_path, orgNames, BAFgit_protocol, BAFgit_url, BAFgitbranch, BAFgitrelease_dir, BAFgitchart_source, BAFgit_repo, BAFgitusername, BAFgitpassword, BAFgitemail, BAFgitprivate_key, BAFk8sContext, BAFk8sConfig_file, vaultUrl, vaultRootToken, endorsersList)
 
     #genNetwork(domainName, orgsCount, orderersCount, peerCounts)
     #genCrypto(domainName, orgsCount, orderersCount, peerCounts)

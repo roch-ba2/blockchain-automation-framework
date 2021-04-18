@@ -26,20 +26,22 @@ organizations:
   name: carrier
   orderer: supplychain
   numberOfPeers: 1
+  endorser: true
 
 - id: 2
   name: manufacturer
   orderer: supplychain
   numberOfPeers: 1
+  endorser: true
 
 - id: 3
   name: supplychain
   orderer: supplychain
   numberOfPeers: 1
-
+  endorser: false
 
 - id: 4
   name: buyer
   orderer: supplychain
   numberOfPeers: 1
-
+  endorser: false
