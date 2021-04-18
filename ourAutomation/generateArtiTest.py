@@ -617,7 +617,7 @@ def genCaliperChannels(domainName, orgsCount, orderersCount, chaincodeName, peer
     #           "created" : chaincode_created})
 
 
-    chConfig["contracts"] = {"id" : chaincodeName,
+    chConfig["contracts"] = [{"id" : chaincodeName,
                 "contractID" : chaincodeName,
                "install": {
                     "version" : chaincodeversion,
@@ -625,14 +625,16 @@ def genCaliperChannels(domainName, orgsCount, orderersCount, chaincodeName, peer
                     "path" : chaincode_path,},
                'instantiate': {'initFunction': chaincode_init_function},
                "initArguments" : chaincode_init_arguments,
-               "created" : chaincode_created}
+               "created" : chaincode_created,
+               "endorsementPolicy" : {'policy': {'{}-of'.format(len(orgNames)): [{'signed-by': x} for x in range(len(orgNames))]},
+               "identities" : contractsIdentitiesList(orgNames)}}]
 
     #caliperNetwork
     # can use here endorsersList
     #{'policy': {'{}}-of'.format(len(orgNames)): [{'signed-by': x} for x in range(len(orgNames))]}}
                                                 
-    chConfig["contracts"]["endorsementPolicy"] = {'policy': {'{}-of'.format(len(orgNames)): [{'signed-by': x} for x in range(len(orgNames))]}}
-    chConfig["contracts"]["identities"] = contractsIdentitiesList(orgNames)
+    #chConfig["contracts"]["endorsementPolicy"] = {'policy': {'{}-of'.format(len(orgNames)): [{'signed-by': x} for x in range(len(orgNames))]}}
+    #chConfig["contracts"]["identities"] = contractsIdentitiesList(orgNames)
 
     return chConfig
 
