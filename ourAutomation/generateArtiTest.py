@@ -1076,6 +1076,39 @@ def getBAFnetwork(domainName, orgsCount, orderersCount, chaincodeName, peerCount
 
 
 
+def caliperValuesEndorsersList(orgNames):
+    mspConfig=''
+    for x in range(len(orgNames)):
+        if x !=0:
+            mspConfig = mspConfig + ' {}'.format(orgNames[x])
+        else:
+            mspConfig = mspConfig + '{}'.format(orgNames[x])
+
+        #mspConfig.append('{}MSP'.format(x))
+    return '"{}"'.format(mspConfig)
+
+
+def getCaliperValues(replicaMasterCount, replicaWorkersCount, repository, vaultUrl, vaultRootToken, endorsersList):
+
+    caliperValues = {'ingress': {'tls': [], 'enabled': False, 'hosts': [{'paths': [], 'host': 'chart-example.local'}],
+    'annotations': {}}, 'replicaWorkersCount': replicaWorkersCount, 'image': {'pullPolicy': 'Always', 'tag': 'b2c2',
+    'repository': repository}, 'args': {'second': 'manager', 'first': 'launch'},
+    'replicaMasterCount': replicaMasterCount, 'VAULT_TOKEN': vaultRootToken, 'VAULT_ADDR': vaultUrl,
+    'fullnameOverride': '', 'securityContext': {}, 'service': {'type': 'ClusterIP', 'port': 80},
+    'serviceAccount': {'create': True, 'name': ''}, 'ENDORSING_ORG_NAMES': caliperValuesEndorsersList(endorsersList), 'podSecurityContext': {},
+    'nodeSelector': {}, 'affinity': {}, 'nameOverride': '', 'tolerations': [], 'imagePullSecrets': [], 'resources': {}}
+
+
+
+    fHandle = open("values.yaml", "w")
+    stream = yaml.dump(caliperValues, default_flow_style = False, sort_keys=False)
+    fHandle.write(stream.replace("'", ""))
+    fHandle.close()
+
+
+
+
+
 
 """
 def generateCerts():
@@ -1234,6 +1267,10 @@ def generate():
             chaincode_path = caliperConfig["chaincode_path"]
             chaincode_init_arguments = caliperConfig["initArguments"]
             chaincode_created = caliperConfig["created"]
+            replicaMasterCount = caliperConfig["replicaMasterCount"]
+            replicaWorkersCount = caliperConfig["replicaWorkersCount"]
+            caliperImageRepository = caliperConfig["caliperImageRepository"]
+            
             #print("chaincode", chaincodeName)
             #print("chaincodeversion", chaincodeversion)
             #print("domain_name",domainName)
@@ -1273,6 +1310,8 @@ def generate():
 
     getBAFnetwork(domainName, orgsCount, orderersCount, chaincodeName, peerCounts, chaincodeversion, chaincode_lang, chaincode_init_function, chaincode_path, orgNames, BAFgit_protocol, BAFgit_url, BAFgitbranch, BAFgitrelease_dir, BAFgitchart_source, BAFgit_repo, BAFgitusername, BAFgitpassword, BAFgitemail, BAFgitprivate_key, BAFk8sContext, BAFk8sConfig_file, vaultUrl, vaultRootToken, endorsersList)
 
+
+    getCaliperValues(replicaMasterCount, replicaWorkersCount, caliperImageRepository, vaultUrl, vaultRootToken, endorsersList)
     #genNetwork(domainName, orgsCount, orderersCount, peerCounts)
     #genCrypto(domainName, orgsCount, orderersCount, peerCounts)
 

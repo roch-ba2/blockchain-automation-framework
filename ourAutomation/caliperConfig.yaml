@@ -5,3 +5,6 @@ chaincode_init_function: init
 chaincode_path: simpleauction/
 initArguments: []
 created: true
+replicaMasterCount: 1
+replicaWorkersCount: 1
+caliperImageRepository: ayhamkassab/caliper
