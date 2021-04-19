@@ -1083,7 +1083,7 @@ pathToBAF, chaincodeversion, chaincodeName, BAFChaincodePath, cloud_provider):
 
             'services': {'consensus': {'grpc': {'port': 9092}, 'type': 'broker', 'name': 'kafka', 'replicas': 3},
             'ca': {'grpc': {'port': 7054}, 'type': 'ca', 'name': 'ca',
-            'subject': '"/C=CH/ST=Zurich/L=Zurich/O={}/CN=ca.{}-net"'.format(orgNames[org], orgNames[org])},
+            'subject': '"/C=GB/ST=London/L=London/O=Orderer/CN=ca.{}-net"'.format(orgNames[org], orgNames[org])},
 
 
             'orderers': [{'consensus': 'kafka', 'grpc': {'port': 7050}, 'orderer': '', 'type': 'orderer',
@@ -1103,7 +1103,7 @@ pathToBAF, chaincodeversion, chaincodeName, BAFChaincodePath, cloud_provider):
             'location': 'Zurich', 'vault': {'url': '"{}"'.format(VAULT_ADDR), 'root_token': '"{}"'.format(VAULT_TOKEN),
             'secret_path': '"secret"'},
             
-            'subject': '"/C=GB/ST=London/L=London/O=Orderer/CN=ca.{}-net"'.format(orgNames[org]), 'type': 'orderer'}
+            'subject': '"O=Orderer,L=51.50/-0.13/London,C=GB"', 'type': 'orderer'}
             
 
 
@@ -1124,7 +1124,7 @@ def genBAFOrderers(orgNames, pathToBAF):
     for org in orgNames:
         if org not in used:
             ordererConfig={'org_name': org, 'orderer': '', 'name': 'orderer1',
-                'certificate': '{}/build/orderer1.crt'.format(pathToBAF), 'type': 'orderer',
+                'certificate': '{}/build/{}/orderer1.crt'.format(pathToBAF, org), 'type': 'orderer',
                 'uri': 'orderer1.{}-net:7050'.format(org)}
             config.append(ordererConfig)
             used.append(org)

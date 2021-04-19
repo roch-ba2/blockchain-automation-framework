@@ -161,7 +161,7 @@ network:
     cloud_provider: minikube
     cli: disabled
     country: CH
-    subject: "/C=GB/ST=London/L=London/O=Orderer/CN=ca.supplychain-net"
+    subject: "O=Orderer,L=51.50/-0.13/London,C=GB"
     org_status: new
     external_url_suffix: develop.local.com
     state: Zurich
@@ -182,7 +182,7 @@ network:
           port: 7054
         type: ca
         name: ca
-        subject: "/C=CH/ST=Zurich/L=Zurich/O=supplychain/CN=ca.supplychain-net"
+        subject: "/C=GB/ST=London/L=London/O=Orderer/CN=ca.supplychain-net"
       orderers:
       - consensus: kafka
         grpc:
@@ -430,7 +430,7 @@ network:
     cloud_provider: minikube
     cli: disabled
     country: CH
-    subject: "/C=GB/ST=London/L=London/O=Orderer/CN=ca.controller-net"
+    subject: "O=Orderer,L=51.50/-0.13/London,C=GB"
     org_status: new
     external_url_suffix: develop.local.com
     state: Zurich
@@ -451,7 +451,7 @@ network:
           port: 7054
         type: ca
         name: ca
-        subject: "/C=CH/ST=Zurich/L=Zurich/O=controller/CN=ca.controller-net"
+        subject: "/C=GB/ST=London/L=London/O=Orderer/CN=ca.controller-net"
       orderers:
       - consensus: kafka
         grpc:
@@ -469,13 +469,13 @@ network:
   orderers:
   - org_name: supplychain
     name: orderer1
-    certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/orderer1.crt
+    certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/supplychain/orderer1.crt
     uri: orderer1.supplychain-net:7050
     orderer: 
     type: orderer
   - org_name: controller
     name: orderer1
-    certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/orderer1.crt
+    certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/controller/orderer1.crt
     uri: orderer1.controller-net:7050
     orderer: 
     type: orderer
