@@ -28,13 +28,13 @@ vault:
 organizations:
 - id: 1
   name: carrier
-  orderer: carrier
+  orderer: supplychain
   numberOfPeers: 1 #if 0 then endorser should be false
   endorser: true
 
 - id: 2
   name: manufacturer
-  orderer: manufacturer
+  orderer: supplychain
   numberOfPeers: 1
   endorser: true
 
@@ -42,23 +42,23 @@ organizations:
   name: supplychain
   orderer: supplychain
   numberOfPeers: 1
-  endorser: true
+  endorser: false
 
 - id: 4
   name: buyer
-  orderer: buyer
+  orderer: controller
   numberOfPeers: 1
   endorser: true
 
 - id: 5
   name: windowshopper
-  orderer: windowshopper
+  orderer: controller
   numberOfPeers: 1
   endorser: true
 
 - id: 6
   name: dealer
-  orderer: dealer
+  orderer: controller
   numberOfPeers: 1
   endorser: true
 
@@ -66,4 +66,4 @@ organizations:
   name: controller
   orderer: controller
   numberOfPeers: 1
-  endorser: true
+  endorser: false
