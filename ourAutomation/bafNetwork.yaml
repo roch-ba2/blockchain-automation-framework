@@ -23,8 +23,8 @@ network:
     state: Zurich
     location: Zurich
     vault:
-      url: "http://130.104.229.21:30000"
-      root_token: "s.32JqFMwzbrqbeFl8bKI9R2QC"
+      url: "http://130.104.229.14:30000"
+      root_token: "s.gUvPCmpDNplYvrkBaiboqHxR"
       secret_path: "secret"
     services:
       ca:
@@ -95,8 +95,8 @@ network:
     state: Zurich
     location: Zurich
     vault:
-      url: "http://130.104.229.21:30000"
-      root_token: "s.32JqFMwzbrqbeFl8bKI9R2QC"
+      url: "http://130.104.229.14:30000"
+      root_token: "s.gUvPCmpDNplYvrkBaiboqHxR"
       secret_path: "secret"
     services:
       ca:
@@ -167,8 +167,8 @@ network:
     state: Zurich
     location: Zurich
     vault:
-      url: "http://130.104.229.21:30000"
-      root_token: "s.32JqFMwzbrqbeFl8bKI9R2QC"
+      url: "http://130.104.229.14:30000"
+      root_token: "s.gUvPCmpDNplYvrkBaiboqHxR"
       secret_path: "secret"
     services:
       consensus:

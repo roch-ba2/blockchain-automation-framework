@@ -21,8 +21,8 @@ BAFk8s:
   config_file: "~/.kube/config"
 
 vault:
-  url: "http://130.104.229.21:30000"
-  root_token: "s.32JqFMwzbrqbeFl8bKI9R2QC"
+  url: "http://130.104.229.14:30000"
+  root_token: "s.gUvPCmpDNplYvrkBaiboqHxR"
 
 
 organizations:
