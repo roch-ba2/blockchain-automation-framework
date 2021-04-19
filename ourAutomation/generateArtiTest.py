@@ -1050,25 +1050,25 @@ BAFgitemail, BAFgitprivate_key, BAFk8sContext, BAFk8sConfig_file, VAULT_ADDR, VA
             'certificate': '{}/build/{}/ca.crt'.format(pathToBAF, orgNames[org]),
             'peerAddress': 'peer0.{}-net:7051'.format(orgNames[org]), 'grpc': {'port': 7051}, 'restserver': {'targetPort': 20001, 'port': 20001},
             'couchdb': {'port': 5984}, 'gossippeeraddress': 'peer0.{}-net:7051'.format(orgNames[org]), 'chaincode': {'version': '"{}"'.format(chaincodeversion),
-            'name': '"{}"'.format(chaincodeName), 'repository': {'username': '{}'.format(BAFgitusername), 'url': '{}'.format(BAFgit_url),
-            'password': '{}'.format(BAFgitpassword), 'branch': '{}'.format(BAFgitbranch), 'path': '"{}"'.format(BAFChaincodePath)},
-            'endorsements': '', 'maindirectory': '.', 'arguments': '\\"init\\",\\"\\"'}, 'peer': None, 'type': 'anchor',
+            'name': '"{}"'.format(chaincodeName), 'repository': {'username': '"{}"'.format(BAFgitusername), 'url': '"{}"'.format(BAFgit_url),
+            'password': '"{}"'.format(BAFgitpassword), 'branch': '{}'.format(BAFgitbranch), 'path': '"{}"'.format(BAFChaincodePath)},
+            'endorsements': '""', 'maindirectory': '"."', 'arguments': '\\"init\\",\\"\\"'}, 'peer': None, 'type': 'anchor',
             'events': {'port': 7053}, 'expressapi': {'targetPort': 3000, 'port': 3000}, 'cli': 'disabled'}]},
             
-            'k8s': {'region': '"cluster_region"', 'config_file': '{}'.format(BAFk8sConfig_file), 'context': '{}'.format(BAFk8sContext)},
+            'k8s': {'region': '"cluster_region"', 'config_file': '"{}"'.format(BAFk8sConfig_file), 'context': '"{}"'.format(BAFk8sContext)},
             
             'cli': 'enabled',
 
-            'gitops': {'username': '{}'.format(BAFgitusername),
-            'private_key': '{}/build/gitops'.format(pathToBAF),
-            'git_protocol': '{}'.format(BAFgit_protocol), 'chart_source': '{}'.format(BAFgitchart_source),
-            'git_url': '{}'.format(BAFgit_url),
-            'branch': '{}'.format(BAFgitbranch), 'release_dir': '{}'.format(BAFgitrelease_dir),
-            'password': '{}'.format(BAFgitpassword), 'email': '{}'.format(BAFgitemail), 'git_repo': '{}'.format(BAFgit_repo)},
+            'gitops': {'username': '"{}"'.format(BAFgitusername),
+            'private_key': '"{}/build/gitops"'.format(pathToBAF),
+            'git_protocol': '"{}"'.format(BAFgit_protocol), 'chart_source': '"{}"'.format(BAFgitchart_source),
+            'git_url': '"{}://{}"'.format(BAFgit_protocol, BAFgit_url),
+            'branch': '"{}"'.format(BAFgitbranch), 'release_dir': '"{}"'.format(BAFgitrelease_dir),
+            'password': '"{}"'.format(BAFgitpassword), 'email': '"{}"'.format(BAFgitemail), 'git_repo': '"{}"'.format(BAFgit_repo)},
 
             'cloud_provider': '{}'.format(cloud_provider), 'name': orgNames[org], 'country': 'CH', 'state': 'Zurich',
-            'location': 'Zurich', 'vault': {'url': '{}'.format(VAULT_ADDR), 'root_token': '{}'.format(VAULT_TOKEN),
-            'secret_path': 'secret'},
+            'location': 'Zurich', 'vault': {'url': '"{}"'.format(VAULT_ADDR), 'root_token': '"{}"'.format(VAULT_TOKEN),
+            'secret_path': '"secret"'},
 
             'subject': 'O={},OU={},L=47.38/8.54/Zurich,C=CH', 'type': 'peer'.format(orgNames[org], orgNames[org])}
             
@@ -1078,7 +1078,7 @@ BAFgitemail, BAFgitprivate_key, BAFk8sContext, BAFk8sConfig_file, VAULT_ADDR, VA
 
             'services': {'consensus': {'grpc': {'port': 9092}, 'type': 'broker', 'name': 'kafka', 'replicas': 3},
             'ca': {'grpc': {'port': 7054}, 'type': 'ca', 'name': 'ca',
-            'subject': '/C=CH/ST=Zurich/L=Zurich/O={}/CN=ca.{}-net'.format(orgNames[org], orgNames[org])},
+            'subject': '"/C=CH/ST=Zurich/L=Zurich/O={}/CN=ca.{}-net"'.format(orgNames[org], orgNames[org])},
 
 
             'orderers': [{'consensus': 'kafka', 'grpc': {'port': 7050}, 'orderer': None, 'type': 'orderer',
@@ -1087,18 +1087,18 @@ BAFgitemail, BAFgitprivate_key, BAFk8sContext, BAFk8sConfig_file, VAULT_ADDR, VA
             'k8s': {'region': '"cluster_region"', 'config_file': '{}'.format(BAFk8sConfig_file), 'context': '{}'.format(BAFk8sContext)},
             'cli': 'disabled',
             
-            'gitops': {'username': '{}'.format(BAFgitusername),
-            'private_key': '{}/build/gitops'.format(pathToBAF),
-            'git_protocol': '{}'.format(BAFgit_protocol), 'chart_source': '{}'.format(BAFgitchart_source),
-            'git_url': '{}'.format(BAFgit_url),
-            'branch': '{}'.format(BAFgitbranch), 'release_dir': '{}'.format(BAFgitrelease_dir),
-            'password': '{}'.format(BAFgitpassword), 'email': '{}'.format(BAFgitemail), 'git_repo': '{}'.format(BAFgit_repo)},
+            'gitops': {'username': '"{}"'.format(BAFgitusername),
+            'private_key': '"{}/build/gitops"'.format(pathToBAF),
+            'git_protocol': '"{}"'.format(BAFgit_protocol), 'chart_source': '"{}"'.format(BAFgitchart_source),
+            'git_url': '"{}://{}"'.format(BAFgit_protocol, BAFgit_url),
+            'branch': '"{}"'.format(BAFgitbranch), 'release_dir': '"{}"'.format(BAFgitrelease_dir),
+            'password': '"{}"'.format(BAFgitpassword), 'email': '"{}"'.format(BAFgitemail), 'git_repo': '"{}"'.format(BAFgit_repo)},
 
             'cloud_provider': '{}'.format(cloud_provider), 'name': orgNames[org], 'country': 'CH', 'state': 'Zurich',
-            'location': 'Zurich', 'vault': {'url': '{}'.format(VAULT_ADDR), 'root_token': '{}'.format(VAULT_TOKEN),
-            'secret_path': 'secret'},
+            'location': 'Zurich', 'vault': {'url': '"{}"'.format(VAULT_ADDR), 'root_token': '"{}"'.format(VAULT_TOKEN),
+            'secret_path': '"secret"'},
             
-            'subject': 'O=Orderer,L=51.50/-0.13/London,C=GB', 'type': 'orderer'}
+            'subject': '"O=Orderer,L=51.50/-0.13/London,C=GB"', 'type': 'orderer'}
             
 
 
@@ -1191,9 +1191,9 @@ def getBAFnetwork(domainName, orgsCount, orderersCount, chaincodeName, peerCount
 
     'version': '2.2.0', 'orderers': [{'org_name': 'supplychain', 'orderer': None, 'name': 'orderer1',
     'certificate': '{}/build/orderer1.crt'.format(pathToBAF), 'type': 'orderer',
-    'uri': 'orderer1.supplychain-net:7050'}], 'env': {'retry_count': 50, 'type': 'local', 'proxy': 'none',
-    'ambassadorPorts': '15010,15020', 'external_dns': 'disabled'}, 'docker': {'url': 'index.docker.io/hyperledgerlabs',
-    'username': 'docker_username', 'password': 'docker_password'}, 'type': 'fabric'}}
+    'uri': 'orderer1.supplychain-net:7050'}], 'env': {'retry_count': 50, 'type': '"local"', 'proxy': 'none',
+    'ambassadorPorts': '15010,15020', 'external_dns': 'disabled'}, 'docker': {'url': '"index.docker.io/hyperledgerlabs"',
+    'username': '"docker_username"', 'password': '"docker_password"'}, 'type': 'fabric'}}
 
 
 
