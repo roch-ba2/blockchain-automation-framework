@@ -1,0 +1,28 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: windowshopper-net-ca-tools
+  namespace: windowshopper-net
+  annotations:
+    fluxcd.io/automated: "false"
+spec:
+  releaseName: windowshopper-net-ca-tools
+  chart:
+    git: https://github.com/ayhamkassab/blockchain-automation-framework.git
+    ref: master
+    path: platforms/hyperledger-fabric/charts/catools
+  values:
+    metadata:
+      namespace: windowshopper-net
+      name: ca-tools
+
+    replicaCount: 1
+
+    image:
+      repository: hyperledger/fabric-ca-tools
+      tag: 1.2.1
+      pullPolicy: IfNotPresent
+      
+    storage:
+      storageclassname: windowshoppersc
+      storagesize: 512Mi
