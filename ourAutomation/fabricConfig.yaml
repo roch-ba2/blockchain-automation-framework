@@ -22,19 +22,19 @@ BAFk8s:
 
 vault:
   url: "http://130.104.229.14:30000"
-  root_token: "s.gUvPCmpDNplYvrkBaiboqHxR"
+  root_token: "s.1foGgMdHgsEH1HuhOaS0HB9z"
 
 
 organizations:
 - id: 1
   name: carrier
-  orderer: supplychain
+  orderer: carrier
   numberOfPeers: 1
   endorser: true
 
 - id: 2
   name: manufacturer
-  orderer: supplychain
+  orderer: manufacturer
   numberOfPeers: 1
   endorser: true
 
@@ -42,4 +42,28 @@ organizations:
   name: supplychain
   orderer: supplychain
   numberOfPeers: 1
-  endorser: false
+  endorser: true
+
+- id: 4
+  name: buyer
+  orderer: buyer
+  numberOfPeers: 1
+  endorser: true
+
+- id: 5
+  name: windowshopper
+  orderer: windowshopper
+  numberOfPeers: 1
+  endorser: true
+
+- id: 6
+  name: dealer
+  orderer: dealer
+  numberOfPeers: 1
+  endorser: true
+
+- id: 7
+  name: controller
+  orderer: controller
+  numberOfPeers: 1
+  endorser: true

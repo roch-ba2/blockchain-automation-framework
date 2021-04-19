@@ -1113,16 +1113,15 @@ BAFgitemail, BAFgitprivate_key, BAFk8sContext, BAFk8sConfig_file, VAULT_ADDR, VA
     return config
 
 
-def genBAFOrderers(domainName, orgsCount, orderersCount):
-    ordererConfig = {}
-    for ordcounter in range(orderersCount):
+def genBAFOrderers(orgNames, pathToBAF):
+    config = []
+    for org in orgNames:
         
-        ordererConfig["ord{}-hlf-ord".format(ordcounter+1)] = {"url" : "grpc://fabric-ord{}:7050".format(ordcounter+1),
-                                                               "grpcOptions" : {"ssl-target-name-override" : "fabric-ord{}".format(ordcounter+1)}}
-
-    return ordererConfig
-
-
+        ordererConfig={'org_name': org, 'orderer': None, 'name': 'orderer1',
+            'certificate': '{}/build/orderer1.crt'.format(pathToBAF), 'type': 'orderer',
+            'uri': 'orderer1.{}-net:7050'.format(org)}
+        config.append(ordererConfig)
+    return config
 
 def TOUSEEEEchannelParticipantsList(orgNames):
     mspConfig=''
@@ -1189,9 +1188,7 @@ def getBAFnetwork(domainName, orgsCount, orderersCount, chaincodeName, peerCount
 
 
 
-    'version': '2.2.0', 'orderers': [{'org_name': 'supplychain', 'orderer': None, 'name': 'orderer1',
-    'certificate': '{}/build/orderer1.crt'.format(pathToBAF), 'type': 'orderer',
-    'uri': 'orderer1.supplychain-net:7050'}], 'env': {'retry_count': 50, 'type': '"local"', 'proxy': 'none',
+    'version': '2.2.0', 'orderers': genBAFOrderers(ordererOwnershipList, pathToBAF), 'env': {'retry_count': 50, 'type': '"local"', 'proxy': 'none',
     'ambassadorPorts': '15010,15020', 'external_dns': 'disabled'}, 'docker': {'url': '"index.docker.io/hyperledgerlabs"',
     'username': '"docker_username"', 'password': '"docker_password"'}, 'type': 'fabric'}}
 

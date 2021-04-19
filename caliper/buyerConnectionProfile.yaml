@@ -1,33 +1,33 @@
 organizations:
-      carrier-net:
+      buyer-net:
         peers:
-        - peer0.carrier-net
+        - peer0.buyer-net
         orderers:
-        - orderer1.carrier-net
+        - orderer1.buyer-net
         certificateAuthorities:
-        - ca.carrier-net
-        mspid: carrierMSP
+        - ca.buyer-net
+        mspid: buyerMSP
     peers:
-      peer0.carrier-net:
-        url: grpcs://peer0.carrier-net:7051
+      peer0.buyer-net:
+        url: grpcs://peer0.buyer-net:7051
         tlsCACerts:
-          path: secret/carrier/msp/tlscacerts/tlsca.pem
+          path: secret/buyer/msp/tlscacerts/tlsca.pem
     orderers:
-      orderer1.carrier-net:
-        url: grpcs://orderer1.carrier-net:7050
+      orderer1.buyer-net:
+        url: grpcs://orderer1.buyer-net:7050
         tlsCACerts:
-          path: secret/carrier/msp/tlscacerts/orderer-tlsca.pem
+          path: secret/buyer/msp/tlscacerts/orderer-tlsca.pem
     name: test-network-carrier-net
     certificateAuthorities:
-      ca.carrier-net:
-        url: https://ca.carrier-net:7054
+      ca.buyer-net:
+        url: https://ca.buyer-net:7054
         httpOptions:
           verify: false
         tlsCACerts:
-          path: secret/carrier/msp/tlscacerts/tlsca.pem
-        caName: ca.carrier-net
+          path: secret/buyer/msp/tlscacerts/tlsca.pem
+        caName: ca.buyer-net
     client:
-      organization: carrier-net
+      organization: buyer-net
       connection:
         timeout:
           peer:
@@ -38,12 +38,12 @@ organizations:
     channels:
       allchannel:
         peers:
-          peer0.carrier-net:
+          peer0.buyer-net:
             eventSource: true
             chaincodeQuery: true
             endorsingPeer: true
             discover: true
             ledgerQuery: true
         orderers:
-        - orderer1.carrier-net
+        - orderer1.buyer-net
     version: 1.0.0

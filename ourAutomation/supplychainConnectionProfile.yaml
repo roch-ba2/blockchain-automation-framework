@@ -8,11 +8,10 @@ organizations:
     - ca.supplychain-net
     mspid: supplychainMSP
 peers:
-  peers:
-    peer0.supplychain-net:
-      url: grpcs://peer0.supplychain-net:7051
-      tlsCACerts:
-        path: secret/supplychain/msp/tlscacerts/tlsca.pem
+  peer0.supplychain-net:
+    url: grpcs://peer0.supplychain-net:7051
+    tlsCACerts:
+      path: secret/supplychain/msp/tlscacerts/tlsca.pem
 orderers:
   orderer1.supplychain-net:
     url: grpcs://orderer1.supplychain-net:7050

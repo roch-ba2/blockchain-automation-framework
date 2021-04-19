@@ -25,9 +25,10 @@ fullnameOverride:
 podSecurityContext: {}
 nodeSelector: {}
 tolerations: []
-ENDORSING_ORG_NAMES: "carrier manufacturer"
+ENDORSING_ORG_NAMES: "carrier manufacturer supplychain buyer windowshopper dealer
+  controller"
 nameOverride: 
-VAULT_TOKEN: s.gUvPCmpDNplYvrkBaiboqHxR
+VAULT_TOKEN: s.1foGgMdHgsEH1HuhOaS0HB9z
 replicaMasterCount: 1
 affinity: {}
 resources: {}

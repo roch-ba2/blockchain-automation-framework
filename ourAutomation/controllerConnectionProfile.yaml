@@ -1,0 +1,49 @@
+organizations:
+  controller-net:
+    peers:
+    - peer0.controller-net
+    orderers:
+    - orderer1.controller-net
+    certificateAuthorities:
+    - ca.controller-net
+    mspid: controllerMSP
+peers:
+  peer0.controller-net:
+    url: grpcs://peer0.controller-net:7051
+    tlsCACerts:
+      path: secret/controller/msp/tlscacerts/tlsca.pem
+orderers:
+  orderer1.controller-net:
+    url: grpcs://orderer1.controller-net:7050
+    tlsCACerts:
+      path: secret/controller/msp/tlscacerts/orderer-tlsca.pem
+name: test-network-carrier-net
+certificateAuthorities:
+  ca.controller-net:
+    url: https://ca.controller-net:7054
+    httpOptions:
+      verify: false
+    tlsCACerts:
+      path: secret/controller/msp/tlscacerts/tlsca.pem
+    caName: ca.controller-net
+client:
+  organization: controller-net
+  connection:
+    timeout:
+      peer:
+        endorser: "300"
+        eventHub: "300"
+        eventReg: "300"
+      orderer: "300"
+channels:
+  allchannel:
+    peers:
+      peer0.controller-net:
+        eventSource: true
+        chaincodeQuery: true
+        endorsingPeer: true
+        discover: true
+        ledgerQuery: true
+    orderers:
+    - orderer1.controller-net
+version: 1.0.0

@@ -29,6 +29,66 @@ organizations:
     path: "./manufacturerConnectionProfile.yaml"
     discover: True
   mspid: manufacturerMSP
+- identities:
+    certificates:
+    - admin: true
+      clientPrivateKey:
+        path: secret/supplychain/tls/admin.pem
+      clientSignedCert:
+        path: secret/supplychain/tls/admin.cert
+      name: "admin"
+  connectionProfile:
+    path: "./supplychainConnectionProfile.yaml"
+    discover: True
+  mspid: supplychainMSP
+- identities:
+    certificates:
+    - admin: true
+      clientPrivateKey:
+        path: secret/buyer/tls/admin.pem
+      clientSignedCert:
+        path: secret/buyer/tls/admin.cert
+      name: "admin"
+  connectionProfile:
+    path: "./buyerConnectionProfile.yaml"
+    discover: True
+  mspid: buyerMSP
+- identities:
+    certificates:
+    - admin: true
+      clientPrivateKey:
+        path: secret/windowshopper/tls/admin.pem
+      clientSignedCert:
+        path: secret/windowshopper/tls/admin.cert
+      name: "admin"
+  connectionProfile:
+    path: "./windowshopperConnectionProfile.yaml"
+    discover: True
+  mspid: windowshopperMSP
+- identities:
+    certificates:
+    - admin: true
+      clientPrivateKey:
+        path: secret/dealer/tls/admin.pem
+      clientSignedCert:
+        path: secret/dealer/tls/admin.cert
+      name: "admin"
+  connectionProfile:
+    path: "./dealerConnectionProfile.yaml"
+    discover: True
+  mspid: dealerMSP
+- identities:
+    certificates:
+    - admin: true
+      clientPrivateKey:
+        path: secret/controller/tls/admin.pem
+      clientSignedCert:
+        path: secret/controller/tls/admin.cert
+      name: "admin"
+  connectionProfile:
+    path: "./controllerConnectionProfile.yaml"
+    discover: True
+  mspid: controllerMSP
 name: Fabric
 caliper:
   sutOptions:
@@ -50,9 +110,14 @@ channels:
       language: golang
     endorsementPolicy:
       policy:
-        2-of:
+        7-of:
         - signed-by: 0
         - signed-by: 1
+        - signed-by: 2
+        - signed-by: 3
+        - signed-by: 4
+        - signed-by: 5
+        - signed-by: 6
       identities:
       - role:
           name: member
@@ -60,6 +125,21 @@ channels:
       - role:
           name: member
           mspId: manufacturerMSP
+      - role:
+          name: member
+          mspId: supplychainMSP
+      - role:
+          name: member
+          mspId: buyerMSP
+      - role:
+          name: member
+          mspId: windowshopperMSP
+      - role:
+          name: member
+          mspId: dealerMSP
+      - role:
+          name: member
+          mspId: controllerMSP
     id: simpleauction
     contractID: simpleauction
   create:
@@ -67,6 +147,7 @@ channels:
       version: 0
       consortium: "SupplyChainConsortium"
       capabilities: []
-      msps: ["carrierMSP", "manufacturerMSP"]
+      msps: ["carrierMSP", "manufacturerMSP", "supplychainMSP", "buyerMSP", "windowshopperMSP",
+        "dealerMSP", "controllerMSP"]
   channelName: allchannel
 version: "2.0.0"

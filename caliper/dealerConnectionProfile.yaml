@@ -1,33 +1,33 @@
 organizations:
-      carrier-net:
+      dealer-net:
         peers:
-        - peer0.carrier-net
+        - peer0.dealer-net
         orderers:
-        - orderer1.carrier-net
+        - orderer1.dealer-net
         certificateAuthorities:
-        - ca.carrier-net
-        mspid: carrierMSP
+        - ca.dealer-net
+        mspid: dealerMSP
     peers:
-      peer0.carrier-net:
-        url: grpcs://peer0.carrier-net:7051
+      peer0.dealer-net:
+        url: grpcs://peer0.dealer-net:7051
         tlsCACerts:
-          path: secret/carrier/msp/tlscacerts/tlsca.pem
+          path: secret/dealer/msp/tlscacerts/tlsca.pem
     orderers:
-      orderer1.carrier-net:
-        url: grpcs://orderer1.carrier-net:7050
+      orderer1.dealer-net:
+        url: grpcs://orderer1.dealer-net:7050
         tlsCACerts:
-          path: secret/carrier/msp/tlscacerts/orderer-tlsca.pem
+          path: secret/dealer/msp/tlscacerts/orderer-tlsca.pem
     name: test-network-carrier-net
     certificateAuthorities:
-      ca.carrier-net:
-        url: https://ca.carrier-net:7054
+      ca.dealer-net:
+        url: https://ca.dealer-net:7054
         httpOptions:
           verify: false
         tlsCACerts:
-          path: secret/carrier/msp/tlscacerts/tlsca.pem
-        caName: ca.carrier-net
+          path: secret/dealer/msp/tlscacerts/tlsca.pem
+        caName: ca.dealer-net
     client:
-      organization: carrier-net
+      organization: dealer-net
       connection:
         timeout:
           peer:
@@ -38,12 +38,12 @@ organizations:
     channels:
       allchannel:
         peers:
-          peer0.carrier-net:
+          peer0.dealer-net:
             eventSource: true
             chaincodeQuery: true
             endorsingPeer: true
             discover: true
             ledgerQuery: true
         orderers:
-        - orderer1.carrier-net
+        - orderer1.dealer-net
     version: 1.0.0

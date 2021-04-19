@@ -1,0 +1,49 @@
+organizations:
+      windowshopper-net:
+        peers:
+        - peer0.windowshopper-net
+        orderers:
+        - orderer1.windowshopper-net
+        certificateAuthorities:
+        - ca.windowshopper-net
+        mspid: windowshopperMSP
+    peers:
+      peer0.windowshopper-net:
+        url: grpcs://peer0.windowshopper-net:7051
+        tlsCACerts:
+          path: secret/windowshopper/msp/tlscacerts/tlsca.pem
+    orderers:
+      orderer1.windowshopper-net:
+        url: grpcs://orderer1.windowshopper-net:7050
+        tlsCACerts:
+          path: secret/windowshopper/msp/tlscacerts/orderer-tlsca.pem
+    name: test-network-carrier-net
+    certificateAuthorities:
+      ca.windowshopper-net:
+        url: https://ca.windowshopper-net:7054
+        httpOptions:
+          verify: false
+        tlsCACerts:
+          path: secret/windowshopper/msp/tlscacerts/tlsca.pem
+        caName: ca.windowshopper-net
+    client:
+      organization: windowshopper-net
+      connection:
+        timeout:
+          peer:
+            endorser: "300"
+            eventHub: "300"
+            eventReg: "300"
+          orderer: "300"
+    channels:
+      allchannel:
+        peers:
+          peer0.windowshopper-net:
+            eventSource: true
+            chaincodeQuery: true
+            endorsingPeer: true
+            discover: true
+            ledgerQuery: true
+        orderers:
+        - orderer1.windowshopper-net
+    version: 1.0.0
