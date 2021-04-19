@@ -473,36 +473,6 @@ network:
     uri: orderer1.supplychain-net:7050
     orderer: null
     type: orderer
-  - org_name: supplychain
-    name: orderer1
-    certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/orderer1.crt
-    uri: orderer1.supplychain-net:7050
-    orderer: null
-    type: orderer
-  - org_name: supplychain
-    name: orderer1
-    certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/orderer1.crt
-    uri: orderer1.supplychain-net:7050
-    orderer: null
-    type: orderer
-  - org_name: controller
-    name: orderer1
-    certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/orderer1.crt
-    uri: orderer1.controller-net:7050
-    orderer: null
-    type: orderer
-  - org_name: controller
-    name: orderer1
-    certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/orderer1.crt
-    uri: orderer1.controller-net:7050
-    orderer: null
-    type: orderer
-  - org_name: controller
-    name: orderer1
-    certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/orderer1.crt
-    uri: orderer1.controller-net:7050
-    orderer: null
-    type: orderer
   - org_name: controller
     name: orderer1
     certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/orderer1.crt

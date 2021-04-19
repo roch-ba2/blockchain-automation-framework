@@ -1075,7 +1075,7 @@ pathToBAF, chaincodeversion, chaincodeName, BAFChaincodePath, cloud_provider):
             'location': 'Zurich', 'vault': {'url': '"{}"'.format(VAULT_ADDR), 'root_token': '"{}"'.format(VAULT_TOKEN),
             'secret_path': '"secret"'},
 
-            'subject': 'O={},OU={},L=47.38/8.54/Zurich,C=CH', 'type': 'peer'.format(orgNames[org], orgNames[org])}
+            'subject': 'O={},OU={},L=47.38/8.54/Zurich,C=CH'.format(orgNames[org], orgNames[org], 'type': 'peer')}
             
         else:
             orgConfig = {'ca_data': {'url': 'ca.{}-net:7054'.format(orgNames[org]), 'certificate': 'file/server.crt'},
@@ -1103,7 +1103,7 @@ pathToBAF, chaincodeversion, chaincodeName, BAFChaincodePath, cloud_provider):
             'location': 'Zurich', 'vault': {'url': '"{}"'.format(VAULT_ADDR), 'root_token': '"{}"'.format(VAULT_TOKEN),
             'secret_path': '"secret"'},
             
-            'subject': '"O=Orderer,L=51.50/-0.13/London,C=GB"', 'type': 'orderer'}
+            'subject': '"/C=GB/ST=London/L=London/O=Orderer/CN=ca.{}-net"'.format(orgNames[org]), 'type': 'orderer'}
             
 
 
@@ -1120,12 +1120,14 @@ pathToBAF, chaincodeversion, chaincodeName, BAFChaincodePath, cloud_provider):
 
 def genBAFOrderers(orgNames, pathToBAF):
     config = []
+    used = []
     for org in orgNames:
-        
-        ordererConfig={'org_name': org, 'orderer': None, 'name': 'orderer1',
-            'certificate': '{}/build/orderer1.crt'.format(pathToBAF), 'type': 'orderer',
-            'uri': 'orderer1.{}-net:7050'.format(org)}
-        config.append(ordererConfig)
+        if org not in used:
+            ordererConfig={'org_name': org, 'orderer': None, 'name': 'orderer1',
+                'certificate': '{}/build/orderer1.crt'.format(pathToBAF), 'type': 'orderer',
+                'uri': 'orderer1.{}-net:7050'.format(org)}
+            config.append(ordererConfig)
+            used.append(org)
     return config
 
 def TOUSEEEEchannelParticipantsList(orgNames):
@@ -1299,7 +1301,7 @@ def generate():
                 endorsersBooleanList.append(listOfOrgs[org]["endorser"])
             #orderersCount=(len([idx for idx in range(len(ordererOwnershipList)) if ordererOwnershipList[idx] == True]))
             orderersCount = len(np.unique(ordererOwnershipList))
-            print(ordererOwnershipList, orderersCount)
+            print(np.unique(ordererOwnershipList), orderersCount)
             domainName = fabricConfig["domain_name"]#"svc.cluster.local"
             endorsersList=([orgNames[idx] for idx in range(len(endorsersBooleanList)) if endorsersBooleanList[idx] == True])
             print(endorsersList, endorsersBooleanList, "peerCounts", peerCounts)
