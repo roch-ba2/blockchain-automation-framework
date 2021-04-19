@@ -29,7 +29,7 @@ organizations:
 - id: 1
   name: carrier
   orderer: carrier
-  numberOfPeers: 1
+  numberOfPeers: 1 #if 0 then endorser should be false
   endorser: true
 
 - id: 2
