@@ -1,4 +1,8 @@
 domain_name: svc.cluster.local
+pathToBAF: /root/hyperledger-labs/myFork/blockchain-automation-framework
+cloud_provider: minikube
+
+BAFChaincodePath: examples/supplychain-app/fabric/chaincode_rest_server/chaincode/
 
 BAFgitops:
   git_protocol: "https"
@@ -10,15 +14,15 @@ BAFgitops:
   username: "ayhamkassab"                                                     # Git user who has rights to check-in in all branches
   password: "**Ak47**"   
   email: "github_email"                                                           # Email to use in git config
-  private_key: "/root/hyperledger-labs/myFork/blockchain-automation-framework/build/gitops"               # Path to private key file which has write-access to the git repo
+  private_key: "/root/hyperledger-labs/myFork/blockchain-automation-framework/build/gitops"   #this is replaced by pathToBAF/build/gitopts            # Path to private key file which has write-access to the git repo
 
 BAFk8s:
   context: "local"
   config_file: "~/.kube/config"
 
 vault:
-  url: 'http://130.104.229.21:30000'
-  root_token: 's.32JqFMwzbrqbeFl8bKI9R2QC'
+  url: "http://130.104.229.21:30000"
+  root_token: "s.32JqFMwzbrqbeFl8bKI9R2QC"
 
 
 organizations:

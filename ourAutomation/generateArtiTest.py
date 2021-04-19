@@ -620,7 +620,7 @@ def genCaliperChannels(domainName, orgsCount, orderersCount, chaincodeName, peer
     chConfig["contracts"] = [{"id" : chaincodeName,
                 "contractID" : chaincodeName,
                "install": {
-                    "version" : chaincodeversion,
+                    "version" : '"v{}"'.format(chaincodeversion),
                      "language" : chaincode_lang,
                     "path" : chaincode_path,},
                'instantiate': {'initFunction': chaincode_init_function},
@@ -1021,15 +1021,93 @@ def genBAFChannels(domainName, orgsCount, orderersCount, peerCounts, orgNames):
 
 
 
-def genBAFOrganizations(domainName, orgsCount, orderersCount, peerCounts, orgNames, BAFgit_protocol, BAFgit_url, BAFgitbranch, BAFgitrelease_dir, BAFgitchart_source, BAFgit_repo, BAFgitusername, BAFgitpassword, BAFgitemail, BAFgitprivate_key, BAFk8sContext, BAFk8sConfig_file, vaultUrl, vaultRootToken):
+
+
+
+
+
+
+
+
+
+    
+
+def genBAFOrganizations(domainName, orgsCount, orderersCount, peerCounts, orgNames, BAFgit_protocol, BAFgit_url,
+BAFgitbranch, BAFgitrelease_dir, BAFgitchart_source, BAFgit_repo, BAFgitusername, BAFgitpassword,
+BAFgitemail, BAFgitprivate_key, BAFk8sContext, BAFk8sConfig_file, VAULT_ADDR, VAULT_TOKEN, endorsersList, ordererOwnershipList, pathToBAF, chaincodeversion, chaincodeName, BAFChaincodePath, cloud_provider):
+
     config = []
-    for org in orgNames:
-        orgConfig = {'cloud_provider': 'minikube', 'name': org, 'country': 'GB', 'state': 'London', 'location': 'London', 'subject': 'O=Carrier,OU=Carrier,L=51.50/-0.13/London,C=GB', 'type': 'peer', 'version': '2.2.0'}
-        orgConfig["organization"] = None
-        orgConfig["services"] = {'ca': {'grpc': {'port': 7054}, 'type': 'ca', 'name': 'ca', 'subject': '/C=GB/ST=London/L=London/O=Carrier/CN=ca.carrier-net'}}
+    for org in range(len(orgNames)):
+        if orgNames[org] in endorsersList:
+            orgConfig = {'ca_data': {'url': 'ca.{}-net:7054'.format(orgNames[org]), 'certificate': 'file/server.crt'},
+            'org_status': 'new', 'external_url_suffix': 'develop.local.com', 'organization': None,
+
+            'services': {'ca': {'grpc': {'port': 7054}, 'type': 'ca', 'name': 'ca',
+            'subject': '/C=CH/ST=Zurich/L=Zurich/O={}/CN=ca.{}-net'.format(orgNames[org], orgNames[org])},
+            
+            'peers': [{'name': 'peer0',
+
+            'certificate': '{}/build/{}/ca.crt'.format(pathToBAF, orgNames[org]),
+            'peerAddress': 'peer0.{}-net:7051'.format(orgNames[org]), 'grpc': {'port': 7051}, 'restserver': {'targetPort': 20001, 'port': 20001},
+            'couchdb': {'port': 5984}, 'gossippeeraddress': 'peer0.{}-net:7051'.format(orgNames[org]), 'chaincode': {'version': '"{}"'.format(chaincodeversion),
+            'name': '"{}"'.format(chaincodeName), 'repository': {'username': '{}'.format(BAFgitusername), 'url': '{}'.format(BAFgit_url),
+            'password': '{}'.format(BAFgitpassword), 'branch': '{}'.format(BAFgitbranch), 'path': '"{}"'.format(BAFChaincodePath)},
+            'endorsements': '', 'maindirectory': '.', 'arguments': '\\"init\\",\\"\\"'}, 'peer': None, 'type': 'anchor',
+            'events': {'port': 7053}, 'expressapi': {'targetPort': 3000, 'port': 3000}, 'cli': 'disabled'}]},
+            
+            'k8s': {'region': '"cluster_region"', 'config_file': '{}'.format(BAFk8sConfig_file), 'context': '{}'.format(BAFk8sContext)},
+            
+            'cli': 'enabled',
+
+            'gitops': {'username': '{}'.format(BAFgitusername),
+            'private_key': '{}/build/gitops'.format(pathToBAF),
+            'git_protocol': '{}'.format(BAFgit_protocol), 'chart_source': '{}'.format(BAFgitchart_source),
+            'git_url': '{}'.format(BAFgit_url),
+            'branch': '{}'.format(BAFgitbranch), 'release_dir': '{}'.format(BAFgitrelease_dir),
+            'password': '{}'.format(BAFgitpassword), 'email': '{}'.format(BAFgitemail), 'git_repo': '{}'.format(BAFgit_repo)},
+
+            'cloud_provider': '{}'.format(cloud_provider), 'name': orgNames[org], 'country': 'CH', 'state': 'Zurich',
+            'location': 'Zurich', 'vault': {'url': '{}'.format(VAULT_ADDR), 'root_token': '{}'.format(VAULT_TOKEN),
+            'secret_path': 'secret'},
+
+            'subject': 'O={},OU={},L=47.38/8.54/Zurich,C=CH', 'type': 'peer'.format(orgNames[org], orgNames[org])}
+            
+        else:
+            orgConfig = {'ca_data': {'url': 'ca.{}-net:7054'.format(orgNames[org]), 'certificate': 'file/server.crt'},
+            'org_status': 'new', 'external_url_suffix': 'develop.local.com', 'organization': None,
+
+            'services': {'consensus': {'grpc': {'port': 9092}, 'type': 'broker', 'name': 'kafka', 'replicas': 3},
+            'ca': {'grpc': {'port': 7054}, 'type': 'ca', 'name': 'ca',
+            'subject': '/C=CH/ST=Zurich/L=Zurich/O={}/CN=ca.{}-net'.format(orgNames[org], orgNames[org])},
+
+
+            'orderers': [{'consensus': 'kafka', 'grpc': {'port': 7050}, 'orderer': None, 'type': 'orderer',
+            'name': 'orderer1'}]},
+            
+            'k8s': {'region': '"cluster_region"', 'config_file': '{}'.format(BAFk8sConfig_file), 'context': '{}'.format(BAFk8sContext)},
+            'cli': 'disabled',
+            
+            'gitops': {'username': '{}'.format(BAFgitusername),
+            'private_key': '{}/build/gitops'.format(pathToBAF),
+            'git_protocol': '{}'.format(BAFgit_protocol), 'chart_source': '{}'.format(BAFgitchart_source),
+            'git_url': '{}'.format(BAFgit_url),
+            'branch': '{}'.format(BAFgitbranch), 'release_dir': '{}'.format(BAFgitrelease_dir),
+            'password': '{}'.format(BAFgitpassword), 'email': '{}'.format(BAFgitemail), 'git_repo': '{}'.format(BAFgit_repo)},
+
+            'cloud_provider': '{}'.format(cloud_provider), 'name': orgNames[org], 'country': 'CH', 'state': 'Zurich',
+            'location': 'Zurich', 'vault': {'url': '{}'.format(VAULT_ADDR), 'root_token': '{}'.format(VAULT_TOKEN),
+            'secret_path': 'secret'},
+            
+            'subject': 'O=Orderer,L=51.50/-0.13/London,C=GB', 'type': 'orderer'}
+            
+
+
+        #orgConfig = {'cloud_provider': 'minikube', 'name': org, 'country': 'GB', 'state': 'London', 'location': 'London', 'subject': 'O=Carrier,OU=Carrier,L=51.50/-0.13/London,C=GB', 'type': 'peer', 'version': '2.2.0'}
+        #orgConfig["organization"] = None
+        #orgConfig["services"] = {'ca': {'grpc': {'port': 7054}, 'type': 'ca', 'name': 'ca', 'subject': '/C=GB/ST=London/L=London/O=Carrier/CN=ca.carrier-net'}}
         # TAKE peer count per org into cconsideration here ******* and in caliper config ****************
-        orgConfig["peers"] = None
-        orgConfig["vault"] = {'url': vaultUrl, 'root_token': vaultRootToken, 'secret_path': 'secret'}
+        #orgConfig["peers"] = None
+        #orgConfig["vault"] = {'url': vaultUrl, 'root_token': vaultRootToken, 'secret_path': 'secret'}
 
         config.append(orgConfig)
     return config
@@ -1046,26 +1124,112 @@ def genBAFOrderers(domainName, orgsCount, orderersCount):
 
 
 
-def getBAFnetwork(domainName, orgsCount, orderersCount, chaincodeName, peerCounts, chaincodeversion, chaincode_lang, chaincode_init_function, chaincode_path, orgNames, BAFgit_protocol, BAFgit_url, BAFgitbranch, BAFgitrelease_dir, BAFgitchart_source, BAFgit_repo, BAFgitusername, BAFgitpassword, BAFgitemail, BAFgitprivate_key, BAFk8sContext, BAFk8sConfig_file, vaultUrl, vaultRootToken, endorsersList):
+def TOUSEEEEchannelParticipantsList(orgNames):
+    mspConfig=''
+    for x in range(len(orgNames)):
+        if x !=0:
+            mspConfig = mspConfig + ', "{}MSP"'.format(orgNames[x])
+        else:
+            mspConfig = mspConfig + '"{}MSP"'.format(orgNames[x])
 
-    bafNetwork = {}
+        #mspConfig.append('{}MSP'.format(x))
+    return '[{}]'.format(mspConfig)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def channelParticipantsList(endorsersList, ordererOwnershipList):
+    config = []
+
+    for org in range(len(endorsersList)):
     
-    bafNetwork["network"] = {'version': '2.2.0' ,'type': 'fabric'}
-    bafNetwork["network"]["env"] ={'env': {'retry_count': 50, 'type': 'local', 'proxy': 'none', 'ambassadorPorts': '15010,15020', 'external_dns': 'disabled'}, 'docker': {'url': 'index.docker.io/hyperledgerlabs', 'username': 'docker_username', 'password': 'docker_password'}} 
-    #bafNetwork["network"]["type"] = "fabric"
-    #bafNetwork["network"]["version"] = {"2.2.0"}
-
-    bafNetwork["network"]["channels"] = genBAFChannels(domainName, orgsCount, orderersCount, peerCounts, orgNames)
-
-
-    bafNetwork["network"]["orderers"] = genBAFOrderers(domainName, orgsCount, orderersCount)
-
-
-
-    bafNetwork["network"]["organizations"] = [genBAFOrganizations(domainName, orgsCount, orderersCount, peerCounts, orgNames, BAFgit_protocol, BAFgit_url, BAFgitbranch, BAFgitrelease_dir, BAFgitchart_source, BAFgit_repo, BAFgitusername, BAFgitpassword, BAFgitemail, BAFgitprivate_key, BAFk8sContext, BAFk8sConfig_file, vaultUrl, vaultRootToken)]
+        orgConfig = {'ordererAddress': 'orderer1.{}-net:7050'.format(ordererOwnershipList[org]),
+        'peers': [{'peer': None, 'gossipAddress': 'peer0.{}-net:7051'.format(endorsersList[org]),
+        'name': 'peer0', 'peerAddress': 'peer0.{}-net:7051'.format(endorsersList[org])}],
+        'name': endorsersList[org], 'organization': None, 'org_status': 'new'}
+        if org == 0:
+            orgConfig["type"] = "creator"
+        else:
+            orgConfig["type"] = "joiner"
+        config.append(orgConfig)
+    return config
 
 
-    #{'network': {'channels': [{'channel_name': 'AllChannel', 'orderer': {'name': 'supplychain'}, 'participants': [{'ordererAddress': 'orderer1.supplychain-net:7050', 'peers': [{'peer': None, 'gossipAddress': 'peer0.carrier-net:7051', 'name': 'peer0', 'peerAddress': 'peer0.carrier-net:7051'}], 'name': 'carrier', 'organization': None, 'type': 'creator', 'org_status': 'new'}, {'ordererAddress': 'orderer1.supplychain-net:7050', 'peers': [{'peer': None, 'gossipAddress': 'peer0.manufacturer-net:7051', 'name': 'peer0', 'peerAddress': 'peer0.manufacturer-net:7051'}], 'name': 'manufacturer', 'organization': None, 'type': 'joiner', 'org_status': 'new'}], 'endorsers': {'corepeerAddress': ['peer0.carrier-net:7051', 'peer0.manufacturer-net:7051'], 'name': ['carrier', 'manufacturer']}, 'consortium': 'SupplyChainConsortium', 'channel': None, 'genesis': {'name': 'OrdererGenesis'}}], 'organizations': [{'ca_data': {'url': 'ca.supplychain-net:7054', 'certificate': 'file/server.crt'}, 'org_status': 'new', 'external_url_suffix': 'develop.local.com', 'organization': None, 'services': {'consensus': {'grpc': {'port': 9092}, 'type': 'broker', 'name': 'kafka', 'replicas': 3}, 'ca': {'grpc': {'port': 7054}, 'type': 'ca', 'name': 'ca', 'subject': '/C=GB/ST=London/L=London/O=Orderer/CN=ca.supplychain-net'}, 'orderers': [{'consensus': 'kafka', 'grpc': {'port': 7050}, 'orderer': None, 'type': 'orderer', 'name': 'orderer1'}]}, 'k8s': {'region': 'cluster_region', 'config_file': '~/.kube/config', 'context': 'local'}, 'cli': 'disabled', 'gitops': {'username': 'ayhamkassab', 'private_key': '/root/hyperledger-labs/myFork/blockchain-automation-framework/build/gitops', 'git_protocol': 'https', 'chart_source': 'platforms/hyperledger-fabric/charts', 'git_url': 'https://github.com/ayhamkassab/blockchain-automation-framework.git', 'branch': 'master', 'release_dir': 'platforms/hyperledger-fabric/releases/dev', 'password': '**Ak47**', 'email': 'github_email', 'git_repo': 'github.com/ayhamkassab/blockchain-automation-framework.git'}, 'cloud_provider': 'minikube', 'name': 'supplychain', 'country': 'UK', 'state': 'London', 'location': 'London', 'vault': {'url': 'http://130.104.229.21:30000', 'root_token': 's.32JqFMwzbrqbeFl8bKI9R2QC', 'secret_path': 'secret'}, 'subject': 'O=Orderer,L=51.50/-0.13/London,C=GB', 'type': 'orderer'}, {'ca_data': {'url': 'ca.manufacturer-net:7054', 'certificate': 'file/server.crt'}, 'org_status': 'new', 'external_url_suffix': 'develop.local.com', 'organization': None, 'services': {'ca': {'grpc': {'port': 7054}, 'type': 'ca', 'name': 'ca', 'subject': '/C=CH/ST=Zurich/L=Zurich/O=Manufacturer/CN=ca.manufacturer-net'}, 'peers': [{'name': 'peer0', 'certificate': '/root/hyperledger-labs/myFork/blockchain-automation-framework/build/manufacturer/ca.crt', 'peerAddress': 'peer0.manufacturer-net:7051', 'grpc': {'port': 7051}, 'restserver': {'targetPort': 20001, 'port': 20001}, 'couchdb': {'port': 5984}, 'gossippeeraddress': 'peer0.manufacturer-net:7051', 'chaincode': {'version': '1', 'name': 'simpleauction', 'repository': {'username': 'ayhamkassab', 'url': 'github.com/ayhamkassab/blockchain-automation-framework.git', 'password': '**Ak47**', 'branch': 'master', 'path': 'examples/supplychain-app/fabric/chaincode_rest_server/chaincode/'}, 'endorsements': '', 'maindirectory': '.', 'arguments': '\\"init\\",\\"\\"'}, 'peer': None, 'type': 'anchor', 'events': {'port': 7053}, 'expressapi': {'targetPort': 3000, 'port': 3000}, 'cli': 'disabled'}]}, 'k8s': {'region': 'cluster_region', 'config_file': '~/.kube/config', 'context': 'local'}, 'cli': 'enabled', 'gitops': {'username': 'ayhamkassab', 'private_key': '/root/hyperledger-labs/myFork/blockchain-automation-framework/build/gitops', 'git_protocol': 'https', 'chart_source': 'platforms/hyperledger-fabric/charts', 'git_url': 'https://github.com/ayhamkassab/blockchain-automation-framework.git', 'branch': 'master', 'release_dir': 'platforms/hyperledger-fabric/releases/dev', 'password': '**Ak47**', 'email': 'github_email', 'git_repo': 'github.com/ayhamkassab/blockchain-automation-framework.git'}, 'cloud_provider': 'minikube', 'name': 'manufacturer', 'country': 'CH', 'state': 'Zurich', 'location': 'Zurich', 'vault': {'url': 'http://130.104.229.21:30000', 'root_token': 's.32JqFMwzbrqbeFl8bKI9R2QC', 'secret_path': 'secret'}, 'subject': 'O=Manufacturer,OU=Manufacturer,L=47.38/8.54/Zurich,C=CH', 'type': 'peer'}, {'ca_data': {'url': 'ca.carrier-net:7054', 'certificate': 'file/server.crt'}, 'org_status': 'new', 'external_url_suffix': 'develop.local.com', 'organization': None, 'services': {'ca': {'grpc': {'port': 7054}, 'type': 'ca', 'name': 'ca', 'subject': '/C=GB/ST=London/L=London/O=Carrier/CN=ca.carrier-net'}, 'peers': [{'name': 'peer0', 'certificate': '/root/hyperledger-labs/myFork/blockchain-automation-framework/build/carrier/ca.crt', 'peerAddress': 'peer0.carrier-net:7051', 'grpc': {'port': 7051}, 'restserver': {'targetPort': 20001, 'port': 20001}, 'couchdb': {'port': 5984}, 'gossippeeraddress': 'peer0.carrier-net:7051', 'chaincode': {'version': '1', 'name': 'simpleauction', 'repository': {'username': 'ayhamkassab', 'url': 'github.com/ayhamkassab/blockchain-automation-framework.git', 'password': '**Ak47**', 'branch': 'master', 'path': 'examples/supplychain-app/fabric/chaincode_rest_server/chaincode/'}, 'endorsements': '', 'maindirectory': '.', 'arguments': '\\"init\\",\\"\\"'}, 'peer': None, 'type': 'anchor', 'events': {'port': 7053}, 'expressapi': {'targetPort': 3000, 'port': 3000}, 'cli': 'disabled'}]}, 'k8s': {'region': 'cluster_region', 'config_file': '~/.kube/config', 'context': 'local'}, 'cli': 'enabled', 'gitops': {'username': 'ayhamkassab', 'private_key': '/root/hyperledger-labs/myFork/blockchain-automation-framework/build/gitops', 'git_protocol': 'https', 'chart_source': 'platforms/hyperledger-fabric/charts', 'git_url': 'https://github.com/ayhamkassab/blockchain-automation-framework.git', 'branch': 'master', 'release_dir': 'platforms/hyperledger-fabric/releases/dev', 'password': '**Ak47**', 'email': 'github_email', 'git_repo': 'github.com/ayhamkassab/blockchain-automation-framework.git'}, 'cloud_provider': 'minikube', 'name': 'carrier', 'country': 'GB', 'state': 'London', 'location': 'London', 'vault': {'url': 'http://130.104.229.21:30000', 'root_token': 's.32JqFMwzbrqbeFl8bKI9R2QC', 'secret_path': 'secret'}, 'subject': 'O=Carrier,OU=Carrier,L=51.50/-0.13/London,C=GB', 'type': 'peer'}], 'version': '2.2.0', 'orderers': [{'org_name': 'supplychain', 'orderer': None, 'name': 'orderer1', 'certificate': '/root/hyperledger-labs/myFork/blockchain-automation-framework/build/orderer1.crt', 'type': 'orderer', 'uri': 'orderer1.supplychain-net:7050'}], 'env': {'retry_count': 50, 'type': 'local', 'proxy': 'none', 'ambassadorPorts': '15010,15020', 'external_dns': 'disabled'}, 'docker': {'url': 'index.docker.io/hyperledgerlabs', 'username': 'docker_username', 'password': 'docker_password'}, 'type': 'fabric'}}
+
+
+
+def getBAFnetwork(domainName, orgsCount, orderersCount, chaincodeName, peerCounts, chaincodeversion, chaincode_lang, chaincode_init_function, chaincode_path, orgNames, BAFgit_protocol, BAFgit_url, BAFgitbranch, BAFgitrelease_dir, BAFgitchart_source, BAFgit_repo, BAFgitusername, BAFgitpassword, BAFgitemail, BAFgitprivate_key, BAFk8sContext, BAFk8sConfig_file, vaultUrl, vaultRootToken, endorsersList, ordererOwnershipList, pathToBAF, BAFChaincodePath, cloud_provider):
+
+
+    bafNetwork = {'network': {'channels': [{'channel_name': 'AllChannel', 'orderer': {'name': 'supplychain'},
+    'participants': channelParticipantsList(endorsersList, ordererOwnershipList),
+
+    'endorsers': {'corepeerAddress': ['peer0.{}-net:7051'.format(x) for x in endorsersList],
+    'name': endorsersList}, 
+    
+    'consortium': 'SupplyChainConsortium', 'channel': None,
+    'genesis': {'name': 'OrdererGenesis'}}], 
+    
+    
+    
+    'organizations': genBAFOrganizations(domainName, orgsCount, orderersCount, peerCounts, orgNames, BAFgit_protocol, BAFgit_url,
+    BAFgitbranch, BAFgitrelease_dir, BAFgitchart_source, BAFgit_repo, BAFgitusername, BAFgitpassword,
+    BAFgitemail, BAFgitprivate_key, BAFk8sContext, BAFk8sConfig_file, vaultUrl, vaultRootToken, endorsersList, ordererOwnershipList, pathToBAF, chaincodeversion, chaincodeName, BAFChaincodePath, cloud_provider),
+
+
+
+
+    'version': '2.2.0', 'orderers': [{'org_name': 'supplychain', 'orderer': None, 'name': 'orderer1',
+    'certificate': '{}/build/orderer1.crt'.format(pathToBAF), 'type': 'orderer',
+    'uri': 'orderer1.supplychain-net:7050'}], 'env': {'retry_count': 50, 'type': 'local', 'proxy': 'none',
+    'ambassadorPorts': '15010,15020', 'external_dns': 'disabled'}, 'docker': {'url': 'index.docker.io/hyperledgerlabs',
+    'username': 'docker_username', 'password': 'docker_password'}, 'type': 'fabric'}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #bafNetwork = {}
+    
+    #bafNetwork["network"] = {'version': '2.2.0' ,'type': 'fabric'}
+    #bafNetwork["network"]["env"] ={'env': {'retry_count': 50, 'type': 'local', 'proxy': 'none', 'ambassadorPorts': '15010,15020', 'external_dns': 'disabled'}, 'docker': {'url': 'index.docker.io/hyperledgerlabs', 'username': 'docker_username', 'password': 'docker_password'}} 
+    ##bafNetwork["network"]["type"] = "fabric"
+    ##bafNetwork["network"]["version"] = {"2.2.0"}
+
+    #bafNetwork["network"]["channels"] = genBAFChannels(domainName, orgsCount, orderersCount, peerCounts, orgNames)
+
+
+    #bafNetwork["network"]["orderers"] = genBAFOrderers(domainName, orgsCount, orderersCount)
+
+
+
+    #bafNetwork["network"]["organizations"] = [genBAFOrganizations(domainName, orgsCount, orderersCount, peerCounts, orgNames, BAFgit_protocol, BAFgit_url, BAFgitbranch, BAFgitrelease_dir, BAFgitchart_source, BAFgit_repo, BAFgitusername, BAFgitpassword, BAFgitemail, BAFgitprivate_key, BAFk8sContext, BAFk8sConfig_file, vaultUrl, vaultRootToken)]
+
+
+    ##{'network': {'channels': [{'channel_name': 'AllChannel', 'orderer': {'name': 'supplychain'}, 'participants': [{'ordererAddress': 'orderer1.supplychain-net:7050', 'peers': [{'peer': None, 'gossipAddress': 'peer0.carrier-net:7051', 'name': 'peer0', 'peerAddress': 'peer0.carrier-net:7051'}], 'name': 'carrier', 'organization': None, 'type': 'creator', 'org_status': 'new'}, {'ordererAddress': 'orderer1.supplychain-net:7050', 'peers': [{'peer': None, 'gossipAddress': 'peer0.manufacturer-net:7051', 'name': 'peer0', 'peerAddress': 'peer0.manufacturer-net:7051'}], 'name': 'manufacturer', 'organization': None, 'type': 'joiner', 'org_status': 'new'}], 'endorsers': {'corepeerAddress': ['peer0.carrier-net:7051', 'peer0.manufacturer-net:7051'], 'name': ['carrier', 'manufacturer']}, 'consortium': 'SupplyChainConsortium', 'channel': None, 'genesis': {'name': 'OrdererGenesis'}}], 'organizations': [{'ca_data': {'url': 'ca.supplychain-net:7054', 'certificate': 'file/server.crt'}, 'org_status': 'new', 'external_url_suffix': 'develop.local.com', 'organization': None, 'services': {'consensus': {'grpc': {'port': 9092}, 'type': 'broker', 'name': 'kafka', 'replicas': 3}, 'ca': {'grpc': {'port': 7054}, 'type': 'ca', 'name': 'ca', 'subject': '/C=GB/ST=London/L=London/O=Orderer/CN=ca.supplychain-net'}, 'orderers': [{'consensus': 'kafka', 'grpc': {'port': 7050}, 'orderer': None, 'type': 'orderer', 'name': 'orderer1'}]}, 'k8s': {'region': 'cluster_region', 'config_file': '~/.kube/config', 'context': 'local'}, 'cli': 'disabled', 'gitops': {'username': 'ayhamkassab', 'private_key': '/root/hyperledger-labs/myFork/blockchain-automation-framework/build/gitops', 'git_protocol': 'https', 'chart_source': 'platforms/hyperledger-fabric/charts', 'git_url': 'https://github.com/ayhamkassab/blockchain-automation-framework.git', 'branch': 'master', 'release_dir': 'platforms/hyperledger-fabric/releases/dev', 'password': '**Ak47**', 'email': 'github_email', 'git_repo': 'github.com/ayhamkassab/blockchain-automation-framework.git'}, 'cloud_provider': 'minikube', 'name': 'supplychain', 'country': 'UK', 'state': 'London', 'location': 'London', 'vault': {'url': 'http://130.104.229.21:30000', 'root_token': 's.32JqFMwzbrqbeFl8bKI9R2QC', 'secret_path': 'secret'}, 'subject': 'O=Orderer,L=51.50/-0.13/London,C=GB', 'type': 'orderer'}, {'ca_data': {'url': 'ca.manufacturer-net:7054', 'certificate': 'file/server.crt'}, 'org_status': 'new', 'external_url_suffix': 'develop.local.com', 'organization': None, 'services': {'ca': {'grpc': {'port': 7054}, 'type': 'ca', 'name': 'ca', 'subject': '/C=CH/ST=Zurich/L=Zurich/O=Manufacturer/CN=ca.manufacturer-net'}, 'peers': [{'name': 'peer0', 'certificate': '/root/hyperledger-labs/myFork/blockchain-automation-framework/build/manufacturer/ca.crt', 'peerAddress': 'peer0.manufacturer-net:7051', 'grpc': {'port': 7051}, 'restserver': {'targetPort': 20001, 'port': 20001}, 'couchdb': {'port': 5984}, 'gossippeeraddress': 'peer0.manufacturer-net:7051', 'chaincode': {'version': '1', 'name': 'simpleauction', 'repository': {'username': 'ayhamkassab', 'url': 'github.com/ayhamkassab/blockchain-automation-framework.git', 'password': '**Ak47**', 'branch': 'master', 'path': 'examples/supplychain-app/fabric/chaincode_rest_server/chaincode/'}, 'endorsements': '', 'maindirectory': '.', 'arguments': '\\"init\\",\\"\\"'}, 'peer': None, 'type': 'anchor', 'events': {'port': 7053}, 'expressapi': {'targetPort': 3000, 'port': 3000}, 'cli': 'disabled'}]}, 'k8s': {'region': 'cluster_region', 'config_file': '~/.kube/config', 'context': 'local'}, 'cli': 'enabled', 'gitops': {'username': 'ayhamkassab', 'private_key': '/root/hyperledger-labs/myFork/blockchain-automation-framework/build/gitops', 'git_protocol': 'https', 'chart_source': 'platforms/hyperledger-fabric/charts', 'git_url': 'https://github.com/ayhamkassab/blockchain-automation-framework.git', 'branch': 'master', 'release_dir': 'platforms/hyperledger-fabric/releases/dev', 'password': '**Ak47**', 'email': 'github_email', 'git_repo': 'github.com/ayhamkassab/blockchain-automation-framework.git'}, 'cloud_provider': 'minikube', 'name': 'manufacturer', 'country': 'CH', 'state': 'Zurich', 'location': 'Zurich', 'vault': {'url': 'http://130.104.229.21:30000', 'root_token': 's.32JqFMwzbrqbeFl8bKI9R2QC', 'secret_path': 'secret'}, 'subject': 'O=Manufacturer,OU=Manufacturer,L=47.38/8.54/Zurich,C=CH', 'type': 'peer'}, {'ca_data': {'url': 'ca.carrier-net:7054', 'certificate': 'file/server.crt'}, 'org_status': 'new', 'external_url_suffix': 'develop.local.com', 'organization': None, 'services': {'ca': {'grpc': {'port': 7054}, 'type': 'ca', 'name': 'ca', 'subject': '/C=GB/ST=London/L=London/O=Carrier/CN=ca.carrier-net'}, 'peers': [{'name': 'peer0', 'certificate': '/root/hyperledger-labs/myFork/blockchain-automation-framework/build/carrier/ca.crt', 'peerAddress': 'peer0.carrier-net:7051', 'grpc': {'port': 7051}, 'restserver': {'targetPort': 20001, 'port': 20001}, 'couchdb': {'port': 5984}, 'gossippeeraddress': 'peer0.carrier-net:7051', 'chaincode': {'version': '1', 'name': 'simpleauction', 'repository': {'username': 'ayhamkassab', 'url': 'github.com/ayhamkassab/blockchain-automation-framework.git', 'password': '**Ak47**', 'branch': 'master', 'path': 'examples/supplychain-app/fabric/chaincode_rest_server/chaincode/'}, 'endorsements': '', 'maindirectory': '.', 'arguments': '\\"init\\",\\"\\"'}, 'peer': None, 'type': 'anchor', 'events': {'port': 7053}, 'expressapi': {'targetPort': 3000, 'port': 3000}, 'cli': 'disabled'}]}, 'k8s': {'region': 'cluster_region', 'config_file': '~/.kube/config', 'context': 'local'}, 'cli': 'enabled', 'gitops': {'username': 'ayhamkassab', 'private_key': '/root/hyperledger-labs/myFork/blockchain-automation-framework/build/gitops', 'git_protocol': 'https', 'chart_source': 'platforms/hyperledger-fabric/charts', 'git_url': 'https://github.com/ayhamkassab/blockchain-automation-framework.git', 'branch': 'master', 'release_dir': 'platforms/hyperledger-fabric/releases/dev', 'password': '**Ak47**', 'email': 'github_email', 'git_repo': 'github.com/ayhamkassab/blockchain-automation-framework.git'}, 'cloud_provider': 'minikube', 'name': 'carrier', 'country': 'GB', 'state': 'London', 'location': 'London', 'vault': {'url': 'http://130.104.229.21:30000', 'root_token': 's.32JqFMwzbrqbeFl8bKI9R2QC', 'secret_path': 'secret'}, 'subject': 'O=Carrier,OU=Carrier,L=51.50/-0.13/London,C=GB', 'type': 'peer'}], 'version': '2.2.0', 'orderers': [{'org_name': 'supplychain', 'orderer': None, 'name': 'orderer1', 'certificate': '/root/hyperledger-labs/myFork/blockchain-automation-framework/build/orderer1.crt', 'type': 'orderer', 'uri': 'orderer1.supplychain-net:7050'}], 'env': {'retry_count': 50, 'type': 'local', 'proxy': 'none', 'ambassadorPorts': '15010,15020', 'external_dns': 'disabled'}, 'docker': {'url': 'index.docker.io/hyperledgerlabs', 'username': 'docker_username', 'password': 'docker_password'}, 'type': 'fabric'}}
 
 
 
@@ -1112,92 +1276,6 @@ def getCaliperValues(replicaMasterCount, replicaWorkersCount, repository, vaultU
 
 
 
-"""
-def generateCerts():
-    os.environ["PATH"] = ":".join(os.environ.get("PATH", "").split(":") + [os.path.dirname(__file__) + os.path.abspath("./bin")])
-
-    p = subprocess.Popen(["which cryptogen"], stdout=subprocess.PIPE, shell=True)
-    p.wait()
-    if p.returncode != 0:
-        print("cryptogen tool not found. exiting")
-        exit()
-
-    print('''
-##########################################################
-##### Generate certificates using cryptogen tool #########
-##########################################################''')
-
-    if os.path.isdir("crypto-config"):
-        shutil.rmtree("crypto-config")
-
-    p = subprocess.Popen(["cryptogen generate --config=./crypto-config.yaml"], shell=True)
-    p.wait()
-    if p.returncode != 0:
-        print("Failed to generate certificates...")
-        exit(1)
-
-def replacePrivateKey(orgsCount, domainName):
-    p = subprocess.Popen(["uname -s"], shell=True, stdout=subprocess.PIPE)
-    arch, _ = p.communicate()
-    p.wait()
-
-    opts = ""
-    if arch == "Darwin":
-        opts = "-it"
-    else:
-        opts = "-i"
-
-    for org in range(orgsCount):
-        path = "crypto-config/peerOrganizations/org{}.{}/ca/*_sk".format(org+1, domainName)
-
-        p = subprocess.Popen(["ls {}".format(path)], shell=True, stdout=subprocess.PIPE)
-        pkPath, _ = p.communicate()
-        pkPath = os.path.basename(pkPath).strip()
-        p.wait()
-
-        p = subprocess.Popen(["sed {} \"s/CA{}_PRIVATE_KEY/{}/g\" docker-compose-e2e.yaml".format(opts, org+1, pkPath)], shell=True)
-        p.wait()
-
-def generateChannelArtifacts(orgsCount):
-    p = subprocess.Popen(["which configtxgen"], stdout=subprocess.PIPE, shell=True)
-    p.wait()
-    if p.returncode != 0:
-        print("configtxgen tool not found. exiting")
-        exit()
-
-    print('''
-##########################################################
-#########  Generating Orderer Genesis block ##############
-##########################################################''')
-    p = subprocess.Popen(["configtxgen -profile TwoOrgsOrdererGenesis -outputBlock ./channel-artifacts/genesis.block"], shell=True)
-    p.wait()
-    if p.returncode != 0:
-        print("Failed to generate orderer genesis block...")
-        exit(1)
-
-    print('''
-#################################################################
-### Generating channel configuration transaction 'channel.tx' ###
-#################################################################''')
-    p = subprocess.Popen(["configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID mychannel"], shell=True)
-    p.wait()
-    if p.returncode != 0:
-        print("Failed to generate channel configuration transaction...")
-        exit(1)
-
-    for org in range(orgsCount):
-        print('''
-#################################################################
-#######    Generating anchor peer update for Org{}MSP   ##########
-#################################################################'''.format(org+1))
-        p = subprocess.Popen(["configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/Org{org}MSPanchors.tx -channelID mychannel -asOrg Org{org}MSP".format(org=org+1)], shell=True)
-        p.wait()
-        if p.returncode != 0:
-            print("Failed to generate channel configuration transaction...")
-            exit(1)
-"""
-
-
 def generate():
 
     with open("fabricConfig.yaml", 'r') as stream:
@@ -1240,6 +1318,10 @@ def generate():
 
             vaultUrl = fabricConfig["vault"]["url"]
             vaultRootToken = fabricConfig["vault"]["root_token"]
+            pathToBAF = fabricConfig["pathToBAF"]
+            cloud_provider = fabricConfig["cloud_provider"]
+            BAFChaincodePath = fabricConfig["BAFChaincodePath"]
+            
 
         except yaml.YAMLError as exc:
             print(exc)
@@ -1310,7 +1392,7 @@ def generate():
     for org in range(len(endorsersList)):
         getCaliperConnectionProfile(domainName, orgsCount, orderersCount, chaincodeName, peerCounts, chaincodeversion, chaincode_lang, chaincode_init_function, chaincode_path, endorsersList[org], ordererOwnershipList[org])
 
-    getBAFnetwork(domainName, orgsCount, orderersCount, chaincodeName, peerCounts, chaincodeversion, chaincode_lang, chaincode_init_function, chaincode_path, orgNames, BAFgit_protocol, BAFgit_url, BAFgitbranch, BAFgitrelease_dir, BAFgitchart_source, BAFgit_repo, BAFgitusername, BAFgitpassword, BAFgitemail, BAFgitprivate_key, BAFk8sContext, BAFk8sConfig_file, vaultUrl, vaultRootToken, endorsersList)
+    getBAFnetwork(domainName, orgsCount, orderersCount, chaincodeName, peerCounts, chaincodeversion, chaincode_lang, chaincode_init_function, chaincode_path, orgNames, BAFgit_protocol, BAFgit_url, BAFgitbranch, BAFgitrelease_dir, BAFgitchart_source, BAFgit_repo, BAFgitusername, BAFgitpassword, BAFgitemail, BAFgitprivate_key, BAFk8sContext, BAFk8sConfig_file, vaultUrl, vaultRootToken, endorsersList, ordererOwnershipList, pathToBAF, BAFChaincodePath, cloud_provider)
 
 
     getCaliperValues(replicaMasterCount, replicaWorkersCount, caliperImageRepository, vaultUrl, vaultRootToken, endorsersList)
