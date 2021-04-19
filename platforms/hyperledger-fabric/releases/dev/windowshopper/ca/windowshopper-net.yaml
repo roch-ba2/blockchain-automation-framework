@@ -1,0 +1,43 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: windowshopper-net-ca
+  namespace: windowshopper-net
+  annotations:
+    fluxcd.io/automated: "false"
+spec:
+  releaseName: windowshopper-net-ca
+  chart:
+    git: https://github.com/ayhamkassab/blockchain-automation-framework.git
+    ref: master
+    path: platforms/hyperledger-fabric/charts/ca    
+  values:
+    metadata:
+      namespace: windowshopper-net
+      images:
+        alpineutils: index.docker.io/hyperledgerlabs/alpine-utils:1.0
+        ca: hyperledger/fabric-ca:1.4.8
+    server:
+      name: ca
+      tlsstatus: true
+      admin: windowshopper-admin
+    storage:
+      storageclassname: windowshoppersc
+      storagesize: 512Mi
+    vault:
+      role: vault-role
+      address: http://130.104.229.14:30000
+      authpath: windowshopper-net-auth
+      secretcert: secret/crypto/peerOrganizations/windowshopper-net/ca?ca.windowshopper-net-cert.pem
+      secretkey: secret/crypto/peerOrganizations/windowshopper-net/ca?windowshopper-net-CA.key
+      secretadminpass: secret/credentials/windowshopper-net/ca/windowshopper?user
+      serviceaccountname: vault-auth
+      imagesecretname: regcred
+    service:
+      servicetype: ClusterIP
+      ports:
+        tcp:
+          port: 7054
+    proxy:
+      provider: none
+      type: peer
