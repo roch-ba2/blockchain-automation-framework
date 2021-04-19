@@ -193,8 +193,8 @@ network:
     organization: 
     k8s:
       region: "cluster_region"
-      config_file: ~/.kube/config
-      context: local
+      config_file: "~/.kube/config"
+      context: "local"
     type: orderer
     name: supplychain
   - ca_data:
@@ -462,8 +462,8 @@ network:
     organization: 
     k8s:
       region: "cluster_region"
-      config_file: ~/.kube/config
-      context: local
+      config_file: "~/.kube/config"
+      context: "local"
     type: orderer
     name: controller
   orderers:

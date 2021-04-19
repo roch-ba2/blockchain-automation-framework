@@ -1089,7 +1089,7 @@ pathToBAF, chaincodeversion, chaincodeName, BAFChaincodePath, cloud_provider):
             'orderers': [{'consensus': 'kafka', 'grpc': {'port': 7050}, 'orderer': '', 'type': 'orderer',
             'name': 'orderer1'}]},
             
-            'k8s': {'region': '"cluster_region"', 'config_file': '{}'.format(BAFk8sConfig_file), 'context': '{}'.format(BAFk8sContext)},
+            'k8s': {'region': '"cluster_region"', 'config_file': '"{}"'.format(BAFk8sConfig_file), 'context': '"{}"'.format(BAFk8sContext)},
             'cli': 'disabled',
             
             'gitops': {'username': '"{}"'.format(BAFgitusername),
