@@ -1027,7 +1027,7 @@ def genBAFChannels(domainName, orgsCount, orderersCount, peerCounts, orgNames):
 for x in range(peerCounts[org]):
 
 
-def genBAForganizationsOrderers(peerCountPerOrg, orgNames, pathToBAF):
+def genBAForganizationsOrderers(peerCountPerOrg, orgNames, pathToBAF, chaincodeversion, chaincodeName, BAFgitusername, BAFgit_url, BAFgitpassword, BAFgitbranch, BAFChaincodePath):
     config = []
     for peerNb in range(peerCountPerOrg):
         
@@ -1048,7 +1048,8 @@ def genBAForganizationsOrderers(peerCountPerOrg, orgNames, pathToBAF):
 
 def genBAFOrganizations(domainName, orgsCount, orderersCount, peerCounts, orgNames, BAFgit_protocol, BAFgit_url,
 BAFgitbranch, BAFgitrelease_dir, BAFgitchart_source, BAFgit_repo, BAFgitusername, BAFgitpassword,
-BAFgitemail, BAFgitprivate_key, BAFk8sContext, BAFk8sConfig_file, VAULT_ADDR, VAULT_TOKEN, endorsersList, ordererOwnershipList, pathToBAF, chaincodeversion, chaincodeName, BAFChaincodePath, cloud_provider):
+BAFgitemail, BAFgitprivate_key, BAFk8sContext, BAFk8sConfig_file, VAULT_ADDR, VAULT_TOKEN, endorsersList, ordererOwnershipList,
+pathToBAF, chaincodeversion, chaincodeName, BAFChaincodePath, cloud_provider):
 
     config = []
     for org in range(len(orgNames)):
@@ -1059,7 +1060,7 @@ BAFgitemail, BAFgitprivate_key, BAFk8sContext, BAFk8sConfig_file, VAULT_ADDR, VA
             'services': {'ca': {'grpc': {'port': 7054}, 'type': 'ca', 'name': 'ca',
             'subject': '/C=CH/ST=Zurich/L=Zurich/O={}/CN=ca.{}-net'.format(orgNames[org], orgNames[org])},
             
-            'peers': genBAForganizationsOrderers(peerCounts[org], orgNames)},
+            'peers': genBAForganizationsOrderers(peerCounts[org], orgNames, pathToBAF, chaincodeversion, chaincodeName, BAFgitusername, BAFgit_url, BAFgitpassword, BAFgitbranch, BAFChaincodePath)},
             
             'k8s': {'region': '"cluster_region"', 'config_file': '"{}"'.format(BAFk8sConfig_file), 'context': '"{}"'.format(BAFk8sContext)},
             
