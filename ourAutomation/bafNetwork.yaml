@@ -41,7 +41,7 @@ network:
           targetPort: 20001
           port: 20001
         gossippeeraddress: peer0.carrier-net:7051
-        peer: null
+        peer: 
         expressapi:
           targetPort: 3000
           port: 3000
@@ -65,7 +65,7 @@ network:
         type: anchor
         events:
           port: 7053
-    organization: null
+    organization: 
     k8s:
       region: "cluster_region"
       config_file: "~/.kube/config"
@@ -113,7 +113,7 @@ network:
           targetPort: 20001
           port: 20001
         gossippeeraddress: peer0.manufacturer-net:7051
-        peer: null
+        peer: 
         expressapi:
           targetPort: 3000
           port: 3000
@@ -137,7 +137,7 @@ network:
         type: anchor
         events:
           port: 7053
-    organization: null
+    organization: 
     k8s:
       region: "cluster_region"
       config_file: "~/.kube/config"
@@ -187,10 +187,10 @@ network:
       - consensus: kafka
         grpc:
           port: 7050
-        orderer: null
+        orderer: 
         type: orderer
         name: orderer1
-    organization: null
+    organization: 
     k8s:
       region: "cluster_region"
       config_file: ~/.kube/config
@@ -238,7 +238,7 @@ network:
           targetPort: 20001
           port: 20001
         gossippeeraddress: peer0.buyer-net:7051
-        peer: null
+        peer: 
         expressapi:
           targetPort: 3000
           port: 3000
@@ -262,7 +262,7 @@ network:
         type: anchor
         events:
           port: 7053
-    organization: null
+    organization: 
     k8s:
       region: "cluster_region"
       config_file: "~/.kube/config"
@@ -310,7 +310,7 @@ network:
           targetPort: 20001
           port: 20001
         gossippeeraddress: peer0.windowshopper-net:7051
-        peer: null
+        peer: 
         expressapi:
           targetPort: 3000
           port: 3000
@@ -334,7 +334,7 @@ network:
         type: anchor
         events:
           port: 7053
-    organization: null
+    organization: 
     k8s:
       region: "cluster_region"
       config_file: "~/.kube/config"
@@ -382,7 +382,7 @@ network:
           targetPort: 20001
           port: 20001
         gossippeeraddress: peer0.dealer-net:7051
-        peer: null
+        peer: 
         expressapi:
           targetPort: 3000
           port: 3000
@@ -406,7 +406,7 @@ network:
         type: anchor
         events:
           port: 7053
-    organization: null
+    organization: 
     k8s:
       region: "cluster_region"
       config_file: "~/.kube/config"
@@ -456,10 +456,10 @@ network:
       - consensus: kafka
         grpc:
           port: 7050
-        orderer: null
+        orderer: 
         type: orderer
         name: orderer1
-    organization: null
+    organization: 
     k8s:
       region: "cluster_region"
       config_file: ~/.kube/config
@@ -471,65 +471,65 @@ network:
     name: orderer1
     certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/orderer1.crt
     uri: orderer1.supplychain-net:7050
-    orderer: null
+    orderer: 
     type: orderer
   - org_name: controller
     name: orderer1
     certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/orderer1.crt
     uri: orderer1.controller-net:7050
-    orderer: null
+    orderer: 
     type: orderer
   channels:
   - participants:
     - peers:
-      - peer: null
+      - peer: 
         gossipAddress: peer0.carrier-net:7051
         name: peer0
         peerAddress: peer0.carrier-net:7051
       name: carrier
       org_status: new
       ordererAddress: orderer1.supplychain-net:7050
-      organization: null
+      organization: 
       type: creator
     - peers:
-      - peer: null
+      - peer: 
         gossipAddress: peer0.manufacturer-net:7051
         name: peer0
         peerAddress: peer0.manufacturer-net:7051
       name: manufacturer
       org_status: new
       ordererAddress: orderer1.supplychain-net:7050
-      organization: null
+      organization: 
       type: joiner
     - peers:
-      - peer: null
+      - peer: 
         gossipAddress: peer0.buyer-net:7051
         name: peer0
         peerAddress: peer0.buyer-net:7051
       name: buyer
       org_status: new
       ordererAddress: orderer1.supplychain-net:7050
-      organization: null
+      organization: 
       type: joiner
     - peers:
-      - peer: null
+      - peer: 
         gossipAddress: peer0.windowshopper-net:7051
         name: peer0
         peerAddress: peer0.windowshopper-net:7051
       name: windowshopper
       org_status: new
       ordererAddress: orderer1.controller-net:7050
-      organization: null
+      organization: 
       type: joiner
     - peers:
-      - peer: null
+      - peer: 
         gossipAddress: peer0.dealer-net:7051
         name: peer0
         peerAddress: peer0.dealer-net:7051
       name: dealer
       org_status: new
       ordererAddress: orderer1.controller-net:7050
-      organization: null
+      organization: 
       type: joiner
     consortium: SupplyChainConsortium
     channel_name: AllChannel
@@ -550,7 +550,7 @@ network:
       - dealer
     genesis:
       name: OrdererGenesis
-    channel: null
+    channel: 
   version: 2.2.0
   env:
     retry_count: 50
