@@ -17,14 +17,14 @@ network:
     cloud_provider: minikube
     cli: enabled
     country: CH
-    subject: O={},OU={},L=47.38/8.54/Zurich,C=CH
+    subject: O=carrier,OU=carrier,L=47.38/8.54/Zurich,C=CH
     org_status: new
     external_url_suffix: develop.local.com
     state: Zurich
     location: Zurich
     vault:
       url: "http://130.104.229.14:30000"
-      root_token: "s.1foGgMdHgsEH1HuhOaS0HB9z"
+      root_token: "s.5KkfEk3Upun8A1fQr1PfjRWL"
       secret_path: "secret"
     services:
       ca:
@@ -89,14 +89,14 @@ network:
     cloud_provider: minikube
     cli: enabled
     country: CH
-    subject: O={},OU={},L=47.38/8.54/Zurich,C=CH
+    subject: O=manufacturer,OU=manufacturer,L=47.38/8.54/Zurich,C=CH
     org_status: new
     external_url_suffix: develop.local.com
     state: Zurich
     location: Zurich
     vault:
       url: "http://130.104.229.14:30000"
-      root_token: "s.1foGgMdHgsEH1HuhOaS0HB9z"
+      root_token: "s.5KkfEk3Upun8A1fQr1PfjRWL"
       secret_path: "secret"
     services:
       ca:
@@ -161,14 +161,14 @@ network:
     cloud_provider: minikube
     cli: disabled
     country: CH
-    subject: "O=Orderer,L=51.50/-0.13/London,C=GB"
+    subject: "/C=GB/ST=London/L=London/O=Orderer/CN=ca.supplychain-net"
     org_status: new
     external_url_suffix: develop.local.com
     state: Zurich
     location: Zurich
     vault:
       url: "http://130.104.229.14:30000"
-      root_token: "s.1foGgMdHgsEH1HuhOaS0HB9z"
+      root_token: "s.5KkfEk3Upun8A1fQr1PfjRWL"
       secret_path: "secret"
     services:
       consensus:
@@ -214,14 +214,14 @@ network:
     cloud_provider: minikube
     cli: enabled
     country: CH
-    subject: O={},OU={},L=47.38/8.54/Zurich,C=CH
+    subject: O=buyer,OU=buyer,L=47.38/8.54/Zurich,C=CH
     org_status: new
     external_url_suffix: develop.local.com
     state: Zurich
     location: Zurich
     vault:
       url: "http://130.104.229.14:30000"
-      root_token: "s.1foGgMdHgsEH1HuhOaS0HB9z"
+      root_token: "s.5KkfEk3Upun8A1fQr1PfjRWL"
       secret_path: "secret"
     services:
       ca:
@@ -286,14 +286,14 @@ network:
     cloud_provider: minikube
     cli: enabled
     country: CH
-    subject: O={},OU={},L=47.38/8.54/Zurich,C=CH
+    subject: O=windowshopper,OU=windowshopper,L=47.38/8.54/Zurich,C=CH
     org_status: new
     external_url_suffix: develop.local.com
     state: Zurich
     location: Zurich
     vault:
       url: "http://130.104.229.14:30000"
-      root_token: "s.1foGgMdHgsEH1HuhOaS0HB9z"
+      root_token: "s.5KkfEk3Upun8A1fQr1PfjRWL"
       secret_path: "secret"
     services:
       ca:
@@ -358,14 +358,14 @@ network:
     cloud_provider: minikube
     cli: enabled
     country: CH
-    subject: O={},OU={},L=47.38/8.54/Zurich,C=CH
+    subject: O=dealer,OU=dealer,L=47.38/8.54/Zurich,C=CH
     org_status: new
     external_url_suffix: develop.local.com
     state: Zurich
     location: Zurich
     vault:
       url: "http://130.104.229.14:30000"
-      root_token: "s.1foGgMdHgsEH1HuhOaS0HB9z"
+      root_token: "s.5KkfEk3Upun8A1fQr1PfjRWL"
       secret_path: "secret"
     services:
       ca:
@@ -430,14 +430,14 @@ network:
     cloud_provider: minikube
     cli: disabled
     country: CH
-    subject: "O=Orderer,L=51.50/-0.13/London,C=GB"
+    subject: "/C=GB/ST=London/L=London/O=Orderer/CN=ca.controller-net"
     org_status: new
     external_url_suffix: develop.local.com
     state: Zurich
     location: Zurich
     vault:
       url: "http://130.104.229.14:30000"
-      root_token: "s.1foGgMdHgsEH1HuhOaS0HB9z"
+      root_token: "s.5KkfEk3Upun8A1fQr1PfjRWL"
       secret_path: "secret"
     services:
       consensus:

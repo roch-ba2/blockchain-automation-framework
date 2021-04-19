@@ -1075,7 +1075,7 @@ pathToBAF, chaincodeversion, chaincodeName, BAFChaincodePath, cloud_provider):
             'location': 'Zurich', 'vault': {'url': '"{}"'.format(VAULT_ADDR), 'root_token': '"{}"'.format(VAULT_TOKEN),
             'secret_path': '"secret"'},
 
-            'subject': 'O={},OU={},L=47.38/8.54/Zurich,C=CH'.format(orgNames[org], orgNames[org], 'type': 'peer')}
+            'subject': 'O={},OU={},L=47.38/8.54/Zurich,C=CH'.format(orgNames[org], orgNames[org]), 'type': 'peer'}
             
         else:
             orgConfig = {'ca_data': {'url': 'ca.{}-net:7054'.format(orgNames[org]), 'certificate': 'file/server.crt'},

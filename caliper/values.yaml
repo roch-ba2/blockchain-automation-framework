@@ -27,7 +27,7 @@ nodeSelector: {}
 tolerations: []
 ENDORSING_ORG_NAMES: "carrier manufacturer buyer windowshopper dealer"
 nameOverride: 
-VAULT_TOKEN: s.1foGgMdHgsEH1HuhOaS0HB9z
+VAULT_TOKEN: s.5KkfEk3Upun8A1fQr1PfjRWL
 replicaMasterCount: 1
 affinity: {}
 resources: {}
