@@ -1297,7 +1297,7 @@ def generate():
             print(ordererOwnershipList, orderersCount)
             domainName = fabricConfig["domain_name"]#"svc.cluster.local"
             endorsersList=([orgNames[idx] for idx in range(len(endorsersBooleanList)) if endorsersBooleanList[idx] == True])
-            print(endorsersList, endorsersBooleanList)
+            print(endorsersList, endorsersBooleanList, "peerCounts", peerCounts)
 
             BAFgit_protocol = fabricConfig["BAFgitops"]["git_protocol"]
             BAFgit_url = fabricConfig["BAFgitops"]["git_url"]
