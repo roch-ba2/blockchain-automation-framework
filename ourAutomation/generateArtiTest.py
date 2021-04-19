@@ -1025,7 +1025,19 @@ def genBAFChannels(domainName, orgsCount, orderersCount, peerCounts, orgNames):
 
 
 
-
+def genBAForganizationsOrderers(org, peerCounts, orgNames, pathToBAF, chaincodeversion, chaincodeName, BAFgitusername, BAFgit_url, BAFgitpassword, BAFgitbranch, BAFChaincodePath):
+    config = []
+    for peerNb in range(peerCounts[org]):
+        
+        peerConfig={'name': 'peer{}'.format(peerNb), 'certificate': '{}/build/{}/ca.crt'.format(pathToBAF, orgNames[org]),
+            'peerAddress': 'peer{}.{}-net:7051'.format(peerNb, orgNames[org]), 'grpc': {'port': 7051}, 'restserver': {'targetPort': 20001, 'port': 20001},
+            'couchdb': {'port': 5984}, 'gossippeeraddress': 'peer{}.{}-net:7051'.format(peerNb, orgNames[org]), 'chaincode': {'version': '"{}"'.format(chaincodeversion),
+            'name': '"{}"'.format(chaincodeName), 'repository': {'username': '"{}"'.format(BAFgitusername), 'url': '"{}"'.format(BAFgit_url),
+            'password': '"{}"'.format(BAFgitpassword), 'branch': '{}'.format(BAFgitbranch), 'path': '"{}"'.format(BAFChaincodePath)},
+            'endorsements': '""', 'maindirectory': '"."', 'arguments': '\\"init\\",\\"\\"'}, 'peer': None, 'type': 'anchor',
+            'events': {'port': 7053}, 'expressapi': {'targetPort': 3000, 'port': 3000}, 'cli': 'disabled'}
+        config.append(peerConfig)
+    return config
 
 
 
@@ -1034,7 +1046,8 @@ def genBAFChannels(domainName, orgsCount, orderersCount, peerCounts, orgNames):
 
 def genBAFOrganizations(domainName, orgsCount, orderersCount, peerCounts, orgNames, BAFgit_protocol, BAFgit_url,
 BAFgitbranch, BAFgitrelease_dir, BAFgitchart_source, BAFgit_repo, BAFgitusername, BAFgitpassword,
-BAFgitemail, BAFgitprivate_key, BAFk8sContext, BAFk8sConfig_file, VAULT_ADDR, VAULT_TOKEN, endorsersList, ordererOwnershipList, pathToBAF, chaincodeversion, chaincodeName, BAFChaincodePath, cloud_provider):
+BAFgitemail, BAFgitprivate_key, BAFk8sContext, BAFk8sConfig_file, VAULT_ADDR, VAULT_TOKEN, endorsersList, ordererOwnershipList,
+pathToBAF, chaincodeversion, chaincodeName, BAFChaincodePath, cloud_provider):
 
     config = []
     for org in range(len(orgNames)):
@@ -1045,15 +1058,7 @@ BAFgitemail, BAFgitprivate_key, BAFk8sContext, BAFk8sConfig_file, VAULT_ADDR, VA
             'services': {'ca': {'grpc': {'port': 7054}, 'type': 'ca', 'name': 'ca',
             'subject': '/C=CH/ST=Zurich/L=Zurich/O={}/CN=ca.{}-net'.format(orgNames[org], orgNames[org])},
             
-            'peers': [{'name': 'peer0',
-
-            'certificate': '{}/build/{}/ca.crt'.format(pathToBAF, orgNames[org]),
-            'peerAddress': 'peer0.{}-net:7051'.format(orgNames[org]), 'grpc': {'port': 7051}, 'restserver': {'targetPort': 20001, 'port': 20001},
-            'couchdb': {'port': 5984}, 'gossippeeraddress': 'peer0.{}-net:7051'.format(orgNames[org]), 'chaincode': {'version': '"{}"'.format(chaincodeversion),
-            'name': '"{}"'.format(chaincodeName), 'repository': {'username': '"{}"'.format(BAFgitusername), 'url': '"{}"'.format(BAFgit_url),
-            'password': '"{}"'.format(BAFgitpassword), 'branch': '{}'.format(BAFgitbranch), 'path': '"{}"'.format(BAFChaincodePath)},
-            'endorsements': '""', 'maindirectory': '"."', 'arguments': '\\"init\\",\\"\\"'}, 'peer': None, 'type': 'anchor',
-            'events': {'port': 7053}, 'expressapi': {'targetPort': 3000, 'port': 3000}, 'cli': 'disabled'}]},
+            'peers': genBAForganizationsOrderers(org, peerCounts, orgNames, pathToBAF, chaincodeversion, chaincodeName, BAFgitusername, BAFgit_url, BAFgitpassword, BAFgitbranch, BAFChaincodePath)},
             
             'k8s': {'region': '"cluster_region"', 'config_file': '"{}"'.format(BAFk8sConfig_file), 'context': '"{}"'.format(BAFk8sContext)},
             
@@ -1173,7 +1178,7 @@ def getBAFnetwork(domainName, orgsCount, orderersCount, chaincodeName, peerCount
     bafNetwork = {'network': {'channels': [{'channel_name': 'AllChannel', 'orderer': {'name': 'supplychain'},
     'participants': channelParticipantsList(endorsersList, ordererOwnershipList),
 
-    'endorsers': {'corepeerAddress': ['peer0.{}-net:7051'.format(x) for x in endorsersList],
+    'endorsers': {'corepeerAddress': ['peer{}.{}-net:7051'.format(x, y) for y in endorsersList for x in range(peerCounts[endorsersList.index(y)])],
     'name': endorsersList}, 
     
     'consortium': 'SupplyChainConsortium', 'channel': None,
