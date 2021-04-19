@@ -1,0 +1,254 @@
+network:
+  organizations:
+  - ca_data:
+      url: ca.carrier-net:7054
+      certificate: file/server.crt
+    gitops:
+      username: "ayhamkassab"
+      private_key: "/root/hyperledger-labs/myFork/blockchain-automation-framework/build/gitops"
+      git_protocol: "https"
+      chart_source: "platforms/hyperledger-fabric/charts"
+      git_url: "https://github.com/ayhamkassab/blockchain-automation-framework.git"
+      branch: "master"
+      release_dir: "platforms/hyperledger-fabric/releases/dev"
+      password: "**Ak47**"
+      email: "github_email"
+      git_repo: "github.com/ayhamkassab/blockchain-automation-framework.git"
+    cloud_provider: minikube
+    cli: enabled
+    country: CH
+    subject: O={},OU={},L=47.38/8.54/Zurich,C=CH
+    org_status: new
+    external_url_suffix: develop.local.com
+    state: Zurich
+    location: Zurich
+    vault:
+      url: "http://130.104.229.21:30000"
+      root_token: "s.32JqFMwzbrqbeFl8bKI9R2QC"
+      secret_path: "secret"
+    services:
+      ca:
+        grpc:
+          port: 7054
+        type: ca
+        name: ca
+        subject: /C=CH/ST=Zurich/L=Zurich/O=carrier/CN=ca.carrier-net
+      peers:
+      - peerAddress: peer0.carrier-net:7051
+        grpc:
+          port: 7051
+        restserver:
+          targetPort: 20001
+          port: 20001
+        gossippeeraddress: peer0.carrier-net:7051
+        peer: null
+        expressapi:
+          targetPort: 3000
+          port: 3000
+        cli: disabled
+        name: peer0
+        certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/carrier/ca.crt
+        chaincode:
+          name: "simpleauction"
+          repository:
+            username: "ayhamkassab"
+            url: "github.com/ayhamkassab/blockchain-automation-framework.git"
+            password: "**Ak47**"
+            branch: master
+            path: "examples/supplychain-app/fabric/chaincode_rest_server/chaincode/"
+          endorsements: ""
+          maindirectory: "."
+          version: "1"
+          arguments: \"init\",\"\"
+        couchdb:
+          port: 5984
+        type: anchor
+        events:
+          port: 7053
+    organization: null
+    k8s:
+      region: "cluster_region"
+      config_file: "~/.kube/config"
+      context: "local"
+    type: peer
+    name: carrier
+  - ca_data:
+      url: ca.manufacturer-net:7054
+      certificate: file/server.crt
+    gitops:
+      username: "ayhamkassab"
+      private_key: "/root/hyperledger-labs/myFork/blockchain-automation-framework/build/gitops"
+      git_protocol: "https"
+      chart_source: "platforms/hyperledger-fabric/charts"
+      git_url: "https://github.com/ayhamkassab/blockchain-automation-framework.git"
+      branch: "master"
+      release_dir: "platforms/hyperledger-fabric/releases/dev"
+      password: "**Ak47**"
+      email: "github_email"
+      git_repo: "github.com/ayhamkassab/blockchain-automation-framework.git"
+    cloud_provider: minikube
+    cli: enabled
+    country: CH
+    subject: O={},OU={},L=47.38/8.54/Zurich,C=CH
+    org_status: new
+    external_url_suffix: develop.local.com
+    state: Zurich
+    location: Zurich
+    vault:
+      url: "http://130.104.229.21:30000"
+      root_token: "s.32JqFMwzbrqbeFl8bKI9R2QC"
+      secret_path: "secret"
+    services:
+      ca:
+        grpc:
+          port: 7054
+        type: ca
+        name: ca
+        subject: /C=CH/ST=Zurich/L=Zurich/O=manufacturer/CN=ca.manufacturer-net
+      peers:
+      - peerAddress: peer0.manufacturer-net:7051
+        grpc:
+          port: 7051
+        restserver:
+          targetPort: 20001
+          port: 20001
+        gossippeeraddress: peer0.manufacturer-net:7051
+        peer: null
+        expressapi:
+          targetPort: 3000
+          port: 3000
+        cli: disabled
+        name: peer0
+        certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/manufacturer/ca.crt
+        chaincode:
+          name: "simpleauction"
+          repository:
+            username: "ayhamkassab"
+            url: "github.com/ayhamkassab/blockchain-automation-framework.git"
+            password: "**Ak47**"
+            branch: master
+            path: "examples/supplychain-app/fabric/chaincode_rest_server/chaincode/"
+          endorsements: ""
+          maindirectory: "."
+          version: "1"
+          arguments: \"init\",\"\"
+        couchdb:
+          port: 5984
+        type: anchor
+        events:
+          port: 7053
+    organization: null
+    k8s:
+      region: "cluster_region"
+      config_file: "~/.kube/config"
+      context: "local"
+    type: peer
+    name: manufacturer
+  - ca_data:
+      url: ca.supplychain-net:7054
+      certificate: file/server.crt
+    gitops:
+      username: "ayhamkassab"
+      private_key: "/root/hyperledger-labs/myFork/blockchain-automation-framework/build/gitops"
+      git_protocol: "https"
+      chart_source: "platforms/hyperledger-fabric/charts"
+      git_url: "https://github.com/ayhamkassab/blockchain-automation-framework.git"
+      branch: "master"
+      release_dir: "platforms/hyperledger-fabric/releases/dev"
+      password: "**Ak47**"
+      email: "github_email"
+      git_repo: "github.com/ayhamkassab/blockchain-automation-framework.git"
+    cloud_provider: minikube
+    cli: disabled
+    country: CH
+    subject: "O=Orderer,L=51.50/-0.13/London,C=GB"
+    org_status: new
+    external_url_suffix: develop.local.com
+    state: Zurich
+    location: Zurich
+    vault:
+      url: "http://130.104.229.21:30000"
+      root_token: "s.32JqFMwzbrqbeFl8bKI9R2QC"
+      secret_path: "secret"
+    services:
+      consensus:
+        grpc:
+          port: 9092
+        type: broker
+        name: kafka
+        replicas: 3
+      ca:
+        grpc:
+          port: 7054
+        type: ca
+        name: ca
+        subject: "/C=CH/ST=Zurich/L=Zurich/O=supplychain/CN=ca.supplychain-net"
+      orderers:
+      - consensus: kafka
+        grpc:
+          port: 7050
+        orderer: null
+        type: orderer
+        name: orderer1
+    organization: null
+    k8s:
+      region: "cluster_region"
+      config_file: ~/.kube/config
+      context: local
+    type: orderer
+    name: supplychain
+  orderers:
+  - org_name: supplychain
+    name: orderer1
+    certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/orderer1.crt
+    uri: orderer1.supplychain-net:7050
+    orderer: null
+    type: orderer
+  channels:
+  - participants:
+    - peers:
+      - peer: null
+        gossipAddress: peer0.carrier-net:7051
+        name: peer0
+        peerAddress: peer0.carrier-net:7051
+      name: carrier
+      org_status: new
+      ordererAddress: orderer1.supplychain-net:7050
+      organization: null
+      type: creator
+    - peers:
+      - peer: null
+        gossipAddress: peer0.manufacturer-net:7051
+        name: peer0
+        peerAddress: peer0.manufacturer-net:7051
+      name: manufacturer
+      org_status: new
+      ordererAddress: orderer1.supplychain-net:7050
+      organization: null
+      type: joiner
+    consortium: SupplyChainConsortium
+    channel_name: AllChannel
+    orderer:
+      name: supplychain
+    endorsers:
+      corepeerAddress:
+      - peer0.carrier-net:7051
+      - peer0.manufacturer-net:7051
+      name:
+      - carrier
+      - manufacturer
+    genesis:
+      name: OrdererGenesis
+    channel: null
+  version: 2.2.0
+  env:
+    retry_count: 50
+    type: "local"
+    proxy: none
+    ambassadorPorts: 15010,15020
+    external_dns: disabled
+  docker:
+    url: "index.docker.io/hyperledgerlabs"
+    username: "docker_username"
+    password: "docker_password"
+  type: fabric

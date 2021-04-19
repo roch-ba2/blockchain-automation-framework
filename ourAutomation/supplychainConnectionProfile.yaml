@@ -1,0 +1,50 @@
+organizations:
+  supplychain-net:
+    peers:
+    - peer0.supplychain-net
+    orderers:
+    - orderer1.supplychain-net
+    certificateAuthorities:
+    - ca.supplychain-net
+    mspid: supplychainMSP
+peers:
+  peers:
+    peer0.supplychain-net:
+      url: grpcs://peer0.supplychain-net:7051
+      tlsCACerts:
+        path: secret/supplychain/msp/tlscacerts/tlsca.pem
+orderers:
+  orderer1.supplychain-net:
+    url: grpcs://orderer1.supplychain-net:7050
+    tlsCACerts:
+      path: secret/supplychain/msp/tlscacerts/orderer-tlsca.pem
+name: test-network-carrier-net
+certificateAuthorities:
+  ca.supplychain-net:
+    url: https://ca.supplychain-net:7054
+    httpOptions:
+      verify: false
+    tlsCACerts:
+      path: secret/supplychain/msp/tlscacerts/tlsca.pem
+    caName: ca.supplychain-net
+client:
+  organization: supplychain-net
+  connection:
+    timeout:
+      peer:
+        endorser: "300"
+        eventHub: "300"
+        eventReg: "300"
+      orderer: "300"
+channels:
+  allchannel:
+    peers:
+      peer0.supplychain-net:
+        eventSource: true
+        chaincodeQuery: true
+        endorsingPeer: true
+        discover: true
+        ledgerQuery: true
+    orderers:
+    - orderer1.supplychain-net
+version: 1.0.0

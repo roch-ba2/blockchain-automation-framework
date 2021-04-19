@@ -2,7 +2,7 @@
     rateControl: &rate
       type: fixed-rate
       opts:
-        tps: 20
+        tps: 1
 
     test:
       name: simpleauction
@@ -12,11 +12,15 @@
         number: 1
       rounds:
         - label: create
-          txNumber: 500
+          txNumber: 10
           rateControl: *rate
           workload:
               module: createOffer.js
-
+        - label: bids
+          txNumber: 10
+          rateControl: *rate
+          workload:
+            module: createBid.js
 
     monitors:
         resource:

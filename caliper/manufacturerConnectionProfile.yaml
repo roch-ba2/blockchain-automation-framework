@@ -1,0 +1,49 @@
+organizations:
+      manufacturer-net:
+        peers:
+        - peer0.manufacturer-net
+        orderers:
+        - orderer1.supplychain-net
+        certificateAuthorities:
+        - ca.manufacturer-net
+        mspid: manufacturerMSP
+    peers:
+      peer0.manufacturer-net:
+        url: grpcs://peer0.manufacturer-net:7051
+        tlsCACerts:
+          path: secret/manufacturer/msp/tlscacerts/tlsca.pem
+    orderers:
+      orderer1.supplychain-net:
+        url: grpcs://orderer1.supplychain-net:7050
+        tlsCACerts:
+          path: secret/manufacturer/msp/tlscacerts/orderer-tlsca.pem
+    name: test-network-carrier-net
+    certificateAuthorities:
+      ca.manufacturer-net:
+        url: https://ca.manufacturer-net:7054
+        httpOptions:
+          verify: false
+        tlsCACerts:
+          path: secret/manufacturer/msp/tlscacerts/tlsca.pem
+        caName: ca.manufacturer-net
+    client:
+      organization: manufacturer-net
+      connection:
+        timeout:
+          peer:
+            endorser: "300"
+            eventHub: "300"
+            eventReg: "300"
+          orderer: "300"
+    channels:
+      allchannel:
+        peers:
+          peer0.manufacturer-net:
+            eventSource: true
+            chaincodeQuery: true
+            endorsingPeer: true
+            discover: true
+            ledgerQuery: true
+        orderers:
+        - orderer1.supplychain-net
+    version: 1.0.0
