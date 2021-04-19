@@ -1024,8 +1024,6 @@ def genBAFChannels(domainName, orgsCount, orderersCount, peerCounts, orgNames):
 
 
 
-for x in range(peerCounts[org]):
-
 
 def genBAForganizationsOrderers(peerCountPerOrg, orgNames, pathToBAF, chaincodeversion, chaincodeName, BAFgitusername, BAFgit_url, BAFgitpassword, BAFgitbranch, BAFChaincodePath):
     config = []
