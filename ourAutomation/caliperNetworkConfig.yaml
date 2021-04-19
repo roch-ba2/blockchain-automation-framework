@@ -33,18 +33,6 @@ organizations:
     certificates:
     - admin: true
       clientPrivateKey:
-        path: secret/supplychain/tls/admin.pem
-      clientSignedCert:
-        path: secret/supplychain/tls/admin.cert
-      name: "admin"
-  connectionProfile:
-    path: "./supplychainConnectionProfile.yaml"
-    discover: True
-  mspid: supplychainMSP
-- identities:
-    certificates:
-    - admin: true
-      clientPrivateKey:
         path: secret/buyer/tls/admin.pem
       clientSignedCert:
         path: secret/buyer/tls/admin.cert
@@ -77,18 +65,6 @@ organizations:
     path: "./dealerConnectionProfile.yaml"
     discover: True
   mspid: dealerMSP
-- identities:
-    certificates:
-    - admin: true
-      clientPrivateKey:
-        path: secret/controller/tls/admin.pem
-      clientSignedCert:
-        path: secret/controller/tls/admin.cert
-      name: "admin"
-  connectionProfile:
-    path: "./controllerConnectionProfile.yaml"
-    discover: True
-  mspid: controllerMSP
 name: Fabric
 caliper:
   sutOptions:
@@ -110,14 +86,12 @@ channels:
       language: golang
     endorsementPolicy:
       policy:
-        7-of:
+        5-of:
         - signed-by: 0
         - signed-by: 1
         - signed-by: 2
         - signed-by: 3
         - signed-by: 4
-        - signed-by: 5
-        - signed-by: 6
       identities:
       - role:
           name: member
@@ -127,9 +101,6 @@ channels:
           mspId: manufacturerMSP
       - role:
           name: member
-          mspId: supplychainMSP
-      - role:
-          name: member
           mspId: buyerMSP
       - role:
           name: member
@@ -137,9 +108,6 @@ channels:
       - role:
           name: member
           mspId: dealerMSP
-      - role:
-          name: member
-          mspId: controllerMSP
     id: simpleauction
     contractID: simpleauction
   create:
@@ -147,7 +115,6 @@ channels:
       version: 0
       consortium: "SupplyChainConsortium"
       capabilities: []
-      msps: ["carrierMSP", "manufacturerMSP", "supplychainMSP", "buyerMSP", "windowshopperMSP",
-        "dealerMSP", "controllerMSP"]
+      msps: ["carrierMSP", "manufacturerMSP", "buyerMSP", "windowshopperMSP", "dealerMSP"]
   channelName: allchannel
 version: "2.0.0"

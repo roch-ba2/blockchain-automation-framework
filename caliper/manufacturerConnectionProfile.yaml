@@ -3,7 +3,7 @@ organizations:
         peers:
         - peer0.manufacturer-net
         orderers:
-        - orderer1.manufacturer-net
+        - orderer1.supplychain-net
         certificateAuthorities:
         - ca.manufacturer-net
         mspid: manufacturerMSP
@@ -13,8 +13,8 @@ organizations:
         tlsCACerts:
           path: secret/manufacturer/msp/tlscacerts/tlsca.pem
     orderers:
-      orderer1.manufacturer-net:
-        url: grpcs://orderer1.manufacturer-net:7050
+      orderer1.supplychain-net:
+        url: grpcs://orderer1.supplychain-net:7050
         tlsCACerts:
           path: secret/manufacturer/msp/tlscacerts/orderer-tlsca.pem
     name: test-network-carrier-net
@@ -45,5 +45,5 @@ organizations:
             discover: true
             ledgerQuery: true
         orderers:
-        - orderer1.manufacturer-net
+        - orderer1.supplychain-net
     version: 1.0.0

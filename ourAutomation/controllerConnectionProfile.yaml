@@ -3,7 +3,7 @@ organizations:
     peers:
     - peer0.controller-net
     orderers:
-    - orderer1.controller-net
+    - orderer1.dealer-net
     certificateAuthorities:
     - ca.controller-net
     mspid: controllerMSP
@@ -13,8 +13,8 @@ peers:
     tlsCACerts:
       path: secret/controller/msp/tlscacerts/tlsca.pem
 orderers:
-  orderer1.controller-net:
-    url: grpcs://orderer1.controller-net:7050
+  orderer1.dealer-net:
+    url: grpcs://orderer1.dealer-net:7050
     tlsCACerts:
       path: secret/controller/msp/tlscacerts/orderer-tlsca.pem
 name: test-network-carrier-net
@@ -45,5 +45,5 @@ channels:
         discover: true
         ledgerQuery: true
     orderers:
-    - orderer1.controller-net
+    - orderer1.dealer-net
 version: 1.0.0
