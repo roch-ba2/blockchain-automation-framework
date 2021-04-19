@@ -12,12 +12,12 @@
         number: 1
       rounds:
         - label: create
-          txNumber: 10
+          txDuration: 5
           rateControl: *rate
           workload:
               module: createOffer.js
         - label: bids
-          txNumber: 10
+          txDuration: 5
           rateControl: *rate
           workload:
             module: createBid.js
