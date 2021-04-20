@@ -1154,20 +1154,20 @@ def TOUSEEEEchannelParticipantsList(orgNames):
 
 
 
-def channelParticipantsList(endorsersList, ordererOwnershipList, peerCounts):
+def channelParticipantsList(orgNames, ordererOwnershipList, peerCounts, endorsersList):
     config = []
 
-    for org in range(len(endorsersList)):
-    
-        orgConfig = {'ordererAddress': 'orderer1.{}-net:7050'.format(ordererOwnershipList[org]),
-        'peers': [{'peer': '', 'gossipAddress': 'peer{}.{}-net:7051'.format(x, endorsersList[org]),
-        'name': 'peer{}'.format(x), 'peerAddress': 'peer{}.{}-net:7051'.format(x, endorsersList[org])} for x in range(peerCounts[org])],
-        'name': endorsersList[org], 'organization': '', 'org_status': 'new'}
-        if org == 0:
-            orgConfig["type"] = "creator"
-        else:
-            orgConfig["type"] = "joiner"
-        config.append(orgConfig)
+    for org in range(len(orgNames)):
+        if orgNames[org] in endorsersList:
+            orgConfig = {'ordererAddress': 'orderer1.{}-net:7050'.format(ordererOwnershipList[org]),
+            'peers': [{'peer': '', 'gossipAddress': 'peer{}.{}-net:7051'.format(x, orgNames[org]),
+            'name': 'peer{}'.format(x), 'peerAddress': 'peer{}.{}-net:7051'.format(x, orgNames[org])} for x in range(peerCounts[org])],
+            'name': orgNames[org], 'organization': '', 'org_status': 'new'}
+            if org == 0:
+                orgConfig["type"] = "creator"
+            else:
+                orgConfig["type"] = "joiner"
+            config.append(orgConfig)
     return config
 
 
@@ -1178,9 +1178,9 @@ def getBAFnetwork(domainName, orgsCount, orderersCount, chaincodeName, peerCount
 
 
     bafNetwork = {'network': {'channels': [{'channel_name': 'AllChannel', 'orderer': {'name': 'supplychain'},
-    'participants': channelParticipantsList(endorsersList, ordererOwnershipList, peerCounts),
+    'participants': channelParticipantsList(orgNames, ordererOwnershipList, peerCounts, endorsersList),
 
-    'endorsers': {'corepeerAddress': ['peer{}.{}-net:7051'.format(x, y) for y in endorsersList for x in range(peerCounts[endorsersList.index(y)])],
+    'endorsers': {'corepeerAddress': ['peer{}.{}-net:7051'.format(x, y) for y in endorsersList for x in range(peerCounts[orgNames.index(y)])],
     'name': endorsersList}, 
     
     'consortium': 'SupplyChainConsortium', 'channel': '',
@@ -1296,9 +1296,12 @@ def generate():
             orgsCount= len(listOfOrgs)
             for org in range(orgsCount):
                 ordererOwnershipList.append(listOfOrgs[org]["orderer"])
-                peerCounts.append(listOfOrgs[org]["numberOfPeers"])
                 orgNames.append(listOfOrgs[org]["name"])
                 endorsersBooleanList.append(listOfOrgs[org]["endorser"])
+                if listOfOrgs[org]["endorser"]:
+                    peerCounts.append(listOfOrgs[org]["numberOfPeers"])
+                else:
+                    peerCounts.append(0)
             #orderersCount=(len([idx for idx in range(len(ordererOwnershipList)) if ordererOwnershipList[idx] == True]))
             orderersCount = len(np.unique(ordererOwnershipList))
             print(np.unique(ordererOwnershipList), orderersCount)
