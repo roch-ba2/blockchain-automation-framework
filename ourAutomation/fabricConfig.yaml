@@ -35,7 +35,7 @@ organizations:
 - id: 2
   name: manufacturer
   orderer: supplychain
-  numberOfPeers: 1
+  numberOfPeers: 2
   endorser: true
 
 - id: 3
@@ -43,3 +43,22 @@ organizations:
   orderer: supplychain
   numberOfPeers: 1
   endorser: false
+
+
+- id: 4
+  name: buyer
+  orderer: supplychain
+  numberOfPeers: 1
+  endorser: true
+
+- id: 5
+  name: windowshopper
+  orderer: supplychain
+  numberOfPeers: 2
+  endorser: true
+
+- id: 6
+  name: dealer
+  orderer: supplychain
+  numberOfPeers: 3
+  endorser: true

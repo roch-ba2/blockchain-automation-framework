@@ -3,7 +3,7 @@ organizations:
     peers:
     - peer0.windowshopper-net
     orderers:
-    - orderer1.controller-net
+    - orderer1.supplychain-net
     certificateAuthorities:
     - ca.windowshopper-net
     mspid: windowshopperMSP
@@ -13,8 +13,8 @@ peers:
     tlsCACerts:
       path: secret/windowshopper/msp/tlscacerts/tlsca.pem
 orderers:
-  orderer1.controller-net:
-    url: grpcs://orderer1.controller-net:7050
+  orderer1.supplychain-net:
+    url: grpcs://orderer1.supplychain-net:7050
     tlsCACerts:
       path: secret/windowshopper/msp/tlscacerts/orderer-tlsca.pem
 name: test-network-carrier-net
@@ -45,5 +45,5 @@ channels:
         discover: true
         ledgerQuery: true
     orderers:
-    - orderer1.controller-net
+    - orderer1.supplychain-net
 version: 1.0.0
