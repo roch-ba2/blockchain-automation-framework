@@ -65,6 +65,130 @@ network:
         type: anchor
         events:
           port: 7053
+      - peerAddress: peer1.carrier-net:7051
+        grpc:
+          port: 7051
+        restserver:
+          targetPort: 20001
+          port: 20001
+        gossippeeraddress: peer1.carrier-net:7051
+        peer: 
+        expressapi:
+          targetPort: 3000
+          port: 3000
+        cli: disabled
+        name: peer1
+        certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/carrier/ca.crt
+        chaincode:
+          name: "simpleauction"
+          repository:
+            username: "ayhamkassab"
+            url: "github.com/ayhamkassab/blockchain-automation-framework.git"
+            password: "**Ak47**"
+            branch: master
+            path: "examples/supplychain-app/fabric/chaincode_rest_server/chaincode/"
+          endorsements: ""
+          maindirectory: "."
+          version: "1"
+          arguments: \"init\",\"\"
+        couchdb:
+          port: 5984
+        type: anchor
+        events:
+          port: 7053
+      - peerAddress: peer2.carrier-net:7051
+        grpc:
+          port: 7051
+        restserver:
+          targetPort: 20001
+          port: 20001
+        gossippeeraddress: peer2.carrier-net:7051
+        peer: 
+        expressapi:
+          targetPort: 3000
+          port: 3000
+        cli: disabled
+        name: peer2
+        certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/carrier/ca.crt
+        chaincode:
+          name: "simpleauction"
+          repository:
+            username: "ayhamkassab"
+            url: "github.com/ayhamkassab/blockchain-automation-framework.git"
+            password: "**Ak47**"
+            branch: master
+            path: "examples/supplychain-app/fabric/chaincode_rest_server/chaincode/"
+          endorsements: ""
+          maindirectory: "."
+          version: "1"
+          arguments: \"init\",\"\"
+        couchdb:
+          port: 5984
+        type: anchor
+        events:
+          port: 7053
+      - peerAddress: peer3.carrier-net:7051
+        grpc:
+          port: 7051
+        restserver:
+          targetPort: 20001
+          port: 20001
+        gossippeeraddress: peer3.carrier-net:7051
+        peer: 
+        expressapi:
+          targetPort: 3000
+          port: 3000
+        cli: disabled
+        name: peer3
+        certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/carrier/ca.crt
+        chaincode:
+          name: "simpleauction"
+          repository:
+            username: "ayhamkassab"
+            url: "github.com/ayhamkassab/blockchain-automation-framework.git"
+            password: "**Ak47**"
+            branch: master
+            path: "examples/supplychain-app/fabric/chaincode_rest_server/chaincode/"
+          endorsements: ""
+          maindirectory: "."
+          version: "1"
+          arguments: \"init\",\"\"
+        couchdb:
+          port: 5984
+        type: anchor
+        events:
+          port: 7053
+      - peerAddress: peer4.carrier-net:7051
+        grpc:
+          port: 7051
+        restserver:
+          targetPort: 20001
+          port: 20001
+        gossippeeraddress: peer4.carrier-net:7051
+        peer: 
+        expressapi:
+          targetPort: 3000
+          port: 3000
+        cli: disabled
+        name: peer4
+        certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/carrier/ca.crt
+        chaincode:
+          name: "simpleauction"
+          repository:
+            username: "ayhamkassab"
+            url: "github.com/ayhamkassab/blockchain-automation-framework.git"
+            password: "**Ak47**"
+            branch: master
+            path: "examples/supplychain-app/fabric/chaincode_rest_server/chaincode/"
+          endorsements: ""
+          maindirectory: "."
+          version: "1"
+          arguments: \"init\",\"\"
+        couchdb:
+          port: 5984
+        type: anchor
+        events:
+          port: 7053
     organization: 
     k8s:
       region: "cluster_region"
@@ -275,6 +399,254 @@ network:
           port: 3000
         cli: disabled
         name: peer0
+        certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/buyer/ca.crt
+        chaincode:
+          name: "simpleauction"
+          repository:
+            username: "ayhamkassab"
+            url: "github.com/ayhamkassab/blockchain-automation-framework.git"
+            password: "**Ak47**"
+            branch: master
+            path: "examples/supplychain-app/fabric/chaincode_rest_server/chaincode/"
+          endorsements: ""
+          maindirectory: "."
+          version: "1"
+          arguments: \"init\",\"\"
+        couchdb:
+          port: 5984
+        type: anchor
+        events:
+          port: 7053
+      - peerAddress: peer1.buyer-net:7051
+        grpc:
+          port: 7051
+        restserver:
+          targetPort: 20001
+          port: 20001
+        gossippeeraddress: peer1.buyer-net:7051
+        peer: 
+        expressapi:
+          targetPort: 3000
+          port: 3000
+        cli: disabled
+        name: peer1
+        certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/buyer/ca.crt
+        chaincode:
+          name: "simpleauction"
+          repository:
+            username: "ayhamkassab"
+            url: "github.com/ayhamkassab/blockchain-automation-framework.git"
+            password: "**Ak47**"
+            branch: master
+            path: "examples/supplychain-app/fabric/chaincode_rest_server/chaincode/"
+          endorsements: ""
+          maindirectory: "."
+          version: "1"
+          arguments: \"init\",\"\"
+        couchdb:
+          port: 5984
+        type: anchor
+        events:
+          port: 7053
+      - peerAddress: peer2.buyer-net:7051
+        grpc:
+          port: 7051
+        restserver:
+          targetPort: 20001
+          port: 20001
+        gossippeeraddress: peer2.buyer-net:7051
+        peer: 
+        expressapi:
+          targetPort: 3000
+          port: 3000
+        cli: disabled
+        name: peer2
+        certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/buyer/ca.crt
+        chaincode:
+          name: "simpleauction"
+          repository:
+            username: "ayhamkassab"
+            url: "github.com/ayhamkassab/blockchain-automation-framework.git"
+            password: "**Ak47**"
+            branch: master
+            path: "examples/supplychain-app/fabric/chaincode_rest_server/chaincode/"
+          endorsements: ""
+          maindirectory: "."
+          version: "1"
+          arguments: \"init\",\"\"
+        couchdb:
+          port: 5984
+        type: anchor
+        events:
+          port: 7053
+      - peerAddress: peer3.buyer-net:7051
+        grpc:
+          port: 7051
+        restserver:
+          targetPort: 20001
+          port: 20001
+        gossippeeraddress: peer3.buyer-net:7051
+        peer: 
+        expressapi:
+          targetPort: 3000
+          port: 3000
+        cli: disabled
+        name: peer3
+        certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/buyer/ca.crt
+        chaincode:
+          name: "simpleauction"
+          repository:
+            username: "ayhamkassab"
+            url: "github.com/ayhamkassab/blockchain-automation-framework.git"
+            password: "**Ak47**"
+            branch: master
+            path: "examples/supplychain-app/fabric/chaincode_rest_server/chaincode/"
+          endorsements: ""
+          maindirectory: "."
+          version: "1"
+          arguments: \"init\",\"\"
+        couchdb:
+          port: 5984
+        type: anchor
+        events:
+          port: 7053
+      - peerAddress: peer4.buyer-net:7051
+        grpc:
+          port: 7051
+        restserver:
+          targetPort: 20001
+          port: 20001
+        gossippeeraddress: peer4.buyer-net:7051
+        peer: 
+        expressapi:
+          targetPort: 3000
+          port: 3000
+        cli: disabled
+        name: peer4
+        certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/buyer/ca.crt
+        chaincode:
+          name: "simpleauction"
+          repository:
+            username: "ayhamkassab"
+            url: "github.com/ayhamkassab/blockchain-automation-framework.git"
+            password: "**Ak47**"
+            branch: master
+            path: "examples/supplychain-app/fabric/chaincode_rest_server/chaincode/"
+          endorsements: ""
+          maindirectory: "."
+          version: "1"
+          arguments: \"init\",\"\"
+        couchdb:
+          port: 5984
+        type: anchor
+        events:
+          port: 7053
+      - peerAddress: peer5.buyer-net:7051
+        grpc:
+          port: 7051
+        restserver:
+          targetPort: 20001
+          port: 20001
+        gossippeeraddress: peer5.buyer-net:7051
+        peer: 
+        expressapi:
+          targetPort: 3000
+          port: 3000
+        cli: disabled
+        name: peer5
+        certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/buyer/ca.crt
+        chaincode:
+          name: "simpleauction"
+          repository:
+            username: "ayhamkassab"
+            url: "github.com/ayhamkassab/blockchain-automation-framework.git"
+            password: "**Ak47**"
+            branch: master
+            path: "examples/supplychain-app/fabric/chaincode_rest_server/chaincode/"
+          endorsements: ""
+          maindirectory: "."
+          version: "1"
+          arguments: \"init\",\"\"
+        couchdb:
+          port: 5984
+        type: anchor
+        events:
+          port: 7053
+      - peerAddress: peer6.buyer-net:7051
+        grpc:
+          port: 7051
+        restserver:
+          targetPort: 20001
+          port: 20001
+        gossippeeraddress: peer6.buyer-net:7051
+        peer: 
+        expressapi:
+          targetPort: 3000
+          port: 3000
+        cli: disabled
+        name: peer6
+        certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/buyer/ca.crt
+        chaincode:
+          name: "simpleauction"
+          repository:
+            username: "ayhamkassab"
+            url: "github.com/ayhamkassab/blockchain-automation-framework.git"
+            password: "**Ak47**"
+            branch: master
+            path: "examples/supplychain-app/fabric/chaincode_rest_server/chaincode/"
+          endorsements: ""
+          maindirectory: "."
+          version: "1"
+          arguments: \"init\",\"\"
+        couchdb:
+          port: 5984
+        type: anchor
+        events:
+          port: 7053
+      - peerAddress: peer7.buyer-net:7051
+        grpc:
+          port: 7051
+        restserver:
+          targetPort: 20001
+          port: 20001
+        gossippeeraddress: peer7.buyer-net:7051
+        peer: 
+        expressapi:
+          targetPort: 3000
+          port: 3000
+        cli: disabled
+        name: peer7
+        certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/buyer/ca.crt
+        chaincode:
+          name: "simpleauction"
+          repository:
+            username: "ayhamkassab"
+            url: "github.com/ayhamkassab/blockchain-automation-framework.git"
+            password: "**Ak47**"
+            branch: master
+            path: "examples/supplychain-app/fabric/chaincode_rest_server/chaincode/"
+          endorsements: ""
+          maindirectory: "."
+          version: "1"
+          arguments: \"init\",\"\"
+        couchdb:
+          port: 5984
+        type: anchor
+        events:
+          port: 7053
+      - peerAddress: peer8.buyer-net:7051
+        grpc:
+          port: 7051
+        restserver:
+          targetPort: 20001
+          port: 20001
+        gossippeeraddress: peer8.buyer-net:7051
+        peer: 
+        expressapi:
+          targetPort: 3000
+          port: 3000
+        cli: disabled
+        name: peer8
         certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/buyer/ca.crt
         chaincode:
           name: "simpleauction"
@@ -551,6 +923,22 @@ network:
         gossipAddress: peer0.carrier-net:7051
         name: peer0
         peerAddress: peer0.carrier-net:7051
+      - peer: 
+        gossipAddress: peer1.carrier-net:7051
+        name: peer1
+        peerAddress: peer1.carrier-net:7051
+      - peer: 
+        gossipAddress: peer2.carrier-net:7051
+        name: peer2
+        peerAddress: peer2.carrier-net:7051
+      - peer: 
+        gossipAddress: peer3.carrier-net:7051
+        name: peer3
+        peerAddress: peer3.carrier-net:7051
+      - peer: 
+        gossipAddress: peer4.carrier-net:7051
+        name: peer4
+        peerAddress: peer4.carrier-net:7051
       name: carrier
       org_status: new
       ordererAddress: orderer1.supplychain-net:7050
@@ -575,6 +963,34 @@ network:
         gossipAddress: peer0.buyer-net:7051
         name: peer0
         peerAddress: peer0.buyer-net:7051
+      - peer: 
+        gossipAddress: peer1.buyer-net:7051
+        name: peer1
+        peerAddress: peer1.buyer-net:7051
+      - peer: 
+        gossipAddress: peer2.buyer-net:7051
+        name: peer2
+        peerAddress: peer2.buyer-net:7051
+      - peer: 
+        gossipAddress: peer3.buyer-net:7051
+        name: peer3
+        peerAddress: peer3.buyer-net:7051
+      - peer: 
+        gossipAddress: peer4.buyer-net:7051
+        name: peer4
+        peerAddress: peer4.buyer-net:7051
+      - peer: 
+        gossipAddress: peer5.buyer-net:7051
+        name: peer5
+        peerAddress: peer5.buyer-net:7051
+      - peer: 
+        gossipAddress: peer6.buyer-net:7051
+        name: peer6
+        peerAddress: peer6.buyer-net:7051
+      - peer: 
+        gossipAddress: peer7.buyer-net:7051
+        name: peer7
+        peerAddress: peer7.buyer-net:7051
       name: buyer
       org_status: new
       ordererAddress: orderer1.supplychain-net:7050
@@ -585,6 +1001,38 @@ network:
         gossipAddress: peer0.windowshopper-net:7051
         name: peer0
         peerAddress: peer0.windowshopper-net:7051
+      - peer: 
+        gossipAddress: peer1.windowshopper-net:7051
+        name: peer1
+        peerAddress: peer1.windowshopper-net:7051
+      - peer: 
+        gossipAddress: peer2.windowshopper-net:7051
+        name: peer2
+        peerAddress: peer2.windowshopper-net:7051
+      - peer: 
+        gossipAddress: peer3.windowshopper-net:7051
+        name: peer3
+        peerAddress: peer3.windowshopper-net:7051
+      - peer: 
+        gossipAddress: peer4.windowshopper-net:7051
+        name: peer4
+        peerAddress: peer4.windowshopper-net:7051
+      - peer: 
+        gossipAddress: peer5.windowshopper-net:7051
+        name: peer5
+        peerAddress: peer5.windowshopper-net:7051
+      - peer: 
+        gossipAddress: peer6.windowshopper-net:7051
+        name: peer6
+        peerAddress: peer6.windowshopper-net:7051
+      - peer: 
+        gossipAddress: peer7.windowshopper-net:7051
+        name: peer7
+        peerAddress: peer7.windowshopper-net:7051
+      - peer: 
+        gossipAddress: peer8.windowshopper-net:7051
+        name: peer8
+        peerAddress: peer8.windowshopper-net:7051
       name: windowshopper
       org_status: new
       ordererAddress: orderer1.supplychain-net:7050
@@ -611,10 +1059,29 @@ network:
     endorsers:
       corepeerAddress:
       - peer0.carrier-net:7051
+      - peer1.carrier-net:7051
+      - peer2.carrier-net:7051
+      - peer3.carrier-net:7051
+      - peer4.carrier-net:7051
       - peer0.manufacturer-net:7051
       - peer1.manufacturer-net:7051
       - peer0.buyer-net:7051
+      - peer1.buyer-net:7051
+      - peer2.buyer-net:7051
+      - peer3.buyer-net:7051
+      - peer4.buyer-net:7051
+      - peer5.buyer-net:7051
+      - peer6.buyer-net:7051
+      - peer7.buyer-net:7051
       - peer0.windowshopper-net:7051
+      - peer1.windowshopper-net:7051
+      - peer2.windowshopper-net:7051
+      - peer3.windowshopper-net:7051
+      - peer4.windowshopper-net:7051
+      - peer5.windowshopper-net:7051
+      - peer6.windowshopper-net:7051
+      - peer7.windowshopper-net:7051
+      - peer8.windowshopper-net:7051
       - peer0.dealer-net:7051
       - peer1.dealer-net:7051
       name:
