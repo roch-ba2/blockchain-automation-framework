@@ -43,27 +43,3 @@ organizations:
   orderer: supplychain
   numberOfPeers: 1
   endorser: false
-
-- id: 4
-  name: buyer
-  orderer: controller
-  numberOfPeers: 1
-  endorser: true
-
-- id: 5
-  name: windowshopper
-  orderer: controller
-  numberOfPeers: 1
-  endorser: true
-
-- id: 6
-  name: dealer
-  orderer: controller
-  numberOfPeers: 1
-  endorser: true
-
-- id: 7
-  name: controller
-  orderer: controller
-  numberOfPeers: 1
-  endorser: false
