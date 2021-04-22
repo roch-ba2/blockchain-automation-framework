@@ -1,0 +1,43 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: dealer-net-ca
+  namespace: dealer-net
+  annotations:
+    fluxcd.io/automated: "false"
+spec:
+  releaseName: dealer-net-ca
+  chart:
+    git: https://github.com/ayhamkassab/blockchain-automation-framework.git
+    ref: master
+    path: platforms/hyperledger-fabric/charts/ca    
+  values:
+    metadata:
+      namespace: dealer-net
+      images:
+        alpineutils: index.docker.io/hyperledgerlabs/alpine-utils:1.0
+        ca: hyperledger/fabric-ca:1.4.8
+    server:
+      name: ca
+      tlsstatus: true
+      admin: dealer-admin
+    storage:
+      storageclassname: dealersc
+      storagesize: 512Mi
+    vault:
+      role: vault-role
+      address: http://130.104.229.14:30000
+      authpath: dealer-net-auth
+      secretcert: secret/crypto/peerOrganizations/dealer-net/ca?ca.dealer-net-cert.pem
+      secretkey: secret/crypto/peerOrganizations/dealer-net/ca?dealer-net-CA.key
+      secretadminpass: secret/credentials/dealer-net/ca/dealer?user
+      serviceaccountname: vault-auth
+      imagesecretname: regcred
+    service:
+      servicetype: ClusterIP
+      ports:
+        tcp:
+          port: 7054
+    proxy:
+      provider: none
+      type: peer
