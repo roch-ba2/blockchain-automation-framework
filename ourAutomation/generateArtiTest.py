@@ -1031,7 +1031,7 @@ def genBAForganizationsPeers(org, peerCounts, orgNames, pathToBAF, chaincodevers
         
         peerConfig={'name': 'peer{}'.format(peerNb), 'certificate': '{}/build/{}/ca.crt'.format(pathToBAF, orgNames[org]),
             'peerAddress': 'peer{}.{}-net:7051'.format(peerNb, orgNames[org]), 'grpc': {'port': 7051}, 'restserver': {'targetPort': 20001, 'port': 20001},
-            'couchdb': {'port': 5984}, 'gossippeeraddress': 'peer{}.{}-net:7051'.format(peerNb, orgNames[org]), 'chaincode': {'version': '"{}"'.format(chaincodeversion),
+            'couchdb': {'port': 5984}, 'gossippeeraddress': 'peer{}.{}-net:7051'.format((peerNb+1) % peerCounts[org], orgNames[org]), 'chaincode': {'version': '"{}"'.format(chaincodeversion),
             'name': '"{}"'.format(chaincodeName), 'repository': {'username': '"{}"'.format(BAFgitusername), 'url': '"{}"'.format(BAFgit_url),
             'password': '"{}"'.format(BAFgitpassword), 'branch': '{}'.format(BAFgitbranch), 'path': '"{}"'.format(BAFChaincodePath)},
             'endorsements': '""', 'maindirectory': '"."', 'arguments': '\\"init\\",\\"\\"'}, 'peer': '', 'type': 'anchor',
@@ -1150,19 +1150,18 @@ def TOUSEEEEchannelParticipantsList(orgNames):
 
 
 
-
-
-
-
 def channelParticipantsList(orgNames, ordererOwnershipList, peerCounts, endorsersList):
     config = []
 
     for org in range(len(orgNames)):
         if orgNames[org] in endorsersList:
+            a = [1,2,3]
             orgConfig = {'ordererAddress': 'orderer1.{}-net:7050'.format(ordererOwnershipList[org]),
-            'peers': [{'peer': '', 'gossipAddress': 'peer{}.{}-net:7051'.format(x, orgNames[org]),
-            'name': 'peer{}'.format(x), 'peerAddress': 'peer{}.{}-net:7051'.format(x, orgNames[org])} for x in range(peerCounts[org])],
+            'peers': [{'peer': '', 'gossipAddress': 'peer{}.{}-net:7051'.format((x+1) % peerCounts[org], orgNames[org]),
+            'name': 'peer{}'.format(x), 'peerAddress': 'peer{}.{}-net:7051'.format(x , orgNames[org])} for x in range(peerCounts[org])],
             'name': orgNames[org], 'organization': '', 'org_status': 'new'}
+            #for x in range(peerCounts[org]):
+            #    print("********************* HERE ************ peer{}.{}-net:7051.format(x+1 % peerCounts[org]", org, x, x+1, peerCounts[org], (x+1) % peerCounts[org])
             if org == 0:
                 orgConfig["type"] = "creator"
             else:
@@ -1180,7 +1179,7 @@ def getBAFnetwork(domainName, orgsCount, orderersCount, chaincodeName, peerCount
     bafNetwork = {'network': {'channels': [{'channel_name': 'AllChannel', 'orderer': {'name': 'supplychain'},
     'participants': channelParticipantsList(orgNames, ordererOwnershipList, peerCounts, endorsersList),
 
-    'endorsers': {'corepeerAddress': ['peer{}.{}-net:7051'.format(x, y) for y in endorsersList for x in range(peerCounts[orgNames.index(y)])],
+    'endorsers': {'corepeerAddress': ['peer0.{}-net:7051'.format(x) for x in endorsersList],
     'name': endorsersList}, 
     
     'consortium': 'SupplyChainConsortium', 'channel': '',
