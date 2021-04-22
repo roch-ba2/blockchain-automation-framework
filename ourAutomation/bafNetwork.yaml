@@ -239,11 +239,11 @@ network:
   - participants:
     - peers:
       - peer: 
-        gossipAddress: peer0.carrier-net:7051
+        gossipAddress: peer1.carrier-net:7051
         name: peer0
         peerAddress: peer0.carrier-net:7051
       - peer: 
-        gossipAddress: peer1.carrier-net:7051
+        gossipAddress: peer0.carrier-net:7051
         name: peer1
         peerAddress: peer1.carrier-net:7051
       name: carrier
@@ -268,7 +268,6 @@ network:
     endorsers:
       corepeerAddress:
       - peer0.carrier-net:7051
-      - peer1.carrier-net:7051
       - peer0.manufacturer-net:7051
       name:
       - carrier
