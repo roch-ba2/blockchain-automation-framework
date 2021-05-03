@@ -50,6 +50,6 @@ organizations:
 - id: 4
   name: supplychain
   orderer: supplychain
-  numberOfPeers: 1
+  numberOfPeers: 3
   endorser: false
 
