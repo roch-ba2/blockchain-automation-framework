@@ -5,7 +5,7 @@ network:
       certificate: file/server.crt
     gitops:
       username: "ayhamkassab"
-      private_key: "/root/hyperledger-labs/myFork/blockchain-automation-framework/build/gitops"
+      private_key: "/home/uclazureuser/baf/blockchain-automation-framework/build/gitops"
       git_protocol: "https"
       chart_source: "platforms/hyperledger-fabric/charts"
       git_url: "https://github.com/ayhamkassab/blockchain-automation-framework.git"
@@ -23,8 +23,8 @@ network:
     state: Zurich
     location: Zurich
     vault:
-      url: "http://130.104.229.14:30000"
-      root_token: "s.5KkfEk3Upun8A1fQr1PfjRWL"
+      url: "http://172.16.0.6:30000"
+      root_token: "s.2wcg8y5VfZvKtkZIblKLS3fw"
       secret_path: "secret"
     services:
       ca:
@@ -47,7 +47,7 @@ network:
           port: 3000
         cli: disabled
         name: peer0
-        certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/carrier/ca.crt
+        certificate: /home/uclazureuser/baf/blockchain-automation-framework/build/carrier/ca.crt
         chaincode:
           name: "simpleauction"
           repository:
@@ -78,7 +78,7 @@ network:
           port: 3000
         cli: disabled
         name: peer1
-        certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/carrier/ca.crt
+        certificate: /home/uclazureuser/baf/blockchain-automation-framework/build/carrier/ca.crt
         chaincode:
           name: "simpleauction"
           repository:
@@ -100,7 +100,7 @@ network:
     k8s:
       region: "cluster_region"
       config_file: "~/.kube/config"
-      context: "local"
+      context: "cluster.local"
     type: peer
     name: carrier
   - ca_data:
@@ -108,7 +108,7 @@ network:
       certificate: file/server.crt
     gitops:
       username: "ayhamkassab"
-      private_key: "/root/hyperledger-labs/myFork/blockchain-automation-framework/build/gitops"
+      private_key: "/home/uclazureuser/baf/blockchain-automation-framework/build/gitops"
       git_protocol: "https"
       chart_source: "platforms/hyperledger-fabric/charts"
       git_url: "https://github.com/ayhamkassab/blockchain-automation-framework.git"
@@ -126,8 +126,8 @@ network:
     state: Zurich
     location: Zurich
     vault:
-      url: "http://130.104.229.14:30000"
-      root_token: "s.5KkfEk3Upun8A1fQr1PfjRWL"
+      url: "http://172.16.0.6:30000"
+      root_token: "s.2wcg8y5VfZvKtkZIblKLS3fw"
       secret_path: "secret"
     services:
       ca:
@@ -150,7 +150,7 @@ network:
           port: 3000
         cli: disabled
         name: peer0
-        certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/manufacturer/ca.crt
+        certificate: /home/uclazureuser/baf/blockchain-automation-framework/build/manufacturer/ca.crt
         chaincode:
           name: "simpleauction"
           repository:
@@ -172,7 +172,7 @@ network:
     k8s:
       region: "cluster_region"
       config_file: "~/.kube/config"
-      context: "local"
+      context: "cluster.local"
     type: peer
     name: manufacturer
   - ca_data:
@@ -180,7 +180,7 @@ network:
       certificate: file/server.crt
     gitops:
       username: "ayhamkassab"
-      private_key: "/root/hyperledger-labs/myFork/blockchain-automation-framework/build/gitops"
+      private_key: "/home/uclazureuser/baf/blockchain-automation-framework/build/gitops"
       git_protocol: "https"
       chart_source: "platforms/hyperledger-fabric/charts"
       git_url: "https://github.com/ayhamkassab/blockchain-automation-framework.git"
@@ -198,8 +198,8 @@ network:
     state: Zurich
     location: Zurich
     vault:
-      url: "http://130.104.229.14:30000"
-      root_token: "s.5KkfEk3Upun8A1fQr1PfjRWL"
+      url: "http://172.16.0.6:30000"
+      root_token: "s.2wcg8y5VfZvKtkZIblKLS3fw"
       secret_path: "secret"
     services:
       ca:
@@ -222,7 +222,7 @@ network:
           port: 3000
         cli: disabled
         name: peer0
-        certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/buyer/ca.crt
+        certificate: /home/uclazureuser/baf/blockchain-automation-framework/build/buyer/ca.crt
         chaincode:
           name: "simpleauction"
           repository:
@@ -246,76 +246,14 @@ network:
         restserver:
           targetPort: 20001
           port: 20001
-        gossippeeraddress: peer2.buyer-net:7051
-        peer: 
-        expressapi:
-          targetPort: 3000
-          port: 3000
-        cli: disabled
-        name: peer1
-        certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/buyer/ca.crt
-        chaincode:
-          name: "simpleauction"
-          repository:
-            username: "ayhamkassab"
-            url: "github.com/ayhamkassab/blockchain-automation-framework.git"
-            password: "**Ak47**"
-            branch: master
-            path: "examples/supplychain-app/fabric/chaincode_rest_server/chaincode/"
-          endorsements: ""
-          maindirectory: "."
-          version: "1"
-          arguments: \"init\",\"\"
-        couchdb:
-          port: 5984
-        type: anchor
-        events:
-          port: 7053
-      - peerAddress: peer2.buyer-net:7051
-        grpc:
-          port: 7051
-        restserver:
-          targetPort: 20001
-          port: 20001
-        gossippeeraddress: peer3.buyer-net:7051
-        peer: 
-        expressapi:
-          targetPort: 3000
-          port: 3000
-        cli: disabled
-        name: peer2
-        certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/buyer/ca.crt
-        chaincode:
-          name: "simpleauction"
-          repository:
-            username: "ayhamkassab"
-            url: "github.com/ayhamkassab/blockchain-automation-framework.git"
-            password: "**Ak47**"
-            branch: master
-            path: "examples/supplychain-app/fabric/chaincode_rest_server/chaincode/"
-          endorsements: ""
-          maindirectory: "."
-          version: "1"
-          arguments: \"init\",\"\"
-        couchdb:
-          port: 5984
-        type: anchor
-        events:
-          port: 7053
-      - peerAddress: peer3.buyer-net:7051
-        grpc:
-          port: 7051
-        restserver:
-          targetPort: 20001
-          port: 20001
         gossippeeraddress: peer0.buyer-net:7051
         peer: 
         expressapi:
           targetPort: 3000
           port: 3000
         cli: disabled
-        name: peer3
-        certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/buyer/ca.crt
+        name: peer1
+        certificate: /home/uclazureuser/baf/blockchain-automation-framework/build/buyer/ca.crt
         chaincode:
           name: "simpleauction"
           repository:
@@ -337,7 +275,7 @@ network:
     k8s:
       region: "cluster_region"
       config_file: "~/.kube/config"
-      context: "local"
+      context: "cluster.local"
     type: peer
     name: buyer
   - ca_data:
@@ -345,7 +283,7 @@ network:
       certificate: file/server.crt
     gitops:
       username: "ayhamkassab"
-      private_key: "/root/hyperledger-labs/myFork/blockchain-automation-framework/build/gitops"
+      private_key: "/home/uclazureuser/baf/blockchain-automation-framework/build/gitops"
       git_protocol: "https"
       chart_source: "platforms/hyperledger-fabric/charts"
       git_url: "https://github.com/ayhamkassab/blockchain-automation-framework.git"
@@ -363,8 +301,8 @@ network:
     state: Zurich
     location: Zurich
     vault:
-      url: "http://130.104.229.14:30000"
-      root_token: "s.5KkfEk3Upun8A1fQr1PfjRWL"
+      url: "http://172.16.0.6:30000"
+      root_token: "s.2wcg8y5VfZvKtkZIblKLS3fw"
       secret_path: "secret"
     services:
       consensus:
@@ -402,25 +340,25 @@ network:
     k8s:
       region: "cluster_region"
       config_file: "~/.kube/config"
-      context: "local"
+      context: "cluster.local"
     type: orderer
     name: supplychain
   orderers:
   - org_name: supplychain
     name: orderer0
-    certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/supplychain/orderer0.crt
+    certificate: /home/uclazureuser/baf/blockchain-automation-framework/build/supplychain/orderer0.crt
     uri: orderer0.supplychain-net:7050
     orderer: 
     type: orderer
   - org_name: supplychain
     name: orderer1
-    certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/supplychain/orderer1.crt
+    certificate: /home/uclazureuser/baf/blockchain-automation-framework/build/supplychain/orderer1.crt
     uri: orderer1.supplychain-net:7050
     orderer: 
     type: orderer
   - org_name: supplychain
     name: orderer2
-    certificate: /root/hyperledger-labs/myFork/blockchain-automation-framework/build/supplychain/orderer2.crt
+    certificate: /home/uclazureuser/baf/blockchain-automation-framework/build/supplychain/orderer2.crt
     uri: orderer2.supplychain-net:7050
     orderer: 
     type: orderer
@@ -456,17 +394,9 @@ network:
         name: peer0
         peerAddress: peer0.buyer-net:7051
       - peer: 
-        gossipAddress: peer2.buyer-net:7051
+        gossipAddress: peer0.buyer-net:7051
         name: peer1
         peerAddress: peer1.buyer-net:7051
-      - peer: 
-        gossipAddress: peer3.buyer-net:7051
-        name: peer2
-        peerAddress: peer2.buyer-net:7051
-      - peer: 
-        gossipAddress: peer0.buyer-net:7051
-        name: peer3
-        peerAddress: peer3.buyer-net:7051
       name: buyer
       org_status: new
       ordererAddress: orderer2.supplychain-net:7050
