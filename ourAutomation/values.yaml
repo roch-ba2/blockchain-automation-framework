@@ -25,7 +25,7 @@ fullnameOverride:
 podSecurityContext: {}
 nodeSelector: {}
 tolerations: []
-ENDORSING_ORG_NAMES: "carrier manufacturer buyer"
+ENDORSING_ORG_NAMES: "carrier buyer"
 nameOverride: 
 VAULT_TOKEN: s.2wcg8y5VfZvKtkZIblKLS3fw
 replicaMasterCount: 1

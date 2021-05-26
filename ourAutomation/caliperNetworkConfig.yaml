@@ -21,18 +21,6 @@ organizations:
     certificates:
     - admin: true
       clientPrivateKey:
-        path: secret/manufacturer/tls/admin.pem
-      clientSignedCert:
-        path: secret/manufacturer/tls/admin.cert
-      name: "admin"
-  connectionProfile:
-    path: "./manufacturerConnectionProfile.yaml"
-    discover: True
-  mspid: manufacturerMSP
-- identities:
-    certificates:
-    - admin: true
-      clientPrivateKey:
         path: secret/buyer/tls/admin.pem
       clientSignedCert:
         path: secret/buyer/tls/admin.cert
@@ -62,17 +50,13 @@ channels:
       language: golang
     endorsementPolicy:
       policy:
-        3-of:
+        2-of:
         - signed-by: 0
         - signed-by: 1
-        - signed-by: 2
       identities:
       - role:
           name: member
           mspId: carrierMSP
-      - role:
-          name: member
-          mspId: manufacturerMSP
       - role:
           name: member
           mspId: buyerMSP
@@ -83,6 +67,6 @@ channels:
       version: 0
       consortium: "SupplyChainConsortium"
       capabilities: []
-      msps: ["carrierMSP", "manufacturerMSP", "buyerMSP"]
+      msps: ["carrierMSP", "buyerMSP"]
   channelName: allchannel
 version: "2.0.0"
