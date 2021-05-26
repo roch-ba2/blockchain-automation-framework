@@ -21,12 +21,18 @@ organizations:
   endorser: true #if false then numberOfPeers should be 0 (even if not, the script will count it as 0)
 
 - id: 2
-  name: buyer
+  name: manufacturer
   orderer: supplychain
   numberOfPeers: 1
   endorser: true
 
 - id: 3
+  name: buyer
+  orderer: supplychain
+  numberOfPeers: 1
+  endorser: true
+
+- id: 4
   name: supplychain
   orderer: supplychain
   numberOfPeers: 1
