@@ -29,6 +29,6 @@ organizations:
 - id: 3
   name: supplychain
   orderer: supplychain
-  numberOfPeers: 1
+  numberOfPeers: 2
   endorser: false
 

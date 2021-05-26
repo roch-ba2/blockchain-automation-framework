@@ -190,6 +190,12 @@ network:
         orderer: 
         type: orderer
         name: orderer0
+      - consensus: kafka
+        grpc:
+          port: 7050
+        orderer: 
+        type: orderer
+        name: orderer1
     organization: 
     k8s:
       region: "cluster_region"
@@ -202,6 +208,12 @@ network:
     name: orderer0
     certificate: /home/uclazureuser/baf/blockchain-automation-framework/build/supplychain/orderer0.crt
     uri: orderer0.supplychain-net:7050
+    orderer: 
+    type: orderer
+  - org_name: supplychain
+    name: orderer1
+    certificate: /home/uclazureuser/baf/blockchain-automation-framework/build/supplychain/orderer1.crt
+    uri: orderer1.supplychain-net:7050
     orderer: 
     type: orderer
   channels:
