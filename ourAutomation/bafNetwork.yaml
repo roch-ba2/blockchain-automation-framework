@@ -4,16 +4,16 @@ network:
       url: ca.carrier-net:7054
       certificate: file/server.crt
     gitops:
-      username: "roch-ba"
+      username: "roch-ba2"
       private_key: "/home/uclazureuser/bafrb/blockchain-automation-framework/build/gitops"
       git_protocol: "https"
       chart_source: "platforms/hyperledger-fabric/charts"
-      git_url: "https://github.com/roch-ba/blockchain-automation-framework.git"
+      git_url: "https://github.com/roch-ba2/blockchain-automation-framework.git"
       branch: "master"
       release_dir: "platforms/hyperledger-fabric/releases/dev"
-      password: "7rRsswM3uozYvqL7TVag"
-      email: "github_email"
-      git_repo: "github.com/roch-ba/blockchain-automation-framework.git"
+      password: "IzrBIWTMNDh3QsCm5H0Z"
+      email: "roch@femto.fr"
+      git_repo: "github.com/roch-ba2/blockchain-automation-framework.git"
     cloud_provider: minikube
     cli: enabled
     country: CH
@@ -51,9 +51,9 @@ network:
         chaincode:
           name: "simpleauction"
           repository:
-            username: "roch-ba"
-            url: "github.com/roch-ba/blockchain-automation-framework.git"
-            password: "7rRsswM3uozYvqL7TVag"
+            username: "roch-ba2"
+            url: "github.com/roch-ba2/blockchain-automation-framework.git"
+            password: "IzrBIWTMNDh3QsCm5H0Z"
             branch: master
             path: "examples/supplychain-app/fabric/chaincode_rest_server/chaincode/"
           endorsements: ""
@@ -76,16 +76,16 @@ network:
       url: ca.buyer-net:7054
       certificate: file/server.crt
     gitops:
-      username: "roch-ba"
+      username: "roch-ba2"
       private_key: "/home/uclazureuser/bafrb/blockchain-automation-framework/build/gitops"
       git_protocol: "https"
       chart_source: "platforms/hyperledger-fabric/charts"
-      git_url: "https://github.com/roch-ba/blockchain-automation-framework.git"
+      git_url: "https://github.com/roch-ba2/blockchain-automation-framework.git"
       branch: "master"
       release_dir: "platforms/hyperledger-fabric/releases/dev"
-      password: "7rRsswM3uozYvqL7TVag"
-      email: "github_email"
-      git_repo: "github.com/roch-ba/blockchain-automation-framework.git"
+      password: "IzrBIWTMNDh3QsCm5H0Z"
+      email: "roch@femto.fr"
+      git_repo: "github.com/roch-ba2/blockchain-automation-framework.git"
     cloud_provider: minikube
     cli: enabled
     country: CH
@@ -123,9 +123,9 @@ network:
         chaincode:
           name: "simpleauction"
           repository:
-            username: "roch-ba"
-            url: "github.com/roch-ba/blockchain-automation-framework.git"
-            password: "7rRsswM3uozYvqL7TVag"
+            username: "roch-ba2"
+            url: "github.com/roch-ba2/blockchain-automation-framework.git"
+            password: "IzrBIWTMNDh3QsCm5H0Z"
             branch: master
             path: "examples/supplychain-app/fabric/chaincode_rest_server/chaincode/"
           endorsements: ""
@@ -148,16 +148,16 @@ network:
       url: ca.supplychain-net:7054
       certificate: file/server.crt
     gitops:
-      username: "roch-ba"
+      username: "roch-ba2"
       private_key: "/home/uclazureuser/bafrb/blockchain-automation-framework/build/gitops"
       git_protocol: "https"
       chart_source: "platforms/hyperledger-fabric/charts"
-      git_url: "https://github.com/roch-ba/blockchain-automation-framework.git"
+      git_url: "https://github.com/roch-ba2/blockchain-automation-framework.git"
       branch: "master"
       release_dir: "platforms/hyperledger-fabric/releases/dev"
-      password: "7rRsswM3uozYvqL7TVag"
-      email: "github_email"
-      git_repo: "github.com/roch-ba/blockchain-automation-framework.git"
+      password: "IzrBIWTMNDh3QsCm5H0Z"
+      email: "roch@femto.fr"
+      git_repo: "github.com/roch-ba2/blockchain-automation-framework.git"
     cloud_provider: minikube
     cli: disabled
     country: CH
