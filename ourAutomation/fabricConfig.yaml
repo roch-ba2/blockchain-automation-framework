@@ -1,5 +1,5 @@
 domain_name: svc.cluster.local
-pathToBAF: /home/uclazureuser/baf/blockchain-automation-framework
+pathToBAF: /home/uclazureuser/bafrb/blockchain-automation-framework
 cloud_provider: minikube
 
 BAFChaincodePath: examples/supplychain-app/fabric/chaincode_rest_server/chaincode/

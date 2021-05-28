@@ -4,14 +4,14 @@ network:
       url: ca.carrier-net:7054
       certificate: file/server.crt
     gitops:
-      username: "ayhamkassab"
-      private_key: "/home/uclazureuser/baf/blockchain-automation-framework/build/gitops"
+      username: "roch-ba"
+      private_key: "/home/uclazureuser/bafrb/blockchain-automation-framework/build/gitops"
       git_protocol: "https"
       chart_source: "platforms/hyperledger-fabric/charts"
-      git_url: "https://github.com/ayhamkassab/blockchain-automation-framework.git"
+      git_url: "https://github.com/roch-ba/blockchain-automation-framework.git"
       branch: "master"
       release_dir: "platforms/hyperledger-fabric/releases/dev"
-      password: "**Ak47**"
+      password: "7rRsswM3uozYvqL7TVag"
       email: "github_email"
       git_repo: "github.com/ayhamkassab/blockchain-automation-framework.git"
     cloud_provider: minikube
@@ -47,13 +47,13 @@ network:
           port: 3000
         cli: disabled
         name: peer0
-        certificate: /home/uclazureuser/baf/blockchain-automation-framework/build/carrier/ca.crt
+        certificate: /home/uclazureuser/bafrb/blockchain-automation-framework/build/carrier/ca.crt
         chaincode:
           name: "simpleauction"
           repository:
-            username: "ayhamkassab"
-            url: "github.com/ayhamkassab/blockchain-automation-framework.git"
-            password: "**Ak47**"
+            username: "roch-ba"
+            url: "github.com/roch-ba/blockchain-automation-framework.git"
+            password: "7rRsswM3uozYvqL7TVag"
             branch: master
             path: "examples/supplychain-app/fabric/chaincode_rest_server/chaincode/"
           endorsements: ""
@@ -76,14 +76,14 @@ network:
       url: ca.buyer-net:7054
       certificate: file/server.crt
     gitops:
-      username: "ayhamkassab"
-      private_key: "/home/uclazureuser/baf/blockchain-automation-framework/build/gitops"
+      username: "roch-ba"
+      private_key: "/home/uclazureuser/bafrb/blockchain-automation-framework/build/gitops"
       git_protocol: "https"
       chart_source: "platforms/hyperledger-fabric/charts"
-      git_url: "https://github.com/ayhamkassab/blockchain-automation-framework.git"
+      git_url: "https://github.com/roch-ba/blockchain-automation-framework.git"
       branch: "master"
       release_dir: "platforms/hyperledger-fabric/releases/dev"
-      password: "**Ak47**"
+      password: "7rRsswM3uozYvqL7TVag"
       email: "github_email"
       git_repo: "github.com/ayhamkassab/blockchain-automation-framework.git"
     cloud_provider: minikube
@@ -119,13 +119,13 @@ network:
           port: 3000
         cli: disabled
         name: peer0
-        certificate: /home/uclazureuser/baf/blockchain-automation-framework/build/buyer/ca.crt
+        certificate: /home/uclazureuser/bafrb/blockchain-automation-framework/build/buyer/ca.crt
         chaincode:
           name: "simpleauction"
           repository:
-            username: "ayhamkassab"
-            url: "github.com/ayhamkassab/blockchain-automation-framework.git"
-            password: "**Ak47**"
+            username: "roch-ba"
+            url: "github.com/roch-ba/blockchain-automation-framework.git"
+            password: "7rRsswM3uozYvqL7TVag"
             branch: master
             path: "examples/supplychain-app/fabric/chaincode_rest_server/chaincode/"
           endorsements: ""
@@ -148,14 +148,14 @@ network:
       url: ca.supplychain-net:7054
       certificate: file/server.crt
     gitops:
-      username: "ayhamkassab"
-      private_key: "/home/uclazureuser/baf/blockchain-automation-framework/build/gitops"
+      username: "roch-ba"
+      private_key: "/home/uclazureuser/bafrb/blockchain-automation-framework/build/gitops"
       git_protocol: "https"
       chart_source: "platforms/hyperledger-fabric/charts"
-      git_url: "https://github.com/ayhamkassab/blockchain-automation-framework.git"
+      git_url: "https://github.com/roch-ba/blockchain-automation-framework.git"
       branch: "master"
       release_dir: "platforms/hyperledger-fabric/releases/dev"
-      password: "**Ak47**"
+      password: "7rRsswM3uozYvqL7TVag"
       email: "github_email"
       git_repo: "github.com/ayhamkassab/blockchain-automation-framework.git"
     cloud_provider: minikube
@@ -206,13 +206,13 @@ network:
   orderers:
   - org_name: supplychain
     name: orderer0
-    certificate: /home/uclazureuser/baf/blockchain-automation-framework/build/supplychain/orderer0.crt
+    certificate: /home/uclazureuser/bafrb/blockchain-automation-framework/build/supplychain/orderer0.crt
     uri: orderer0.supplychain-net:7050
     orderer: 
     type: orderer
   - org_name: supplychain
     name: orderer1
-    certificate: /home/uclazureuser/baf/blockchain-automation-framework/build/supplychain/orderer1.crt
+    certificate: /home/uclazureuser/bafrb/blockchain-automation-framework/build/supplychain/orderer1.crt
     uri: orderer1.supplychain-net:7050
     orderer: 
     type: orderer
