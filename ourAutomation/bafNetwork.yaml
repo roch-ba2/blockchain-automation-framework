@@ -13,7 +13,7 @@ network:
       release_dir: "platforms/hyperledger-fabric/releases/dev"
       password: "7rRsswM3uozYvqL7TVag"
       email: "github_email"
-      git_repo: "github.com/ayhamkassab/blockchain-automation-framework.git"
+      git_repo: "github.com/roch-ba/blockchain-automation-framework.git"
     cloud_provider: minikube
     cli: enabled
     country: CH
@@ -85,7 +85,7 @@ network:
       release_dir: "platforms/hyperledger-fabric/releases/dev"
       password: "7rRsswM3uozYvqL7TVag"
       email: "github_email"
-      git_repo: "github.com/ayhamkassab/blockchain-automation-framework.git"
+      git_repo: "github.com/roch-ba/blockchain-automation-framework.git"
     cloud_provider: minikube
     cli: enabled
     country: CH
@@ -157,7 +157,7 @@ network:
       release_dir: "platforms/hyperledger-fabric/releases/dev"
       password: "7rRsswM3uozYvqL7TVag"
       email: "github_email"
-      git_repo: "github.com/ayhamkassab/blockchain-automation-framework.git"
+      git_repo: "github.com/roch-ba/blockchain-automation-framework.git"
     cloud_provider: minikube
     cli: disabled
     country: CH
