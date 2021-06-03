@@ -69,7 +69,7 @@ network:
     k8s:
       region: "cluster_region"
       config_file: "~/.kube/config"
-      context: "local"
+      context: "cluster.local"
     type: peer
     name: carrier
   - ca_data:
@@ -141,7 +141,7 @@ network:
     k8s:
       region: "cluster_region"
       config_file: "~/.kube/config"
-      context: "local"
+      context: "cluster.local"
     type: peer
     name: buyer
   - ca_data:
@@ -200,7 +200,7 @@ network:
     k8s:
       region: "cluster_region"
       config_file: "~/.kube/config"
-      context: "local"
+      context: "cluster.local"
     type: orderer
     name: supplychain
   orderers:
