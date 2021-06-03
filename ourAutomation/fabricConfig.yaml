@@ -1,16 +1,16 @@
 domain_name: svc.cluster.local
-pathToBAF: /home/uclazureuser/bafrb/blockchain-automation-framework
+pathToBAF: /home/ucluser/baf/blockchain-automation-framework
 cloud_provider: minikube
 
 BAFChaincodePath: examples/supplychain-app/fabric/chaincode_rest_server/chaincode/
 
 BAFk8s:
-  context: "cluster.local"
+  context: "local"
   config_file: "~/.kube/config"
 
 vault:
-  url: "http://172.16.0.6:30000"
-  root_token: "s.2wcg8y5VfZvKtkZIblKLS3fw"
+  url: "http://172.17.0.6:30000"
+  root_token: "s.6aMYwn5aidksNJkquEPABfpE"
 
 
 organizations:

@@ -1,4 +1,4 @@
-VAULT_ADDR: http://172.16.0.6:30000
+VAULT_ADDR: http://172.17.0.6:30000
 ingress:
   tls: []
   hosts:
@@ -27,7 +27,7 @@ nodeSelector: {}
 tolerations: []
 ENDORSING_ORG_NAMES: "carrier buyer"
 nameOverride: 
-VAULT_TOKEN: s.2wcg8y5VfZvKtkZIblKLS3fw
+VAULT_TOKEN: s.6aMYwn5aidksNJkquEPABfpE
 replicaMasterCount: 1
 affinity: {}
 resources: {}
