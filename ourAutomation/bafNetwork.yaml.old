@@ -45,7 +45,7 @@ network:
         expressapi:
           targetPort: 3000
           port: 3000
-        cli: enabled
+        cli: disabled
         name: peer0
         certificate: /home/ucluser/baf/blockchain-automation-framework/build/carrier/ca.crt
         chaincode:
@@ -117,7 +117,7 @@ network:
         expressapi:
           targetPort: 3000
           port: 3000
-        cli: enabled
+        cli: disabled
         name: peer0
         certificate: /home/ucluser/baf/blockchain-automation-framework/build/buyer/ca.crt
         chaincode:
@@ -159,7 +159,7 @@ network:
       email: "roch@femto.fr"
       git_repo: "github.com/roch-ba2/blockchain-automation-framework.git"
     cloud_provider: minikube
-    cli: enabled
+    cli: disabled
     country: CH
     subject: "O=Orderer,L=51.50/-0.13/London,C=GB"
     org_status: new
