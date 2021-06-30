@@ -1,0 +1,38 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: peer0-buyer-cli
+  namespace: buyer-net
+  annotations:
+    fluxcd.io/automated: "false"
+spec:
+  releaseName: peer0-buyer-cli
+  chart:
+    git: https://github.com/roch-ba2/blockchain-automation-framework.git
+    ref: master
+    path: platforms/hyperledger-fabric/charts/fabric_cli    
+  values:
+    metadata:
+      namespace: buyer-net
+      images:
+        fabrictools: hyperledger/fabric-tools:2.2.0
+        alpineutils: index.docker.io/hyperledgerlabs/alpine-utils:1.0
+    storage:
+      class: buyersc
+      size: 256Mi
+    vault:
+      role: vault-role
+      address: http://172.17.0.6:30000
+      authpath: buyer-net-auth
+      adminsecretprefix: secret/crypto/peerOrganizations/buyer-net/users/admin
+      orderersecretprefix: secret/crypto/peerOrganizations/buyer-net/orderer
+      serviceaccountname: vault-auth
+      imagesecretname: regcred
+      tls: false
+    peer:
+      name: peer0
+      localmspid: buyerMSP
+      tlsstatus: true
+      address: peer0.buyer-net:7051
+    orderer:
+      address: orderer0.supplychain-net:7050
